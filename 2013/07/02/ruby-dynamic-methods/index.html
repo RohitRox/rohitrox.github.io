@@ -1,0 +1,686 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ruby Dynamic Methods - Blog @ RohitRox</title>
+  <meta name="author" content="Rohit Rox">
+
+  
+  <meta name="description" content="We define methods using def keywords which is fine for most of the cases. But consider a situation where you have to create a series of methods all &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Blog @ RohitRox" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Blog @ RohitRox</a></h1>
+  
+    <h2>tips tricks tuts and everything learned</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:rohitrox.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Ruby Dynamic Methods</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-02T11:27:00+05:45" pubdate data-updated="true">Jul 2<span>nd</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>We define methods using <strong><em>def</em></strong> keywords which is fine for most of the cases.</p>
+
+<p>But consider a situation where you have to create a series of methods all of which have the same basic structure and logic then it seems repititive and not dry.</p>
+
+<p>Ruby, being a dynamic language, you can create methods on the fly.</p>
+
+<p>So, what does that mean?</p>
+
+<p>lets see this simplest example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">A</span>
+</span><span class='line'>    <span class="n">define_method</span> <span class="ss">:a</span> <span class="k">do</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;hello&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">define_method</span> <span class="ss">:greeting</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="n">message</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">A</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">a</span> <span class="c1">#=&gt; hello</span>
+</span><span class='line'>  <span class="n">A</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">greeting</span> <span class="s1">&#39;Ram ram&#39;</span> <span class="c1">#=&gt; Ram ram</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!--more-->
+
+
+<p>The <strong><em>define_method</em></strong> defines an instance method in the receiver. The syntax and usage are self-explained in the example above.</p>
+
+<p>lets see following example that may be useful in practical scenarios.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">ACTIVE</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="no">INACTIVE</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="no">PENDING</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:status</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">active?</span>
+</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="no">ACTIVE</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">inactive?</span>
+</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">::</span><span class="no">INACTIVE</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">pending?</span>
+</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">::</span><span class="no">PENDING</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="n">user</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">user</span><span class="o">.</span><span class="n">inactive?</span>
+</span><span class='line'>  <span class="c1">#=&gt; true</span>
+</span><span class='line'>  <span class="n">user</span><span class="o">.</span><span class="n">active?</span>
+</span><span class='line'>  <span class="c1">#=&gt; false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Refactored code using dynamic method definition:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">ACTIVE</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="no">INACTIVE</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="no">PENDING</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:status</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">[</span><span class="ss">:active</span><span class="p">,</span> <span class="ss">:inactive</span><span class="p">,</span> <span class="ss">:pending</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="nb">method</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="s2">?&quot;</span> <span class="k">do</span>
+</span><span class='line'>        <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">.</span><span class="n">const_get</span><span class="p">(</span><span class="nb">method</span><span class="o">.</span><span class="n">upcase</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="n">user</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">user</span><span class="o">.</span><span class="n">inactive?</span>
+</span><span class='line'>  <span class="c1">#=&gt; true</span>
+</span><span class='line'>  <span class="n">user</span><span class="o">.</span><span class="n">active?</span>
+</span><span class='line'>  <span class="c1">#=&gt; false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We use define_method to define method dynamically.</p>
+
+<p>We can also define instance methods with a class method, using this technique we can expose a class method that will generate the  instance methods. COOL !</p>
+
+<p>Example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">ACTIVE</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="no">INACTIVE</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="no">PENDING</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:status</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">states</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">args</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">arg</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">arg</span><span class="si">}</span><span class="s2">?&quot;</span> <span class="k">do</span>
+</span><span class='line'>          <span class="nb">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">.</span><span class="n">const_get</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">upcase</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">states</span> <span class="ss">:active</span><span class="p">,</span> <span class="ss">:inactive</span><span class="p">,</span> <span class="ss">:pending</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, what about class methods. The simplest way is</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">A</span>
+</span><span class='line'>  <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+</span><span class='line'>    <span class="n">define_method</span> <span class="n">method_name</span> <span class="k">do</span>
+</span><span class='line'>      <span class="c1">#...</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are <strong><em>instance_eval</em></strong> and <strong><em>class_eval</em></strong> also, which are used for dynamic method definition. These methods allow you to evaluate arbitrary code in the context of a particular class or object. These methods can be very confusing sometimes. You can read <a href="http://stackoverflow.com/questions/900419/how-to-understand-the-difference-between-class-eval-and-instance-eval">this</a> discussion and <a href="http://www.ploughthroughruby.co.uk/2009/09/30/define_method-instance_eval-and-class_eval.html/">this</a> blog post and understand how they can be used.</p>
+
+<p>From that discussion, we summerize</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="no">Foo</span> <span class="o">=</span> <span class="no">Class</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">class_eval</span> <span class="k">do</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">class_bar</span>
+</span><span class='line'>      <span class="s2">&quot;class_bar&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">instance_eval</span> <span class="k">do</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">instance_bar</span>
+</span><span class='line'>      <span class="s2">&quot;instance_bar&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">class_bar</span>       <span class="c1">#=&gt; undefined method ‘class_bar’ for Foo:Class</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">class_bar</span>   <span class="c1">#=&gt; &quot;class_bar&quot;</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">instance_bar</span>       <span class="c1">#=&gt; &quot;instance_bar&quot;</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">instance_bar</span>   <span class="c1">#=&gt; undefined method ‘instance_bar’ for #&lt;Foo:0x7dce8&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that, we don&rsquo;t use <strong><em>define_method</em></strong> inside *_eval, becasue it does not matter if you use define_method inside class_eval or instance_eval it would always create an instance method.</p>
+
+<p>And, we get this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="no">Foo</span> <span class="o">=</span> <span class="no">Class</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">class_eval</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">define_method</span> <span class="s2">&quot;class_bar&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="s2">&quot;class_bar&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">instance_eval</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">define_method</span> <span class="s2">&quot;instance_bar&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="s2">&quot;instance_bar&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">class_bar</span> <span class="c1">#=&gt; undefined</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">class_bar</span> <span class="c1">#=&gt; &quot;class_bar&quot;</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">instance_bar</span> <span class="c1">#=&gt; undefined</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">instance_bar</span> <span class="c1">#=&gt; &quot;instance_bar&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next, we can invoke methods dynamically. One way to invoke a method dynamically in ruby is to send a message to the object. We can send a message to a class either within the class definition itself, or by simply sending it to the class object like you’d send any other message. This can be accomplished by usin <strong><em>send</em></strong>.</p>
+
+<p>The simplest example could be:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>
+</span><span class='line'>  <span class="n">s</span><span class="o">=</span> <span class="s2">&quot;hi man&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">p</span> <span class="n">s</span><span class="o">.</span><span class="n">length</span> <span class="c1">#=&gt; 6</span>
+</span><span class='line'>  <span class="nb">p</span> <span class="n">s</span><span class="o">.</span><span class="n">include?</span> <span class="s2">&quot;hi&quot;</span> <span class="c1">#=&gt; true</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">p</span> <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:length</span><span class="p">)</span> <span class="c1">#=&gt; 6</span>
+</span><span class='line'>  <span class="nb">p</span> <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:include?</span><span class="p">,</span><span class="s2">&quot;hi&quot;</span><span class="p">)</span> <span class="c1">#=&gt; true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>How can this be ever useful?</p>
+
+<p>Lets see the following code( example taken from <a href="http://www.funonrails.com/2011/12/dynamic-methods-inside-ruby-classes.html">here</a>)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>    <span class="n">protect_from_forgery</span>
+</span><span class='line'>    <span class="n">helper_method</span> <span class="ss">:current_staff</span><span class="p">,</span> <span class="ss">:current_employee</span><span class="p">,</span> <span class="n">current_admin</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">authenticate_staff!</span><span class="p">(</span><span class="n">opts</span><span class="o">=</span><span class="p">{})</span>
+</span><span class='line'>      <span class="n">current_staff</span> <span class="o">||</span> <span class="n">not_authorized</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">current_staff</span>
+</span><span class='line'>      <span class="n">current_user</span> <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_a?</span> <span class="no">Staff</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">authenticate_employee!</span><span class="p">(</span><span class="n">opts</span><span class="o">=</span><span class="p">{})</span>
+</span><span class='line'>      <span class="n">current_employee</span> <span class="o">||</span> <span class="n">not_authorized</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">current_employee</span>
+</span><span class='line'>      <span class="n">current_user</span> <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_a?</span> <span class="no">Employee</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">authenticate_admin!</span><span class="p">(</span><span class="n">opts</span><span class="o">=</span><span class="p">{})</span>
+</span><span class='line'>      <span class="n">current_admin</span> <span class="o">||</span> <span class="n">not_authorized</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">current_admin</span>
+</span><span class='line'>      <span class="n">current_user</span> <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_a?</span> <span class="no">Admin</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And refactored one:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="sx">%w(Staff Employee Admin)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">k</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">define_method</span> <span class="s2">&quot;current_</span><span class="si">#{</span><span class="n">k</span><span class="o">.</span><span class="n">underscore</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">current_user</span> <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">constantize</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">define_method</span> <span class="s2">&quot;authenticate_</span><span class="si">#{</span><span class="n">k</span><span class="o">.</span><span class="n">underscore</span><span class="si">}</span><span class="s2">!&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">opts</span><span class="o">=</span><span class="p">{}</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">send</span><span class="p">(</span><span class="s2">&quot;current_</span><span class="si">#{</span><span class="n">k</span><span class="o">.</span><span class="n">underscore</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="n">not_authorized</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Dynamically defined methods can help guard against method definition mistakes, avoid repetitive codes and be concise and smart.</p>
+
+<p>Happy Metaprogramming.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rohit Rox</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-02T11:27:00+05:45" pubdate data-updated="true">Jul 2<span>nd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/metaprogramming/'>metaprogramming</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/" data-via="roxxypoxxy" data-counturl="http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2013/05/23/jquery-performance-tuning/" title="Previous Post: Jquery performance Tuning">&laquo; Jquery performance Tuning</a>
+      
+      
+        <a class="basic-alignment right" href="/2013/07/19/canvas-images-and-rails/" title="Next Post: Canvas Images and Rails">Canvas Images and Rails &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p class="my_json">
+	<span class="curly">{</span><br />
+	&nbsp;<span class="key">me:</span> <span class="val">Rohit Joshi from Kathmandu, Nepal</span>,<br />
+	&nbsp;<span class="key">profession: {<br />
+		&nbsp;&nbsp;<span class="key">web_developer:</span> <span class="val">["Ruby on Rails", "Javascript"]</span><br />
+	&nbsp;},<br />
+	&nbsp;<span class="key">email:</span> <a href="mailto:link2j.roy@gmail.com" target="_blank">link2j.roy@gmail.com</a>,<br />
+	&nbsp;<span class="key">twitter:</span> <a href="http://twitter.com/roxxypoxxy" target="_blank">@roxxypoxxy</a>,<br />
+	&nbsp;<span class="key">github:</span> <a href="http://github.com/rohitrox" target="_blank">rohitrox</a>,<br />
+	&nbsp;<span class="key">web:</span> <a href="http://rohitjoshi.com.np" target="_blank">http://rohitjoshi.com.np</a><br />
+	<span class="curly">}</span>
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/07/19/canvas-images-and-rails/">Canvas Images and Rails</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/02/ruby-dynamic-methods/">Ruby Dynamic Methods</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/23/jquery-performance-tuning/">Jquery Performance Tuning</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/18/feature-flippers-with-rollout/">Feature Flippers With Rollout</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/19/vim-quick-tips/">VIM Quick Tips</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li class='category'><a href='/blog/categories/canvas/'>Canvas (1)</a></li>
+<li class='category'><a href='/blog/categories/html5/'>HTML5 (1)</a></li>
+<li class='category'><a href='/blog/categories/jquery/'>JQuery (1)</a></li>
+<li class='category'><a href='/blog/categories/javascript/'>Javascript (3)</a></li>
+<li class='category'><a href='/blog/categories/mysql/'>MySQL (1)</a></li>
+<li class='category'><a href='/blog/categories/mysql/'>MySql (1)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>Rails (1)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>Ruby (2)</a></li>
+<li class='category'><a href='/blog/categories/vim/'>Vim (1)</a></li>
+<li class='category'><a href='/blog/categories/metaprogramming/'>metaprogramming (1)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>rails (1)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>ruby (2)</a></li>
+</ul>
+</section><a class="twitter-timeline" href="https://twitter.com/roxxypoxxy" data-widget-id="365563816915902464" data-tweet-limit="5">Tweets</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rohit Rox -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/';
+        var disqus_url = 'http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

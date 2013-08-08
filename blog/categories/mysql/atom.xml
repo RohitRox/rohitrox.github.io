@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: MySql | Blog @ RohitRox]]></title>
+  <link href="http://rohitrox.github.io/blog/categories/mysql/atom.xml" rel="self"/>
+  <link href="http://rohitrox.github.io/"/>
+  <updated>2013-08-09T02:11:04+05:45</updated>
+  <id>http://rohitrox.github.io/</id>
+  <author>
+    <name><![CDATA[Rohit Rox]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MySql commands]]></title>
+    <link href="http://rohitrox.github.io/2012/11/03/mysql-commands/"/>
+    <updated>2012-11-03T14:26:00+05:45</updated>
+    <id>http://rohitrox.github.io/2012/11/03/mysql-commands</id>
+    <content type="html"><![CDATA[<p>This is a short-list of handy MySQL commands that I have to use time and time again, in my development machine as well as in servers and for importing and exporting databases.</p>
+
+<p>Login to mysql console (from unix bash)
+```bash</p>
+
+<pre><code>$ mysql -u user -p
+# if host name is required
+$ mysql -h hostname -u user -p
+</code></pre>
+
+<p>```</p>
+
+<p>Create a new database
+``` bash</p>
+
+<pre><code>mysql&gt; create database databasename;
+</code></pre>
+
+<p>```</p>
+
+<p>List all databases
+``` bash</p>
+
+<pre><code>mysql&gt; show databases;
+</code></pre>
+
+<p>```</p>
+
+<!--more-->
+
+
+<p>Switch to a database
+``` bash</p>
+
+<pre><code>mysql&gt; use database_name;
+</code></pre>
+
+<p>```</p>
+
+<p>List tables
+``` bash</p>
+
+<pre><code>mysql&gt; show tables;
+</code></pre>
+
+<p>```</p>
+
+<p>See database&rsquo;s field formats.
+``` bash</p>
+
+<pre><code> mysql&gt; describe table_name;
+</code></pre>
+
+<p>```</p>
+
+<p>Drop a db.
+``` bash</p>
+
+<pre><code>mysql&gt; drop database database_name;
+</code></pre>
+
+<p>```</p>
+
+<p>Delete a table.
+``` bash</p>
+
+<pre><code>mysql&gt; drop table table_name;
+</code></pre>
+
+<p>```</p>
+
+<p>Show all data in a table.
+``` bash</p>
+
+<pre><code>mysql&gt; SELECT * FROM table_name;
+</code></pre>
+
+<p>```</p>
+
+<p>Returns the columns and column information pertaining to the designated table.
+``` bash</p>
+
+<pre><code>mysql&gt; show columns from table_name;
+</code></pre>
+
+<p>```</p>
+
+<p>Set a root password if there is on root password.
+``` bash</p>
+
+<pre><code>$ mysqladmin -u root password newpassword
+</code></pre>
+
+<p>```</p>
+
+<p>Update a root password.
+``` bash</p>
+
+<pre><code>$ mysqladmin -u root -p oldpassword newpassword
+</code></pre>
+
+<p>```</p>
+
+<p>Recover a MySQL root password.
+Stop the MySQL server process. Start again with no grant tables. Login to MySQL as root. Set new password. Exit MySQL and restart MySQL server.
+``` bash</p>
+
+<pre><code>$ /etc/init.d/mysql stop
+$ mysqld_safe --skip-grant-tables &amp;
+$ mysql -u root
+mysql&gt; use mysql;
+mysql&gt; update user set password=PASSWORD("newrootpassword") where User='root';
+mysql&gt; flush privileges;
+mysql&gt; quit
+$ /etc/init.d/mysql stop
+$ /etc/init.d/mysql start
+</code></pre>
+
+<p><code>
+Export a database for backup.
+</code> bash</p>
+
+<pre><code>$ mysqldump -u user -p database_name &gt; file.sql
+</code></pre>
+
+<p>```</p>
+
+<p>Import a database
+``` bash</p>
+
+<pre><code>$ mysql -p -u username database_name &lt; file.sql 
+</code></pre>
+
+<p><code>
+Dump all databases
+</code> bash</p>
+
+<pre><code>$ mysqldump -u root -password --opt &gt; alldatabases.sql
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+</feed>

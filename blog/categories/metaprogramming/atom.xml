@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: metaprogramming | Blog @ RohitRox]]></title>
+  <link href="http://rohitrox.github.io/blog/categories/metaprogramming/atom.xml" rel="self"/>
+  <link href="http://rohitrox.github.io/"/>
+  <updated>2013-08-09T02:11:04+05:45</updated>
+  <id>http://rohitrox.github.io/</id>
+  <author>
+    <name><![CDATA[Rohit Rox]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby Dynamic Methods]]></title>
+    <link href="http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/"/>
+    <updated>2013-07-02T11:27:00+05:45</updated>
+    <id>http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods</id>
+    <content type="html"><![CDATA[<p>We define methods using <strong><em>def</em></strong> keywords which is fine for most of the cases.</p>
+
+<p>But consider a situation where you have to create a series of methods all of which have the same basic structure and logic then it seems repititive and not dry.</p>
+
+<p>Ruby, being a dynamic language, you can create methods on the fly.</p>
+
+<p>So, what does that mean?</p>
+
+<p>lets see this simplest example:</p>
+
+<p>``` ruby</p>
+
+<p>  class A</p>
+
+<pre><code>define_method :a do
+  puts "hello"
+end
+
+define_method :greeting do |message|
+  puts message
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  A.new.a #=> hello
+  A.new.greeting &lsquo;Ram ram&rsquo; #=> Ram ram</p>
+
+<p>```</p>
+
+<!--more-->
+
+
+<p>The <strong><em>define_method</em></strong> defines an instance method in the receiver. The syntax and usage are self-explained in the example above.</p>
+
+<p>lets see following example that may be useful in practical scenarios.</p>
+
+<p>``` ruby</p>
+
+<p>  class User</p>
+
+<pre><code>ACTIVE = 0
+INACTIVE = 1
+PENDING = 2
+
+attr_accessor :status
+
+def active?
+  status == ACTIVE
+end
+
+def inactive?
+  status == User::INACTIVE
+end
+
+def pending?
+  status == User::PENDING
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  user = User.new
+  user.status = 1</p>
+
+<p>  user.inactive?
+  #=> true
+  user.active?
+  #=> false</p>
+
+<p>```</p>
+
+<p>Refactored code using dynamic method definition:</p>
+
+<p>``` ruby</p>
+
+<p>  class User</p>
+
+<pre><code>ACTIVE = 0
+INACTIVE = 1
+PENDING = 2
+
+attr_accessor :status
+
+[:active, :inactive, :pending].each do |method|
+  define_method "#{method}?" do
+    status == User.const_get(method.upcase)
+  end
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  user = User.new
+  user.status = 1</p>
+
+<p>  user.inactive?
+  #=> true
+  user.active?
+  #=> false</p>
+
+<p>```
+We use define_method to define method dynamically.</p>
+
+<p>We can also define instance methods with a class method, using this technique we can expose a class method that will generate the  instance methods. COOL !</p>
+
+<p>Example:</p>
+
+<p>``` ruby
+  class User</p>
+
+<pre><code>ACTIVE = 0
+INACTIVE = 1
+PENDING = 2
+
+attr_accessor :status
+
+def self.states(*args)
+  args.each do |arg|
+    define_method "#{arg}?" do
+      self.status == User.const_get(arg.upcase)
+    end
+  end
+end
+
+states :active, :inactive, :pending
+</code></pre>
+
+<p>  end</p>
+
+<p>```</p>
+
+<p>Now, what about class methods. The simplest way is</p>
+
+<p>``` ruby</p>
+
+<pre><code>class A
+  class &lt;&lt; self
+    define_method method_name do
+      #...
+    end
+  end
+end
+</code></pre>
+
+<p>```
+There are <strong><em>instance_eval</em></strong> and <strong><em>class_eval</em></strong> also, which are used for dynamic method definition. These methods allow you to evaluate arbitrary code in the context of a particular class or object. These methods can be very confusing sometimes. You can read <a href="http://stackoverflow.com/questions/900419/how-to-understand-the-difference-between-class-eval-and-instance-eval">this</a> discussion and <a href="http://www.ploughthroughruby.co.uk/2009/09/30/define_method-instance_eval-and-class_eval.html/">this</a> blog post and understand how they can be used.</p>
+
+<p>From that discussion, we summerize</p>
+
+<p>``` ruby
+  Foo = Class.new
+  Foo.class_eval do</p>
+
+<pre><code>def class_bar
+  "class_bar"
+end
+</code></pre>
+
+<p>  end
+  Foo.instance_eval do</p>
+
+<pre><code>def instance_bar
+  "instance_bar"
+end
+</code></pre>
+
+<p>  end
+  Foo.class_bar       #=> undefined method ‘class_bar’ for Foo:Class
+  Foo.new.class_bar   #=> &ldquo;class_bar&rdquo;
+  Foo.instance_bar       #=> &ldquo;instance_bar&rdquo;
+  Foo.new.instance_bar   #=> undefined method ‘instance_bar’ for #&lt;Foo:0x7dce8>
+```</p>
+
+<p>Note that, we don&rsquo;t use <strong><em>define_method</em></strong> inside *_eval, becasue it does not matter if you use define_method inside class_eval or instance_eval it would always create an instance method.</p>
+
+<p>And, we get this:</p>
+
+<p>``` ruby
+  Foo = Class.new</p>
+
+<p>  Foo.class_eval do</p>
+
+<pre><code>define_method "class_bar" do
+  "class_bar"
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  Foo.instance_eval do</p>
+
+<pre><code>define_method "instance_bar" do
+  "instance_bar"
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  Foo.class_bar #=> undefined
+  Foo.new.class_bar #=> &ldquo;class_bar&rdquo;
+  Foo.instance_bar #=> undefined
+  Foo.new.instance_bar #=> &ldquo;instance_bar&rdquo;</p>
+
+<p>```</p>
+
+<p>Next, we can invoke methods dynamically. One way to invoke a method dynamically in ruby is to send a message to the object. We can send a message to a class either within the class definition itself, or by simply sending it to the class object like you’d send any other message. This can be accomplished by usin <strong><em>send</em></strong>.</p>
+
+<p>The simplest example could be:</p>
+
+<p>``` ruby</p>
+
+<p>  s= &ldquo;hi man&rdquo;</p>
+
+<p>  p s.length #=> 6
+  p s.include? &ldquo;hi&rdquo; #=> true</p>
+
+<p>  p s.send(:length) #=> 6
+  p s.send(:include?,&ldquo;hi&rdquo;) #=> true</p>
+
+<p>```</p>
+
+<p>How can this be ever useful?</p>
+
+<p>Lets see the following code( example taken from <a href="http://www.funonrails.com/2011/12/dynamic-methods-inside-ruby-classes.html">here</a>)</p>
+
+<p>``` ruby</p>
+
+<p>  class ApplicationController &lt; ActionController::Base</p>
+
+<pre><code>protect_from_forgery
+helper_method :current_staff, :current_employee, current_admin
+
+def authenticate_staff!(opts={})
+  current_staff || not_authorized
+end
+
+def current_staff
+  current_user if current_user.is_a? Staff
+end
+
+def authenticate_employee!(opts={})
+  current_employee || not_authorized
+end
+
+def current_employee
+  current_user if current_user.is_a? Employee
+end
+
+def authenticate_admin!(opts={})
+  current_admin || not_authorized
+end
+
+def current_admin
+  current_user if current_user.is_a? Admin
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>```</p>
+
+<p>And refactored one:</p>
+
+<p>``` ruby
+  %w(Staff Employee Admin).each do |k|</p>
+
+<pre><code>define_method "current_#{k.underscore}" do
+  current_user if current_user.is_a?(k.constantize)
+end
+
+define_method "authenticate_#{k.underscore}!" do |opts={}|
+  send("current_#{k.underscore}") || not_authorized
+end
+</code></pre>
+
+<p>  end
+```</p>
+
+<p>Dynamically defined methods can help guard against method definition mistakes, avoid repetitive codes and be concise and smart.</p>
+
+<p>Happy Metaprogramming.</p>
+]]></content>
+  </entry>
+  
+</feed>

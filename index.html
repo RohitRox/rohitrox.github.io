@@ -1,1 +1,1014 @@
-My Octopress Page is coming soon &hellip;
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Blog @ RohitRox</title>
+  <meta name="author" content="Rohit Rox">
+
+  
+  <meta name="description" content="With the introduction of Canvas, HTML5 has empower us to draw shapes, graphs, render texts, make gradients and patterns, manipulate images pixels, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://rohitrox.github.io">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Blog @ RohitRox" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Blog @ RohitRox</a></h1>
+  
+    <h2>tips tricks tuts and everything learned</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:rohitrox.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/07/19/canvas-images-and-rails/">Canvas Images and Rails</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-19T15:15:00+05:45" pubdate data-updated="true">Jul 19<span>th</span>, 2013</time>
+        
+         | <a href="/2013/07/19/canvas-images-and-rails/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>With the introduction of Canvas, HTML5 has empower us to draw shapes, graphs, render texts, make gradients and patterns, manipulate images pixels, set an animations, even creating a stunning games!
+All this stuffs occur on the client side in the browsers.
+So let say you make an app that render some effects in a Canvas element and you want to allow user to take screenshot of the resut or save the result in your server for yourself.</p>
+
+<p>Let&rsquo;s digg how can we do it and save that canvas as an image in ther server using Rails.</p>
+
+<h3>Strategy 1 : Send canvas image as raw dataURL</h3>
+
+<p>The data URI scheme is a URI scheme that provides a way to include data in-line in web pages as if they were external resources. The <code>canvas.toDataURL()</code> method returns the image data of the canvas as Data URI. And the Data URI has the image data Encodes with MIME base64.</p>
+
+<p>Let&rsquo;s see how it works. Copy and run this javascript snippet in your browser console. Somewhere at the bottom of the page you&rsquo;ll see a green circle.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;2d&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">centerX</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">centerY</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">radius</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">arc</span><span class="p">(</span><span class="nx">centerX</span><span class="p">,</span> <span class="nx">centerY</span><span class="p">,</span> <span class="nx">radius</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">fill</span><span class="p">();</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">lineWidth</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">strokeStyle</span> <span class="o">=</span> <span class="s1">&#39;#003300&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">canvas</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Now lets render that canvas as an image.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">dataURL</span> <span class="o">=</span>  <span class="nx">canvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s1">&#39;image/png&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="nx">dataURL</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/07/19/canvas-images-and-rails/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/07/02/ruby-dynamic-methods/">Ruby Dynamic Methods</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-02T11:27:00+05:45" pubdate data-updated="true">Jul 2<span>nd</span>, 2013</time>
+        
+         | <a href="/2013/07/02/ruby-dynamic-methods/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We define methods using <strong><em>def</em></strong> keywords which is fine for most of the cases.</p>
+
+<p>But consider a situation where you have to create a series of methods all of which have the same basic structure and logic then it seems repititive and not dry.</p>
+
+<p>Ruby, being a dynamic language, you can create methods on the fly.</p>
+
+<p>So, what does that mean?</p>
+
+<p>lets see this simplest example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">A</span>
+</span><span class='line'>    <span class="n">define_method</span> <span class="ss">:a</span> <span class="k">do</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;hello&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">define_method</span> <span class="ss">:greeting</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="n">message</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">A</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">a</span> <span class="c1">#=&gt; hello</span>
+</span><span class='line'>  <span class="n">A</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">greeting</span> <span class="s1">&#39;Ram ram&#39;</span> <span class="c1">#=&gt; Ram ram</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/07/02/ruby-dynamic-methods/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/05/23/jquery-performance-tuning/">Jquery Performance Tuning</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-23T15:35:00+05:45" pubdate data-updated="true">May 23<span>rd</span>, 2013</time>
+        
+         | <a href="/2013/05/23/jquery-performance-tuning/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After searching and digging a lot of artciles about improving jquery performance in web apps, I decided to make a list of best common performance tips and bect practices. We&rsquo;ll also reveal some of JQuery&rsquo;s hidden feature and how we can use them for performance tuning.</p>
+
+<p>Lets divide this post into 4 main categoris.</p>
+
+<ul>
+<li>Selector Performace</li>
+<li>DOM Manipulation</li>
+<li>Events</li>
+<li>Digging into JQuery Secrets</li>
+<li>General and All-Time performance tricks</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/05/23/jquery-performance-tuning/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/03/18/feature-flippers-with-rollout/">Feature Flippers With Rollout</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-18T12:09:00+05:45" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
+        
+         | <a href="/2013/03/18/feature-flippers-with-rollout/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try it out before it goes massive.</p>
+
+<p>So lets rollout.</p>
+
+<p>First of all, make sure that you have redis, because rollout uses redis as its backend. Then add <code>gem 'rollout'</code> to gemfile and bundle install.</p>
+
+<p>Now, we need to create a rollout setup file inside initializer.</p>
+
+<p>Let&rsquo;s name it rollout_init.rb which looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>
+</span><span class='line'>  <span class="vg">$redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="vg">$rollout</span> <span class="o">=</span> <span class="no">Rollout</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$redis</span><span class="p">)</span>
+</span><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">define_group</span><span class="p">(</span><span class="ss">:admin</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">admin?</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Documentation suggests to use a global variables. So we create one with a new redis instance.
+Then, we create rollout instance passsing that redis instance. We can configure rollout in many ways, here we are defining an admin group by passing a block and checking whether the user belongs to that group or not.
+Complete documentation can be found <a href="https://github.com/jamesgolick/rollout">here</a>.</p>
+
+<p>Next, we can now use handy rollout method like for example let&rsquo;s say we need to activate chat feature for admin group only.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">if</span> <span class="vg">$rollout</span><span class="o">.</span><span class="n">active?</span> <span class="ss">:chat</span><span class="p">,</span> <span class="n">current_user</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/03/18/feature-flippers-with-rollout/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/12/19/vim-quick-tips/">VIM Quick Tips</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-19T11:50:00+05:45" pubdate data-updated="true">Dec 19<span>th</span>, 2012</time>
+        
+         | <a href="/2012/12/19/vim-quick-tips/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Vim quick tips and tricks, listing some useful, essential and most often used Vim commands.</p>
+
+<h2>Moving Around</h2>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Command                             </th>
+<th> Action                          </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> j or Up Arrow                       </td>
+<td> Move the cursor up one line.            </td>
+</tr>
+<tr>
+<td></td>
+<td> k or Down Arrow                     </td>
+<td> Down one line.          </td>
+</tr>
+<tr>
+<td></td>
+<td> h or Left Arrow                     </td>
+<td> Left one character.</td>
+</tr>
+<tr>
+<td></td>
+<td> l or Right Arrow                    </td>
+<td> Right one character.</td>
+</tr>
+<tr>
+<td></td>
+<td> e                                   </td>
+<td> To the end of a word.</td>
+</tr>
+<tr>
+<td></td>
+<td> E                                   </td>
+<td> To the end of a whitespace-delimited word.</td>
+</tr>
+<tr>
+<td></td>
+<td> b                                   </td>
+<td> To the beginning of a word.</td>
+</tr>
+<tr>
+<td></td>
+<td> B                                   </td>
+<td> To the beginning of a whitespace-delimited word.</td>
+</tr>
+<tr>
+<td></td>
+<td> 0                                   </td>
+<td> To the beginning of a line.</td>
+</tr>
+<tr>
+<td></td>
+<td> $                                   </td>
+<td> To the end of a line.</td>
+</tr>
+<tr>
+<td></td>
+<td> H                                   </td>
+<td> To the first line of the screen.</td>
+</tr>
+<tr>
+<td></td>
+<td> M                                   </td>
+<td> To the middle line of the screen.</td>
+</tr>
+<tr>
+<td></td>
+<td> L                                   </td>
+<td> To the the last line of the screen.</td>
+</tr>
+<tr>
+<td></td>
+<td> :n                                  </td>
+<td> Jump to line number n. For example, to jump to line 42, you&rsquo;d type :42</td>
+</tr>
+<tr>
+<td></td>
+<td> gg                                  </td>
+<td> Goto start of file   </td>
+</tr>
+<tr>
+<td></td>
+<td> G                                   </td>
+<td> Goto end of file</td>
+</tr>
+<tr>
+<td></td>
+<td> I                                   </td>
+<td> go to the beginning of the line and go into insert</td>
+</tr>
+<tr>
+<td></td>
+<td> A                                   </td>
+<td> go to the end of the line and go into insert</td>
+</tr>
+<tr>
+<td></td>
+<td> Ctrl+g                              </td>
+<td> Show file info  including your position in the file</td>
+</tr>
+<tr>
+<td></td>
+<td> i                                   </td>
+<td> Insert at cursor</td>
+</tr>
+<tr>
+<td></td>
+<td> a                                   </td>
+<td> Append after cursor</td>
+</tr>
+<tr>
+<td></td>
+<td> A                                   </td>
+<td> Append at end of line</td>
+</tr>
+<tr>
+<td></td>
+<td> ESC                                 </td>
+<td> Terminate insert mode</td>
+</tr>
+<tr>
+<td></td>
+<td> u                                   </td>
+<td> Undo last change</td>
+</tr>
+<tr>
+<td></td>
+<td> U                                   </td>
+<td> Undo all changes to entire line</td>
+</tr>
+<tr>
+<td></td>
+<td> dd                                  </td>
+<td> Delete line</td>
+</tr>
+<tr>
+<td></td>
+<td> 3dd                                 </td>
+<td> Delete 3 lines.</td>
+</tr>
+<tr>
+<td></td>
+<td> D                                   </td>
+<td> Delete contents of line after cursor</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/12/19/vim-quick-tips/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/11/03/mysql-commands/">MySql Commands</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-03T14:26:00+05:45" pubdate data-updated="true">Nov 3<span>rd</span>, 2012</time>
+        
+         | <a href="/2012/11/03/mysql-commands/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is a short-list of handy MySQL commands that I have to use time and time again, in my development machine as well as in servers and for importing and exporting databases.</p>
+
+<p>Login to mysql console (from unix bash)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mysql -u user -p
+</span><span class='line'><span class="c"># if host name is required</span>
+</span><span class='line'><span class="nv">$ </span>mysql -h hostname -u user -p
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create a new database</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; create database databasename;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>List all databases</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; show databases;
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/11/03/mysql-commands/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/11/01/oop-with-javascript/">OOP With Javascript</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-01T00:18:00+05:45" pubdate data-updated="true">Nov 1<span>st</span>, 2012</time>
+        
+         | <a href="/2012/11/01/oop-with-javascript/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>JavaScript has strong object-oriented programming capabilities, even though some debates have taken place due to the differences in object-oriented JavaScript compared to other languages.</p>
+
+<h2>Objects and Classes</h2>
+
+<p>JavaScript is a prototype-based language which contains no class statement, such as is found in C++ or Ruby. This is sometimes confusing for programmers accustomed to languages with a class statement. Instead, JavaScript uses functions as classes. Defining a class is as easy as defining a function. In the example below we define a new class called Person.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To create a new instance of an object new operator.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">my_person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/11/01/oop-with-javascript/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/10/31/javascript-static-and-instance-methods/">Javascript Static and Instance Methods</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-31T23:05:00+05:45" pubdate data-updated="true">Oct 31<span>st</span>, 2012</time>
+        
+         | <a href="/2012/10/31/javascript-static-and-instance-methods/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Custom JavaScript objects can have instance methods (function that are associated with a particular JavaScript object), but like other Object-Oriented languages, they can also have <em>static</em> methods, that is functions that are associated with the JavaScript class that created an object, as opposed to the object itself. This is useful in cases where a function (a.k.a. a method) will not be different in different object instances.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/10/31/javascript-static-and-instance-methods/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/10/30/activerecord-with-ruby-alone/">ActiveRecord With Ruby Alone</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-30T23:06:00+05:45" pubdate data-updated="true">Oct 30<span>th</span>, 2012</time>
+        
+         | <a href="/2012/10/30/activerecord-with-ruby-alone/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Active Record is the main tool that Rails developers use to communicate with and underlying database. Active Record does some wonderful things for a web developer looking for abstractions in  database setup, SQL connections and queries.  We can get a cool command line Ruby application or utility script for our daily tasks using Active Record going in about 5 minutes!</p>
+
+<p>First of all, get the activerecord gem using</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install activerecord
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At the top of Ruby program we need to require the Active Record gem previously installed.  Interacting with your database will be a pleasure now!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;activerecord&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Establishing a connection to database</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">establish_connection</span> <span class="p">{</span>
+</span><span class='line'>  <span class="ss">:adapter</span> <span class="o">=&gt;</span> <span class="s2">&quot;mysql&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:host</span> <span class="o">=&gt;</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="s2">&quot;password&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:database</span> <span class="o">=&gt;</span> <span class="s2">&quot;dbname&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/10/30/activerecord-with-ruby-alone/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/10/30/interacting-to-mysql-with-ruby/">Interacting to MySQL Using Ruby</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-30T00:58:00+05:45" pubdate data-updated="true">Oct 30<span>th</span>, 2012</time>
+        
+         | <a href="/2012/10/30/interacting-to-mysql-with-ruby/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This tutorials guides you to go straight into interacting with MySQL database using Ruby alone. No Rails.
+It is assumed that MySQL has been installed in your computer.</p>
+
+<p>Now let&rsquo;s get started:</p>
+
+<p>First of all, lets begin with installing MySQL libraries via RubyGems</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">sudo</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">mysql</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is <a href="http://www.tmtm.org/en/mysql/ruby/">documentation</a> for the MySQL library online . So you can follow that.</p>
+
+<p>Now let&rsquo;s fire irb.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;mysql&#39;</span>
+</span><span class='line'><span class="n">db</span> <span class="o">=</span> <span class="no">Mysql</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;database&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/10/30/interacting-to-mysql-with-ruby/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p class="my_json">
+	<span class="curly">{</span><br />
+	&nbsp;<span class="key">me:</span> <span class="val">Rohit Joshi from Kathmandu, Nepal</span>,<br />
+	&nbsp;<span class="key">profession: {<br />
+		&nbsp;&nbsp;<span class="key">web_developer:</span> <span class="val">[&#8220;Ruby on Rails&#8221;, &#8220;Javascript&#8221;]</span><br />
+	&nbsp;},<br />
+	&nbsp;<span class="key">email:</span> <a href="mailto:link2j.roy@gmail.com" target="_blank">link2j.roy@gmail.com</a>,<br />
+	&nbsp;<span class="key">twitter:</span> <a href="http://twitter.com/roxxypoxxy" target="_blank">@roxxypoxxy</a>,<br />
+	&nbsp;<span class="key">github:</span> <a href="http://github.com/rohitrox" target="_blank">rohitrox</a>,<br />
+	&nbsp;<span class="key">web:</span> <a href="http://rohitjoshi.com.np" target="_blank">http://rohitjoshi.com.np</a><br />
+	<span class="curly">}</span>
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/07/19/canvas-images-and-rails/">Canvas Images and Rails</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/02/ruby-dynamic-methods/">Ruby Dynamic Methods</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/23/jquery-performance-tuning/">Jquery Performance Tuning</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/18/feature-flippers-with-rollout/">Feature Flippers With Rollout</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/19/vim-quick-tips/">VIM Quick Tips</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li class='category'><a href='/blog/categories/canvas/'>Canvas (1)</a></li>
+<li class='category'><a href='/blog/categories/html5/'>HTML5 (1)</a></li>
+<li class='category'><a href='/blog/categories/jquery/'>JQuery (1)</a></li>
+<li class='category'><a href='/blog/categories/javascript/'>Javascript (3)</a></li>
+<li class='category'><a href='/blog/categories/mysql/'>MySQL (1)</a></li>
+<li class='category'><a href='/blog/categories/mysql/'>MySql (1)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>Rails (1)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>Ruby (2)</a></li>
+<li class='category'><a href='/blog/categories/vim/'>Vim (1)</a></li>
+<li class='category'><a href='/blog/categories/metaprogramming/'>metaprogramming (1)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>rails (1)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>ruby (2)</a></li>
+</ul>
+</section><a class="twitter-timeline" href="https://twitter.com/roxxypoxxy" data-widget-id="365563816915902464" data-tweet-limit="5">Tweets</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rohit Rox -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

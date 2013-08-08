@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Canvas Images and Rails - Blog @ RohitRox</title>
+  <meta name="author" content="Rohit Rox">
+
+  
+  <meta name="description" content="With the introduction of Canvas, HTML5 has empower us to draw shapes, graphs, render texts, make gradients and patterns, manipulate images pixels, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://rohitrox.github.io/2013/07/19/canvas-images-and-rails">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Blog @ RohitRox" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Blog @ RohitRox</a></h1>
+  
+    <h2>tips tricks tuts and everything learned</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:rohitrox.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Canvas Images and Rails</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-19T15:15:00+05:45" pubdate data-updated="true">Jul 19<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>With the introduction of Canvas, HTML5 has empower us to draw shapes, graphs, render texts, make gradients and patterns, manipulate images pixels, set an animations, even creating a stunning games!
+All this stuffs occur on the client side in the browsers.
+So let say you make an app that render some effects in a Canvas element and you want to allow user to take screenshot of the resut or save the result in your server for yourself.</p>
+
+<p>Let&rsquo;s digg how can we do it and save that canvas as an image in ther server using Rails.</p>
+
+<h3>Strategy 1 : Send canvas image as raw dataURL</h3>
+
+<p>The data URI scheme is a URI scheme that provides a way to include data in-line in web pages as if they were external resources. The <code>canvas.toDataURL()</code> method returns the image data of the canvas as Data URI. And the Data URI has the image data Encodes with MIME base64.</p>
+
+<p>Let&rsquo;s see how it works. Copy and run this javascript snippet in your browser console. Somewhere at the bottom of the page you&rsquo;ll see a green circle.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;2d&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">centerX</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">centerY</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">radius</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">arc</span><span class="p">(</span><span class="nx">centerX</span><span class="p">,</span> <span class="nx">centerY</span><span class="p">,</span> <span class="nx">radius</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">fill</span><span class="p">();</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">lineWidth</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">strokeStyle</span> <span class="o">=</span> <span class="s1">&#39;#003300&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">canvas</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Now lets render that canvas as an image.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">dataURL</span> <span class="o">=</span>  <span class="nx">canvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s1">&#39;image/png&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="nx">dataURL</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!--more-->
+
+
+<p>As you can see, with that weird long url string something like <code>data:image/png;base64,iVBORw0KGgoA...</code>, it render a png image. That long url is infact data uri which has image data encoded with MIME base64.</p>
+
+<p>The format to be specific is <strong><em> data:[&lt;mime type&gt;][;charset=&lt;charset&gt;][;base64],&lt; encoded data &gt; </em></strong>.</p>
+
+<p>Now, if we want to save that image in the server, we can just send that data uri as normal params and at the server, we can use ruby to decode that save that data as image file.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;base64&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:data_uri</span><span class="o">]</span>
+</span><span class='line'><span class="sr">//</span> <span class="n">remove</span> <span class="n">all</span> <span class="n">extras</span> <span class="n">except</span> <span class="n">data</span>
+</span><span class='line'><span class="n">image_data</span> <span class="o">=</span> <span class="no">Base64</span><span class="o">.</span><span class="n">decode64</span><span class="p">(</span><span class="n">data</span><span class="o">[</span><span class="s1">&#39;data:image/png;base64,&#39;</span><span class="o">.</span><span class="n">length</span> <span class="o">.</span><span class="n">.</span> <span class="o">-</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/public/uploads/somefilename.png&quot;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">f</span><span class="o">.</span><span class="n">write</span> <span class="n">image_data</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Strategy 2 : Send It as a Blob object</h3>
+
+<p>This method also use the dataURL but instead of send it as a raw text, we convert it to an image file object and send it.
+For this we use the Blob object. Simply it&rsquo;s an object that represent a file-like object, so we create a blob object with the type PNG image, after we append this blob object to a FormData, and finally we send it through the jQuery Ajax Method.</p>
+
+<p>Let&rsquo;s detail a bit what I say above, we already see how we get the dataURL from an object, the dataURL is only a raw text, so we need to decode it to a binary data, we already know that the type of the encoding in the dataURL is Base64, and for decode it using a JavaScript solution we use the predefined atob method, now after decoding it we get a binary data, and we need to convert it to an array where there element is a 8-bit unsigned integer values. Finally we have to put this array in a new Uint8Array object for pass it to our Blob object that represent our file, now let create a function that do this and convert our Canvas to a blob object:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>   <span class="c1">// Convert dataURL to Blob object</span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">dataURLtoBlob</span><span class="p">(</span><span class="nx">dataURL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Decode the dataURL    </span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">binary</span> <span class="o">=</span> <span class="nx">atob</span><span class="p">(</span><span class="nx">dataURL</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]);</span>
+</span><span class='line'>    <span class="c1">// Create 8-bit unsigned array</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">array</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">binary</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">array</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">binary</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">i</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// Return our Blob object</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nx">Blob</span><span class="p">([</span><span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="nx">array</span><span class="p">)],</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;image/png&#39;</span><span class="p">});</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can now create a new FormData object, put our file on it and send our data using Ajax.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>   <span class="c1">// Get our file</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">file</span><span class="o">=</span> <span class="nx">dataURLtoBlob</span><span class="p">(</span><span class="nx">dataURL</span><span class="p">);</span>
+</span><span class='line'>  <span class="c1">// Create new form data</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">fd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormData</span><span class="p">();</span>
+</span><span class='line'>  <span class="c1">// Append our Canvas image file to the form data</span>
+</span><span class='line'>  <span class="nx">fd</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="nx">file</span><span class="p">);</span>
+</span><span class='line'>  <span class="c1">// And send it</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+</span><span class='line'>     <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;/screenshot&quot;</span><span class="p">,</span>
+</span><span class='line'>     <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+</span><span class='line'>     <span class="nx">data</span><span class="o">:</span> <span class="nx">fd</span><span class="p">,</span>
+</span><span class='line'>     <span class="nx">processData</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>     <span class="nx">contentType</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At controller:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>    <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/public/uploads/somefilename.png&quot;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:image</span><span class="o">].</span><span class="n">read</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, that&rsquo;s it.</p>
+
+<p>This method is more appropriate and faster than the first one.</p>
+
+<p>Those wondering how to mix this with carrierwave and paperclip, here are the links:</p>
+
+<p><a href="http://stackoverflow.com/questions/14900038/rails-carrierwave-iphone-base64-image-upload">Rails carrierwave base-64 encoded image upload</a></p>
+
+<p><a href="https://gist.github.com/WizardOfOgz/1012107">Base64-encoded images with Paperclip</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rohit Rox</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-19T15:15:00+05:45" pubdate data-updated="true">Jul 19<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/canvas/'>Canvas</a>, <a class='category' href='/blog/categories/html5/'>HTML5</a>, <a class='category' href='/blog/categories/javascript/'>Javascript</a>, <a class='category' href='/blog/categories/rails/'>Rails</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/" data-via="roxxypoxxy" data-counturl="http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2013/07/02/ruby-dynamic-methods/" title="Previous Post: Ruby Dynamic Methods">&laquo; Ruby Dynamic Methods</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p class="my_json">
+	<span class="curly">{</span><br />
+	&nbsp;<span class="key">me:</span> <span class="val">Rohit Joshi from Kathmandu, Nepal</span>,<br />
+	&nbsp;<span class="key">profession: {<br />
+		&nbsp;&nbsp;<span class="key">web_developer:</span> <span class="val">["Ruby on Rails", "Javascript"]</span><br />
+	&nbsp;},<br />
+	&nbsp;<span class="key">email:</span> <a href="mailto:link2j.roy@gmail.com" target="_blank">link2j.roy@gmail.com</a>,<br />
+	&nbsp;<span class="key">twitter:</span> <a href="http://twitter.com/roxxypoxxy" target="_blank">@roxxypoxxy</a>,<br />
+	&nbsp;<span class="key">github:</span> <a href="http://github.com/rohitrox" target="_blank">rohitrox</a>,<br />
+	&nbsp;<span class="key">web:</span> <a href="http://rohitjoshi.com.np" target="_blank">http://rohitjoshi.com.np</a><br />
+	<span class="curly">}</span>
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/07/19/canvas-images-and-rails/">Canvas Images and Rails</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/02/ruby-dynamic-methods/">Ruby Dynamic Methods</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/23/jquery-performance-tuning/">Jquery Performance Tuning</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/18/feature-flippers-with-rollout/">Feature Flippers With Rollout</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/19/vim-quick-tips/">VIM Quick Tips</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li class='category'><a href='/blog/categories/canvas/'>Canvas (1)</a></li>
+<li class='category'><a href='/blog/categories/html5/'>HTML5 (1)</a></li>
+<li class='category'><a href='/blog/categories/jquery/'>JQuery (1)</a></li>
+<li class='category'><a href='/blog/categories/javascript/'>Javascript (3)</a></li>
+<li class='category'><a href='/blog/categories/mysql/'>MySQL (1)</a></li>
+<li class='category'><a href='/blog/categories/mysql/'>MySql (1)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>Rails (1)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>Ruby (2)</a></li>
+<li class='category'><a href='/blog/categories/vim/'>Vim (1)</a></li>
+<li class='category'><a href='/blog/categories/metaprogramming/'>metaprogramming (1)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>rails (1)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>ruby (2)</a></li>
+</ul>
+</section><a class="twitter-timeline" href="https://twitter.com/roxxypoxxy" data-widget-id="365563816915902464" data-tweet-limit="5">Tweets</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rohit Rox -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/';
+        var disqus_url = 'http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

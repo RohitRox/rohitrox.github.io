@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Feature flippers with rollout - Blog @ RohitRox</title>
+  <meta name="author" content="Rohit Rox">
+
+  
+  <meta name="description" content="Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Blog @ RohitRox" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Blog @ RohitRox</a></h1>
+  
+    <h2>tips tricks tuts and everything learned</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:rohitrox.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Feature Flippers With Rollout</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-18T12:09:00+05:45" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try it out before it goes massive.</p>
+
+<p>So lets rollout.</p>
+
+<p>First of all, make sure that you have redis, because rollout uses redis as its backend. Then add <code>gem 'rollout'</code> to gemfile and bundle install.</p>
+
+<p>Now, we need to create a rollout setup file inside initializer.</p>
+
+<p>Let&rsquo;s name it rollout_init.rb which looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>
+</span><span class='line'>  <span class="vg">$redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="vg">$rollout</span> <span class="o">=</span> <span class="no">Rollout</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$redis</span><span class="p">)</span>
+</span><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">define_group</span><span class="p">(</span><span class="ss">:admin</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">admin?</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Documentation suggests to use a global variables. So we create one with a new redis instance.
+Then, we create rollout instance passsing that redis instance. We can configure rollout in many ways, here we are defining an admin group by passing a block and checking whether the user belongs to that group or not.
+Complete documentation can be found <a href="https://github.com/jamesgolick/rollout">here</a>.</p>
+
+<p>Next, we can now use handy rollout method like for example let&rsquo;s say we need to activate chat feature for admin group only.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">if</span> <span class="vg">$rollout</span><span class="o">.</span><span class="n">active?</span> <span class="ss">:chat</span><span class="p">,</span> <span class="n">current_user</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!--more-->
+
+
+<p>The <code>$rollout.active?</code> method accepts the name of the feature and the user and returns true or false.</p>
+
+<p>This method is accessible in views as well as in controllers.
+That&rsquo;s not all, if you restart your server now and look at the app, you may find out that the feature is unavailable to admin groups also, it is because by default the feature is deactivated to all groups or users. We can make a rake task or an interface for activating the feature to subset of users. Activating code looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">activate_group</span><span class="p">(</span><span class="ss">:chat</span><span class="p">,</span> <span class="ss">:admin</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will activate the feature ( chat in our case ) for admin group.</p>
+
+<p>Also we can activate the feature to all users or specific user or to some percentage.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">activate_group</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="ss">:all</span> <span class="p">)</span> <span class="c1">#activate to all, there is all group already by default</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">activate_user</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by_email</span><span class="p">(</span><span class="s2">&quot;admin@myapp.com&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="c1">#activate to specific user</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">activate_percantage</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="mi">50</span> <span class="p">)</span> <span class="c1">#activate to 50% of users</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Each of these methods have deactivate version for deactivating the feature. You can also just call <code>$rollout.deactivate_all(:chat)</code> to deactivate the feature to all at once.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rohit Rox</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-18T12:09:00+05:45" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/" data-via="roxxypoxxy" data-counturl="http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/12/19/vim-quick-tips/" title="Previous Post: VIM Quick Tips">&laquo; VIM Quick Tips</a>
+      
+      
+        <a class="basic-alignment right" href="/2013/05/23/jquery-performance-tuning/" title="Next Post: Jquery performance Tuning">Jquery performance Tuning &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p class="my_json">
+	<span class="curly">{</span><br />
+	&nbsp;<span class="key">me:</span> <span class="val">Rohit Joshi from Kathmandu, Nepal</span>,<br />
+	&nbsp;<span class="key">profession: {<br />
+		&nbsp;&nbsp;<span class="key">web_developer:</span> <span class="val">["Ruby on Rails", "Javascript"]</span><br />
+	&nbsp;},<br />
+	&nbsp;<span class="key">email:</span> <a href="mailto:link2j.roy@gmail.com" target="_blank">link2j.roy@gmail.com</a>,<br />
+	&nbsp;<span class="key">twitter:</span> <a href="http://twitter.com/roxxypoxxy" target="_blank">@roxxypoxxy</a>,<br />
+	&nbsp;<span class="key">github:</span> <a href="http://github.com/rohitrox" target="_blank">rohitrox</a>,<br />
+	&nbsp;<span class="key">web:</span> <a href="http://rohitjoshi.com.np" target="_blank">http://rohitjoshi.com.np</a><br />
+	<span class="curly">}</span>
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/07/19/canvas-images-and-rails/">Canvas Images and Rails</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/02/ruby-dynamic-methods/">Ruby Dynamic Methods</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/23/jquery-performance-tuning/">Jquery Performance Tuning</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/18/feature-flippers-with-rollout/">Feature Flippers With Rollout</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/19/vim-quick-tips/">VIM Quick Tips</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li class='category'><a href='/blog/categories/canvas/'>Canvas (1)</a></li>
+<li class='category'><a href='/blog/categories/html5/'>HTML5 (1)</a></li>
+<li class='category'><a href='/blog/categories/jquery/'>JQuery (1)</a></li>
+<li class='category'><a href='/blog/categories/javascript/'>Javascript (3)</a></li>
+<li class='category'><a href='/blog/categories/mysql/'>MySQL (1)</a></li>
+<li class='category'><a href='/blog/categories/mysql/'>MySql (1)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>Rails (1)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>Ruby (2)</a></li>
+<li class='category'><a href='/blog/categories/vim/'>Vim (1)</a></li>
+<li class='category'><a href='/blog/categories/metaprogramming/'>metaprogramming (1)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>rails (1)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>ruby (2)</a></li>
+</ul>
+</section><a class="twitter-timeline" href="https://twitter.com/roxxypoxxy" data-widget-id="365563816915902464" data-tweet-limit="5">Tweets</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rohit Rox -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/';
+        var disqus_url = 'http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

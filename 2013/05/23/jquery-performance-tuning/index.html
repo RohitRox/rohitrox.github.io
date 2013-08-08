@@ -1,0 +1,623 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Jquery performance Tuning - Blog @ RohitRox</title>
+  <meta name="author" content="Rohit Rox">
+
+  
+  <meta name="description" content="After searching and digging a lot of artciles about improving jquery performance in web apps, I decided to make a list of best common performance &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://rohitrox.github.io/2013/05/23/jquery-performance-tuning">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Blog @ RohitRox" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Blog @ RohitRox</a></h1>
+  
+    <h2>tips tricks tuts and everything learned</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:rohitrox.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Jquery Performance Tuning</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-23T15:35:00+05:45" pubdate data-updated="true">May 23<span>rd</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>After searching and digging a lot of artciles about improving jquery performance in web apps, I decided to make a list of best common performance tips and bect practices. We&rsquo;ll also reveal some of JQuery&rsquo;s hidden feature and how we can use them for performance tuning.</p>
+
+<p>Lets divide this post into 4 main categoris.</p>
+
+<ul>
+<li>Selector Performace</li>
+<li>DOM Manipulation</li>
+<li>Events</li>
+<li>Digging into JQuery Secrets</li>
+<li>General and All-Time performance tricks</li>
+</ul>
+
+
+<!--more-->
+
+
+<h2>Selector Performace</h2>
+
+<h4>Know your selectors</h4>
+
+<p>You should be careful about using jquery selectors because all selectors are nor created equally. With benchmarks, we can see:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#id, element&#39;</span><span class="p">);</span> <span class="c1">// Id and Element selectors are the fastest</span>
+</span><span class='line'>  <span class="c1">// the reason is because it maps to a native JavaScript methods</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.class_name&#39;</span><span class="p">);</span> <span class="c1">// Slower class selectors</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;:hidden, [attribute=value]&#39;</span><span class="p">);</span> <span class="c1">// Pseudo and Attribute selectors are the slowest</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Optimize selectors for Sizzle’s ‘right to left’ model</h4>
+
+<p>JQuery as of now uses the Sizzle Javascript Selector Library which works a bit differently from the selector engine used in the past versions. Namely it uses a ‘right to left’ model rather than a ‘left to right’. Make sure that your right-most selector is really specific and any selectors on the left are more broad:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">linkContacts</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.contact-links div.side-wrapper&#39;</span><span class="p">);</span> <span class="c1">// Good</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">linkContacts</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;a.contact-links .side-wrapper&#39;</span><span class="p">);</span> <span class="c1">// Bad</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Keep it Simple!</h4>
+
+<p>Avoid overly complex selectors. Unless you have an incredibly complex HTML document, it’s rare you’ll need any more than two or three qualifiers.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;body #page:first-child article.main p#intro em&quot;</span><span class="p">);</span> <span class="c1">// Bad</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;p#intro em&quot;</span><span class="p">);</span> <span class="c1">// Good</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Class selectors and Context</h4>
+
+<p>Always try to scope your selectors with id or element.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.active&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span> <span class="c1">// bad</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#header .active&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span> <span class="c1">// better</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.active&#39;</span><span class="p">,</span> <span class="s1">&#39;#header&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span> <span class="c1">// better</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#header&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;.active&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span> <span class="c1">// fastest</span>
+</span><span class='line'>  <span class="c1">// .find() is faster because it directly uses native javascript methods to search inside the passsed context under the hood</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;button.active&#39;</span><span class="p">);</span> <span class="c1">// fastest</span>
+</span><span class='line'>  <span class="c1">// grabs all matches tags FIRST, then iterates through them to find matching classes</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>DOM Manipulation</h2>
+
+<h4>Cache and Chains to Avoid Reselection</h4>
+
+<p>Interacting with the DOM as little as possible will drastically speed up your applications.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="c1">// Bad</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#sidebar .promo&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#sidebar .newPromo&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#sidebar).after(somethingcool);</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">  // Good</span>
+</span><span class='line'><span class="s1">  var sb = $(&#39;</span><span class="err">#</span><span class="nx">sidebar</span><span class="s1">&#39;); </span>
+</span><span class='line'><span class="s1">  sb.find(&#39;</span><span class="p">.</span><span class="nx">promo</span><span class="s1">&#39;).hide(); </span>
+</span><span class='line'><span class="s1">  sb.find(&#39;</span><span class="p">.</span><span class="nx">newPromo</span><span class="err">&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">sb</span><span class="p">.</span><span class="nx">after</span><span class="p">(</span><span class="nx">somethingcool</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Bad</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;font-size&quot;</span><span class="p">,</span> <span class="s2">&quot;1.2em&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Text changed!&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Good</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span> <span class="s2">&quot;color&quot;</span><span class="o">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;font-size&quot;</span><span class="o">:</span> <span class="s2">&quot;1.2em&quot;</span><span class="p">}).</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Text changed!&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Wrap everything in a single element when doing any kind of DOM insertion</h4>
+
+<p>DOM manipulation is very slow. Try to modify your HTML structure as little as possible.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">menu</span> <span class="o">=</span> <span class="s1">&#39;&lt;ul id=&quot;menu&quot;&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">menu</span> <span class="o">+=</span> <span class="s1">&#39;&lt;li&gt;&#39;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="s1">&#39;&lt;/li&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">menu</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/ul&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#header&#39;</span><span class="p">).</span><span class="nx">prepend</span><span class="p">(</span><span class="nx">menu</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Instead of doing:</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#header&#39;</span><span class="p">).</span><span class="nx">prepend</span><span class="p">(</span><span class="s1">&#39;&lt;ul id=&quot;menu&quot;&gt;&lt;/ul&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#menu&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;li&gt;&#39;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="s1">&#39;&lt;/li&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Events</h2>
+
+<h4>Leverage Event Delegation</h4>
+
+<p>Event listeners cost memory. In complex websites and apps it’s not uncommon to have a lot of event listeners floating around, and thankfully jQuery provides some really easy methods for handling event listeners efficiently through delegation.</p>
+
+<p>When you have a lot of elements in a container and you want to assign an event to all of them – use delegation to handle it. Delegation provides you with the ability to bind only one event to a parent element and then check on what child the event acted (target). It’s very handy when you have a big table with a lot of data and you want to set events to the TDs. Grab the table, set the delegation event for all the TDs:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">).</span><span class="nx">delegate</span><span class="p">(</span><span class="s2">&quot;td&quot;</span><span class="p">,</span> <span class="s2">&quot;hover&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;hover&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Digging into JQuery Secrets</h2>
+
+<h4>Element Creation</h4>
+
+<p>The following snippet is enough what I mean:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">myDiv</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s1">&#39;&lt;div/&gt;&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;my-new-element&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="kr">class</span><span class="o">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">css</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">backgrondColor</span><span class="o">:</span> <span class="s1">&#39;#FFF&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">border</span><span class="o">:</span> <span class="s1">&#39;1px solid #CCC&#39;</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nx">click</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Clicked!&#39;</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nx">html</span><span class="o">:</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s1">&#39;&lt;a/&gt;&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">href</span><span class="o">:</span> <span class="s1">&#39;#&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">click</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>              <span class="c1">// do something</span>
+</span><span class='line'>              <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">})</span>
+</span><span class='line'>  <span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Writing own selectors</h4>
+
+<p>If you have selectors that you use often in your script – extend jQuery object $.expr[&lsquo;:&rsquo;] and write your own selector.
+In the following example We create a selector above_the_fold that returns a set of elements that are not visible:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>
+</span><span class='line'>  <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">expr</span><span class="p">[</span><span class="s1">&#39;:&#39;</span><span class="p">],</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">above_the_fold</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="nx">el</span><span class="p">).</span><span class="nx">offset</span><span class="p">().</span><span class="nx">top</span> <span class="o">&lt;</span> <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">scrollTop</span><span class="p">()</span> <span class="o">+</span> <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">height</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">nonVisibleElements</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;div:above_the_fold&#39;</span><span class="p">);</span> <span class="c1">// Select the elements</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>CSS Hooks</h4>
+
+<p>The <a href="http://api.jquery.com/jQuery.cssHooks/">CSS hooks API</a> was introduced to give developers the ability to get and set particular CSS values. Using it, you can hide browser specific implementations and expose a unified interface for accessing particular properties.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">.</span><span class="nx">cssHooks</span><span class="p">[</span><span class="s1">&#39;borderRadius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">get</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">elem</span><span class="p">,</span> <span class="nx">computed</span><span class="p">,</span> <span class="nx">extra</span><span class="p">){</span>
+</span><span class='line'>        <span class="c1">// Depending on the browser, read the value of</span>
+</span><span class='line'>        <span class="c1">// -moz-border-radius, -webkit-border-radius or border-radius</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">set</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">elem</span><span class="p">,</span> <span class="nx">value</span><span class="p">){</span>
+</span><span class='line'>        <span class="c1">// Set the appropriate CSS3 property</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Use it without worrying which property the browser actually understands:</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#rect&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;borderRadius&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What is even better, is that people have already built a rich <a href="https://github.com/brandonaaron/jquery-cssHooks">library of supported CSS hooks</a> that you can use for free in your next project.</p>
+
+<h2>General And All time tricks</h2>
+
+<!--more-->
+
+
+<h4>Use HTML5</h4>
+
+<p>You may wonder how jquery performance and HTML5 are related but the new HTML 5 standard comes with new tags and a lighter DOM structure in mind. Lighter DOM structure and different tags diferent purpose for means less elements to traverse for jQuery.</p>
+
+<h4>DOM isn&rsquo;t your database</h4>
+
+<p>Traversing DOM to retrieve information stored in .text(), .html() is not optimal approach. Use html5 data to attach any kind of information in DOM. With the recent updates to the jQuery data() method, HTML5 data attributes are pulled automatically and are available as entries.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;d1&quot;</span> <span class="na">data-role=</span><span class="s">&quot;page&quot;</span> <span class="na">data-page_hash=</span><span class="s">&quot;H4jk8s00&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#d1&quot;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">);</span> <span class="c1">//page</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#d1&quot;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&quot;page_hash&quot;</span><span class="p">);</span> <span class="c1">//H4jk8s00</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Append style tag when styling 15 or more elements</h4>
+
+<p>When styling a few elements it is best to simply use jQuery’s css() method, however when styling 15 or more elements it is more efficient to append a style tag to the DOM instead of applying css to each items.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;style type=&quot;text/css&quot;&gt; div.activated { color: red; } &lt;/style&gt;&#39;</span><span class="p">).</span><span class="nx">appendTo</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>Always use the latest version</h5>
+
+<p>JQuery is always in constant development and improvement. The latest version always contains more bug fixes and performance improvements so it is always wise to keep upto date with the latest versions.</p>
+
+<h4>Combine jQuery with raw Javascript where needed</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#someAnchor&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">alert</span><span class="p">(</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#someAnchor&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">alert</span><span class="p">(</span> <span class="k">this</span><span class="p">.</span><span class="nx">id</span> <span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Load the framework from Google Code</h4>
+
+<p>I urge everyone to use the Google AJAX Libraries content delivery network to serve jQuery to users directly from Google’s network of datacenters. Doing so has several advantages over hosting jQuery on your server(s): decreased latency, increased parallelism, and better caching.</p>
+
+<p>The only disadvantage is that if the connection to the CDN were to fail, our site would be left with no jQuery library which could be a big deal if we run a jQuery intensive website. If it happens then there should be some mechanism to fetch the library from other source or from our own locally hosted location. Fortunately, you can easily reference a backup. You can have a copy of jQuery on your server, and use a little bit of JavaScript to load it only if the Google one doesn’t load for some reason.
+This little snippet, found in HTML5 Boilerplate, will do just that:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;script&gt;</span><span class="nb">window</span><span class="p">.</span><span class="nx">jQuery</span> <span class="o">||</span> <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">&#39;&lt;script src=&quot;js/libs/jquery-1.9.0.min.js&quot;&gt;&lt;\/script&gt;&#39;</span><span class="p">)</span><span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rohit Rox</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-23T15:35:00+05:45" pubdate data-updated="true">May 23<span>rd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/jquery/'>JQuery</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://rohitrox.github.io/2013/05/23/jquery-performance-tuning/" data-via="roxxypoxxy" data-counturl="http://rohitrox.github.io/2013/05/23/jquery-performance-tuning/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2013/03/18/feature-flippers-with-rollout/" title="Previous Post: Feature flippers with rollout">&laquo; Feature flippers with rollout</a>
+      
+      
+        <a class="basic-alignment right" href="/2013/07/02/ruby-dynamic-methods/" title="Next Post: Ruby Dynamic Methods">Ruby Dynamic Methods &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p class="my_json">
+	<span class="curly">{</span><br />
+	&nbsp;<span class="key">me:</span> <span class="val">Rohit Joshi from Kathmandu, Nepal</span>,<br />
+	&nbsp;<span class="key">profession: {<br />
+		&nbsp;&nbsp;<span class="key">web_developer:</span> <span class="val">["Ruby on Rails", "Javascript"]</span><br />
+	&nbsp;},<br />
+	&nbsp;<span class="key">email:</span> <a href="mailto:link2j.roy@gmail.com" target="_blank">link2j.roy@gmail.com</a>,<br />
+	&nbsp;<span class="key">twitter:</span> <a href="http://twitter.com/roxxypoxxy" target="_blank">@roxxypoxxy</a>,<br />
+	&nbsp;<span class="key">github:</span> <a href="http://github.com/rohitrox" target="_blank">rohitrox</a>,<br />
+	&nbsp;<span class="key">web:</span> <a href="http://rohitjoshi.com.np" target="_blank">http://rohitjoshi.com.np</a><br />
+	<span class="curly">}</span>
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/07/19/canvas-images-and-rails/">Canvas Images and Rails</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/02/ruby-dynamic-methods/">Ruby Dynamic Methods</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/23/jquery-performance-tuning/">Jquery Performance Tuning</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/18/feature-flippers-with-rollout/">Feature Flippers With Rollout</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/19/vim-quick-tips/">VIM Quick Tips</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li class='category'><a href='/blog/categories/canvas/'>Canvas (1)</a></li>
+<li class='category'><a href='/blog/categories/html5/'>HTML5 (1)</a></li>
+<li class='category'><a href='/blog/categories/jquery/'>JQuery (1)</a></li>
+<li class='category'><a href='/blog/categories/javascript/'>Javascript (3)</a></li>
+<li class='category'><a href='/blog/categories/mysql/'>MySQL (1)</a></li>
+<li class='category'><a href='/blog/categories/mysql/'>MySql (1)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>Rails (1)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>Ruby (2)</a></li>
+<li class='category'><a href='/blog/categories/vim/'>Vim (1)</a></li>
+<li class='category'><a href='/blog/categories/metaprogramming/'>metaprogramming (1)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>rails (1)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>ruby (2)</a></li>
+</ul>
+</section><a class="twitter-timeline" href="https://twitter.com/roxxypoxxy" data-widget-id="365563816915902464" data-tweet-limit="5">Tweets</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rohit Rox -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://rohitrox.github.io/2013/05/23/jquery-performance-tuning/';
+        var disqus_url = 'http://rohitrox.github.io/2013/05/23/jquery-performance-tuning/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

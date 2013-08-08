@@ -1,0 +1,1918 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Blog @ RohitRox]]></title>
+  <link href="http://rohitrox.github.io/atom.xml" rel="self"/>
+  <link href="http://rohitrox.github.io/"/>
+  <updated>2013-08-09T02:11:04+05:45</updated>
+  <id>http://rohitrox.github.io/</id>
+  <author>
+    <name><![CDATA[Rohit Rox]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Canvas Images and Rails]]></title>
+    <link href="http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/"/>
+    <updated>2013-07-19T15:15:00+05:45</updated>
+    <id>http://rohitrox.github.io/2013/07/19/canvas-images-and-rails</id>
+    <content type="html"><![CDATA[<p>With the introduction of Canvas, HTML5 has empower us to draw shapes, graphs, render texts, make gradients and patterns, manipulate images pixels, set an animations, even creating a stunning games!
+All this stuffs occur on the client side in the browsers.
+So let say you make an app that render some effects in a Canvas element and you want to allow user to take screenshot of the resut or save the result in your server for yourself.</p>
+
+<p>Let&rsquo;s digg how can we do it and save that canvas as an image in ther server using Rails.</p>
+
+<h3>Strategy 1 : Send canvas image as raw dataURL</h3>
+
+<p>The data URI scheme is a URI scheme that provides a way to include data in-line in web pages as if they were external resources. The <code>canvas.toDataURL()</code> method returns the image data of the canvas as Data URI. And the Data URI has the image data Encodes with MIME base64.</p>
+
+<p>Let&rsquo;s see how it works. Copy and run this javascript snippet in your browser console. Somewhere at the bottom of the page you&rsquo;ll see a green circle.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;2d&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">centerX</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">centerY</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">radius</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">arc</span><span class="p">(</span><span class="nx">centerX</span><span class="p">,</span> <span class="nx">centerY</span><span class="p">,</span> <span class="nx">radius</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">fill</span><span class="p">();</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">lineWidth</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">strokeStyle</span> <span class="o">=</span> <span class="s1">&#39;#003300&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">context</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">canvas</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Now lets render that canvas as an image.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">dataURL</span> <span class="o">=</span>  <span class="nx">canvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s1">&#39;image/png&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="nx">dataURL</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!--more-->
+
+
+<p>As you can see, with that weird long url string something like <code>data:image/png;base64,iVBORw0KGgoA...</code>, it render a png image. That long url is infact data uri which has image data encoded with MIME base64.</p>
+
+<p>The format to be specific is <strong><em> data:[&lt;mime type&gt;][;charset=&lt;charset&gt;][;base64],&lt; encoded data &gt; </em></strong>.</p>
+
+<p>Now, if we want to save that image in the server, we can just send that data uri as normal params and at the server, we can use ruby to decode that save that data as image file.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;base64&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:data_uri</span><span class="o">]</span>
+</span><span class='line'><span class="sr">//</span> <span class="n">remove</span> <span class="n">all</span> <span class="n">extras</span> <span class="n">except</span> <span class="n">data</span>
+</span><span class='line'><span class="n">image_data</span> <span class="o">=</span> <span class="no">Base64</span><span class="o">.</span><span class="n">decode64</span><span class="p">(</span><span class="n">data</span><span class="o">[</span><span class="s1">&#39;data:image/png;base64,&#39;</span><span class="o">.</span><span class="n">length</span> <span class="o">.</span><span class="n">.</span> <span class="o">-</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/public/uploads/somefilename.png&quot;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">f</span><span class="o">.</span><span class="n">write</span> <span class="n">image_data</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Strategy 2 : Send It as a Blob object</h3>
+
+<p>This method also use the dataURL but instead of send it as a raw text, we convert it to an image file object and send it.
+For this we use the Blob object. Simply it&rsquo;s an object that represent a file-like object, so we create a blob object with the type PNG image, after we append this blob object to a FormData, and finally we send it through the jQuery Ajax Method.</p>
+
+<p>Let&rsquo;s detail a bit what I say above, we already see how we get the dataURL from an object, the dataURL is only a raw text, so we need to decode it to a binary data, we already know that the type of the encoding in the dataURL is Base64, and for decode it using a JavaScript solution we use the predefined atob method, now after decoding it we get a binary data, and we need to convert it to an array where there element is a 8-bit unsigned integer values. Finally we have to put this array in a new Uint8Array object for pass it to our Blob object that represent our file, now let create a function that do this and convert our Canvas to a blob object:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>   <span class="c1">// Convert dataURL to Blob object</span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">dataURLtoBlob</span><span class="p">(</span><span class="nx">dataURL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Decode the dataURL    </span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">binary</span> <span class="o">=</span> <span class="nx">atob</span><span class="p">(</span><span class="nx">dataURL</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]);</span>
+</span><span class='line'>    <span class="c1">// Create 8-bit unsigned array</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">array</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">binary</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">array</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">binary</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">i</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// Return our Blob object</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nx">Blob</span><span class="p">([</span><span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="nx">array</span><span class="p">)],</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;image/png&#39;</span><span class="p">});</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can now create a new FormData object, put our file on it and send our data using Ajax.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>   <span class="c1">// Get our file</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">file</span><span class="o">=</span> <span class="nx">dataURLtoBlob</span><span class="p">(</span><span class="nx">dataURL</span><span class="p">);</span>
+</span><span class='line'>  <span class="c1">// Create new form data</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">fd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormData</span><span class="p">();</span>
+</span><span class='line'>  <span class="c1">// Append our Canvas image file to the form data</span>
+</span><span class='line'>  <span class="nx">fd</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="nx">file</span><span class="p">);</span>
+</span><span class='line'>  <span class="c1">// And send it</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+</span><span class='line'>     <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;/screenshot&quot;</span><span class="p">,</span>
+</span><span class='line'>     <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+</span><span class='line'>     <span class="nx">data</span><span class="o">:</span> <span class="nx">fd</span><span class="p">,</span>
+</span><span class='line'>     <span class="nx">processData</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>     <span class="nx">contentType</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At controller:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>    <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/public/uploads/somefilename.png&quot;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:image</span><span class="o">].</span><span class="n">read</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, that&rsquo;s it.</p>
+
+<p>This method is more appropriate and faster than the first one.</p>
+
+<p>Those wondering how to mix this with carrierwave and paperclip, here are the links:</p>
+
+<p><a href="http://stackoverflow.com/questions/14900038/rails-carrierwave-iphone-base64-image-upload">Rails carrierwave base-64 encoded image upload</a></p>
+
+<p><a href="https://gist.github.com/WizardOfOgz/1012107">Base64-encoded images with Paperclip</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby Dynamic Methods]]></title>
+    <link href="http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/"/>
+    <updated>2013-07-02T11:27:00+05:45</updated>
+    <id>http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods</id>
+    <content type="html"><![CDATA[<p>We define methods using <strong><em>def</em></strong> keywords which is fine for most of the cases.</p>
+
+<p>But consider a situation where you have to create a series of methods all of which have the same basic structure and logic then it seems repititive and not dry.</p>
+
+<p>Ruby, being a dynamic language, you can create methods on the fly.</p>
+
+<p>So, what does that mean?</p>
+
+<p>lets see this simplest example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">A</span>
+</span><span class='line'>    <span class="n">define_method</span> <span class="ss">:a</span> <span class="k">do</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;hello&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">define_method</span> <span class="ss">:greeting</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="n">message</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">A</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">a</span> <span class="c1">#=&gt; hello</span>
+</span><span class='line'>  <span class="n">A</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">greeting</span> <span class="s1">&#39;Ram ram&#39;</span> <span class="c1">#=&gt; Ram ram</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!--more-->
+
+
+<p>The <strong><em>define_method</em></strong> defines an instance method in the receiver. The syntax and usage are self-explained in the example above.</p>
+
+<p>lets see following example that may be useful in practical scenarios.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">ACTIVE</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="no">INACTIVE</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="no">PENDING</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:status</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">active?</span>
+</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="no">ACTIVE</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">inactive?</span>
+</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">::</span><span class="no">INACTIVE</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">pending?</span>
+</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">::</span><span class="no">PENDING</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="n">user</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">user</span><span class="o">.</span><span class="n">inactive?</span>
+</span><span class='line'>  <span class="c1">#=&gt; true</span>
+</span><span class='line'>  <span class="n">user</span><span class="o">.</span><span class="n">active?</span>
+</span><span class='line'>  <span class="c1">#=&gt; false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Refactored code using dynamic method definition:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">ACTIVE</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="no">INACTIVE</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="no">PENDING</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:status</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">[</span><span class="ss">:active</span><span class="p">,</span> <span class="ss">:inactive</span><span class="p">,</span> <span class="ss">:pending</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="nb">method</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="s2">?&quot;</span> <span class="k">do</span>
+</span><span class='line'>        <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">.</span><span class="n">const_get</span><span class="p">(</span><span class="nb">method</span><span class="o">.</span><span class="n">upcase</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="n">user</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">user</span><span class="o">.</span><span class="n">inactive?</span>
+</span><span class='line'>  <span class="c1">#=&gt; true</span>
+</span><span class='line'>  <span class="n">user</span><span class="o">.</span><span class="n">active?</span>
+</span><span class='line'>  <span class="c1">#=&gt; false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We use define_method to define method dynamically.</p>
+
+<p>We can also define instance methods with a class method, using this technique we can expose a class method that will generate the  instance methods. COOL !</p>
+
+<p>Example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">ACTIVE</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="no">INACTIVE</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="no">PENDING</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:status</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">states</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">args</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">arg</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">arg</span><span class="si">}</span><span class="s2">?&quot;</span> <span class="k">do</span>
+</span><span class='line'>          <span class="nb">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">.</span><span class="n">const_get</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">upcase</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">states</span> <span class="ss">:active</span><span class="p">,</span> <span class="ss">:inactive</span><span class="p">,</span> <span class="ss">:pending</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, what about class methods. The simplest way is</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">A</span>
+</span><span class='line'>  <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+</span><span class='line'>    <span class="n">define_method</span> <span class="n">method_name</span> <span class="k">do</span>
+</span><span class='line'>      <span class="c1">#...</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are <strong><em>instance_eval</em></strong> and <strong><em>class_eval</em></strong> also, which are used for dynamic method definition. These methods allow you to evaluate arbitrary code in the context of a particular class or object. These methods can be very confusing sometimes. You can read <a href="http://stackoverflow.com/questions/900419/how-to-understand-the-difference-between-class-eval-and-instance-eval">this</a> discussion and <a href="http://www.ploughthroughruby.co.uk/2009/09/30/define_method-instance_eval-and-class_eval.html/">this</a> blog post and understand how they can be used.</p>
+
+<p>From that discussion, we summerize</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="no">Foo</span> <span class="o">=</span> <span class="no">Class</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">class_eval</span> <span class="k">do</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">class_bar</span>
+</span><span class='line'>      <span class="s2">&quot;class_bar&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">instance_eval</span> <span class="k">do</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">instance_bar</span>
+</span><span class='line'>      <span class="s2">&quot;instance_bar&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">class_bar</span>       <span class="c1">#=&gt; undefined method ‘class_bar’ for Foo:Class</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">class_bar</span>   <span class="c1">#=&gt; &quot;class_bar&quot;</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">instance_bar</span>       <span class="c1">#=&gt; &quot;instance_bar&quot;</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">instance_bar</span>   <span class="c1">#=&gt; undefined method ‘instance_bar’ for #&lt;Foo:0x7dce8&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that, we don&rsquo;t use <strong><em>define_method</em></strong> inside *_eval, becasue it does not matter if you use define_method inside class_eval or instance_eval it would always create an instance method.</p>
+
+<p>And, we get this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="no">Foo</span> <span class="o">=</span> <span class="no">Class</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">class_eval</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">define_method</span> <span class="s2">&quot;class_bar&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="s2">&quot;class_bar&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">instance_eval</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">define_method</span> <span class="s2">&quot;instance_bar&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="s2">&quot;instance_bar&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">class_bar</span> <span class="c1">#=&gt; undefined</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">class_bar</span> <span class="c1">#=&gt; &quot;class_bar&quot;</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">instance_bar</span> <span class="c1">#=&gt; undefined</span>
+</span><span class='line'>  <span class="no">Foo</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">instance_bar</span> <span class="c1">#=&gt; &quot;instance_bar&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next, we can invoke methods dynamically. One way to invoke a method dynamically in ruby is to send a message to the object. We can send a message to a class either within the class definition itself, or by simply sending it to the class object like you’d send any other message. This can be accomplished by usin <strong><em>send</em></strong>.</p>
+
+<p>The simplest example could be:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>
+</span><span class='line'>  <span class="n">s</span><span class="o">=</span> <span class="s2">&quot;hi man&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">p</span> <span class="n">s</span><span class="o">.</span><span class="n">length</span> <span class="c1">#=&gt; 6</span>
+</span><span class='line'>  <span class="nb">p</span> <span class="n">s</span><span class="o">.</span><span class="n">include?</span> <span class="s2">&quot;hi&quot;</span> <span class="c1">#=&gt; true</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">p</span> <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:length</span><span class="p">)</span> <span class="c1">#=&gt; 6</span>
+</span><span class='line'>  <span class="nb">p</span> <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:include?</span><span class="p">,</span><span class="s2">&quot;hi&quot;</span><span class="p">)</span> <span class="c1">#=&gt; true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>How can this be ever useful?</p>
+
+<p>Lets see the following code( example taken from <a href="http://www.funonrails.com/2011/12/dynamic-methods-inside-ruby-classes.html">here</a>)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>    <span class="n">protect_from_forgery</span>
+</span><span class='line'>    <span class="n">helper_method</span> <span class="ss">:current_staff</span><span class="p">,</span> <span class="ss">:current_employee</span><span class="p">,</span> <span class="n">current_admin</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">authenticate_staff!</span><span class="p">(</span><span class="n">opts</span><span class="o">=</span><span class="p">{})</span>
+</span><span class='line'>      <span class="n">current_staff</span> <span class="o">||</span> <span class="n">not_authorized</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">current_staff</span>
+</span><span class='line'>      <span class="n">current_user</span> <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_a?</span> <span class="no">Staff</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">authenticate_employee!</span><span class="p">(</span><span class="n">opts</span><span class="o">=</span><span class="p">{})</span>
+</span><span class='line'>      <span class="n">current_employee</span> <span class="o">||</span> <span class="n">not_authorized</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">current_employee</span>
+</span><span class='line'>      <span class="n">current_user</span> <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_a?</span> <span class="no">Employee</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">authenticate_admin!</span><span class="p">(</span><span class="n">opts</span><span class="o">=</span><span class="p">{})</span>
+</span><span class='line'>      <span class="n">current_admin</span> <span class="o">||</span> <span class="n">not_authorized</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">current_admin</span>
+</span><span class='line'>      <span class="n">current_user</span> <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_a?</span> <span class="no">Admin</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And refactored one:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="sx">%w(Staff Employee Admin)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">k</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">define_method</span> <span class="s2">&quot;current_</span><span class="si">#{</span><span class="n">k</span><span class="o">.</span><span class="n">underscore</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">current_user</span> <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">constantize</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">define_method</span> <span class="s2">&quot;authenticate_</span><span class="si">#{</span><span class="n">k</span><span class="o">.</span><span class="n">underscore</span><span class="si">}</span><span class="s2">!&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">opts</span><span class="o">=</span><span class="p">{}</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">send</span><span class="p">(</span><span class="s2">&quot;current_</span><span class="si">#{</span><span class="n">k</span><span class="o">.</span><span class="n">underscore</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="n">not_authorized</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Dynamically defined methods can help guard against method definition mistakes, avoid repetitive codes and be concise and smart.</p>
+
+<p>Happy Metaprogramming.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Jquery performance Tuning]]></title>
+    <link href="http://rohitrox.github.io/2013/05/23/jquery-performance-tuning/"/>
+    <updated>2013-05-23T15:35:00+05:45</updated>
+    <id>http://rohitrox.github.io/2013/05/23/jquery-performance-tuning</id>
+    <content type="html"><![CDATA[<p>After searching and digging a lot of artciles about improving jquery performance in web apps, I decided to make a list of best common performance tips and bect practices. We&rsquo;ll also reveal some of JQuery&rsquo;s hidden feature and how we can use them for performance tuning.</p>
+
+<p>Lets divide this post into 4 main categoris.</p>
+
+<ul>
+<li>Selector Performace</li>
+<li>DOM Manipulation</li>
+<li>Events</li>
+<li>Digging into JQuery Secrets</li>
+<li>General and All-Time performance tricks</li>
+</ul>
+
+
+<!--more-->
+
+
+<h2>Selector Performace</h2>
+
+<h4>Know your selectors</h4>
+
+<p>You should be careful about using jquery selectors because all selectors are nor created equally. With benchmarks, we can see:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#id, element&#39;</span><span class="p">);</span> <span class="c1">// Id and Element selectors are the fastest</span>
+</span><span class='line'>  <span class="c1">// the reason is because it maps to a native JavaScript methods</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.class_name&#39;</span><span class="p">);</span> <span class="c1">// Slower class selectors</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;:hidden, [attribute=value]&#39;</span><span class="p">);</span> <span class="c1">// Pseudo and Attribute selectors are the slowest</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Optimize selectors for Sizzle’s ‘right to left’ model</h4>
+
+<p>JQuery as of now uses the Sizzle Javascript Selector Library which works a bit differently from the selector engine used in the past versions. Namely it uses a ‘right to left’ model rather than a ‘left to right’. Make sure that your right-most selector is really specific and any selectors on the left are more broad:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">linkContacts</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.contact-links div.side-wrapper&#39;</span><span class="p">);</span> <span class="c1">// Good</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">linkContacts</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;a.contact-links .side-wrapper&#39;</span><span class="p">);</span> <span class="c1">// Bad</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Keep it Simple!</h4>
+
+<p>Avoid overly complex selectors. Unless you have an incredibly complex HTML document, it’s rare you’ll need any more than two or three qualifiers.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;body #page:first-child article.main p#intro em&quot;</span><span class="p">);</span> <span class="c1">// Bad</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;p#intro em&quot;</span><span class="p">);</span> <span class="c1">// Good</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Class selectors and Context</h4>
+
+<p>Always try to scope your selectors with id or element.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.active&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span> <span class="c1">// bad</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#header .active&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span> <span class="c1">// better</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.active&#39;</span><span class="p">,</span> <span class="s1">&#39;#header&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span> <span class="c1">// better</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#header&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;.active&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span> <span class="c1">// fastest</span>
+</span><span class='line'>  <span class="c1">// .find() is faster because it directly uses native javascript methods to search inside the passsed context under the hood</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;button.active&#39;</span><span class="p">);</span> <span class="c1">// fastest</span>
+</span><span class='line'>  <span class="c1">// grabs all matches tags FIRST, then iterates through them to find matching classes</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>DOM Manipulation</h2>
+
+<h4>Cache and Chains to Avoid Reselection</h4>
+
+<p>Interacting with the DOM as little as possible will drastically speed up your applications.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="c1">// Bad</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#sidebar .promo&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#sidebar .newPromo&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#sidebar).after(somethingcool);</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">  // Good</span>
+</span><span class='line'><span class="s1">  var sb = $(&#39;</span><span class="err">#</span><span class="nx">sidebar</span><span class="s1">&#39;); </span>
+</span><span class='line'><span class="s1">  sb.find(&#39;</span><span class="p">.</span><span class="nx">promo</span><span class="s1">&#39;).hide(); </span>
+</span><span class='line'><span class="s1">  sb.find(&#39;</span><span class="p">.</span><span class="nx">newPromo</span><span class="err">&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">sb</span><span class="p">.</span><span class="nx">after</span><span class="p">(</span><span class="nx">somethingcool</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Bad</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;font-size&quot;</span><span class="p">,</span> <span class="s2">&quot;1.2em&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Text changed!&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Good</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span> <span class="s2">&quot;color&quot;</span><span class="o">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;font-size&quot;</span><span class="o">:</span> <span class="s2">&quot;1.2em&quot;</span><span class="p">}).</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Text changed!&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Wrap everything in a single element when doing any kind of DOM insertion</h4>
+
+<p>DOM manipulation is very slow. Try to modify your HTML structure as little as possible.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">menu</span> <span class="o">=</span> <span class="s1">&#39;&lt;ul id=&quot;menu&quot;&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">menu</span> <span class="o">+=</span> <span class="s1">&#39;&lt;li&gt;&#39;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="s1">&#39;&lt;/li&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">menu</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/ul&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#header&#39;</span><span class="p">).</span><span class="nx">prepend</span><span class="p">(</span><span class="nx">menu</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Instead of doing:</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#header&#39;</span><span class="p">).</span><span class="nx">prepend</span><span class="p">(</span><span class="s1">&#39;&lt;ul id=&quot;menu&quot;&gt;&lt;/ul&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#menu&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;li&gt;&#39;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="s1">&#39;&lt;/li&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Events</h2>
+
+<h4>Leverage Event Delegation</h4>
+
+<p>Event listeners cost memory. In complex websites and apps it’s not uncommon to have a lot of event listeners floating around, and thankfully jQuery provides some really easy methods for handling event listeners efficiently through delegation.</p>
+
+<p>When you have a lot of elements in a container and you want to assign an event to all of them – use delegation to handle it. Delegation provides you with the ability to bind only one event to a parent element and then check on what child the event acted (target). It’s very handy when you have a big table with a lot of data and you want to set events to the TDs. Grab the table, set the delegation event for all the TDs:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">).</span><span class="nx">delegate</span><span class="p">(</span><span class="s2">&quot;td&quot;</span><span class="p">,</span> <span class="s2">&quot;hover&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;hover&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Digging into JQuery Secrets</h2>
+
+<h4>Element Creation</h4>
+
+<p>The following snippet is enough what I mean:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">var</span> <span class="nx">myDiv</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s1">&#39;&lt;div/&gt;&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;my-new-element&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="kr">class</span><span class="o">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">css</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">backgrondColor</span><span class="o">:</span> <span class="s1">&#39;#FFF&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">border</span><span class="o">:</span> <span class="s1">&#39;1px solid #CCC&#39;</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nx">click</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Clicked!&#39;</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nx">html</span><span class="o">:</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s1">&#39;&lt;a/&gt;&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">href</span><span class="o">:</span> <span class="s1">&#39;#&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">click</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>              <span class="c1">// do something</span>
+</span><span class='line'>              <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">})</span>
+</span><span class='line'>  <span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Writing own selectors</h4>
+
+<p>If you have selectors that you use often in your script – extend jQuery object $.expr[&lsquo;:&rsquo;] and write your own selector.
+In the following example We create a selector above_the_fold that returns a set of elements that are not visible:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>
+</span><span class='line'>  <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">expr</span><span class="p">[</span><span class="s1">&#39;:&#39;</span><span class="p">],</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">above_the_fold</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="nx">el</span><span class="p">).</span><span class="nx">offset</span><span class="p">().</span><span class="nx">top</span> <span class="o">&lt;</span> <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">scrollTop</span><span class="p">()</span> <span class="o">+</span> <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">height</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">nonVisibleElements</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;div:above_the_fold&#39;</span><span class="p">);</span> <span class="c1">// Select the elements</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>CSS Hooks</h4>
+
+<p>The <a href="http://api.jquery.com/jQuery.cssHooks/">CSS hooks API</a> was introduced to give developers the ability to get and set particular CSS values. Using it, you can hide browser specific implementations and expose a unified interface for accessing particular properties.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">.</span><span class="nx">cssHooks</span><span class="p">[</span><span class="s1">&#39;borderRadius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">get</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">elem</span><span class="p">,</span> <span class="nx">computed</span><span class="p">,</span> <span class="nx">extra</span><span class="p">){</span>
+</span><span class='line'>        <span class="c1">// Depending on the browser, read the value of</span>
+</span><span class='line'>        <span class="c1">// -moz-border-radius, -webkit-border-radius or border-radius</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">set</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">elem</span><span class="p">,</span> <span class="nx">value</span><span class="p">){</span>
+</span><span class='line'>        <span class="c1">// Set the appropriate CSS3 property</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Use it without worrying which property the browser actually understands:</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#rect&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;borderRadius&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What is even better, is that people have already built a rich <a href="https://github.com/brandonaaron/jquery-cssHooks">library of supported CSS hooks</a> that you can use for free in your next project.</p>
+
+<h2>General And All time tricks</h2>
+
+<!--more-->
+
+
+<h4>Use HTML5</h4>
+
+<p>You may wonder how jquery performance and HTML5 are related but the new HTML 5 standard comes with new tags and a lighter DOM structure in mind. Lighter DOM structure and different tags diferent purpose for means less elements to traverse for jQuery.</p>
+
+<h4>DOM isn&rsquo;t your database</h4>
+
+<p>Traversing DOM to retrieve information stored in .text(), .html() is not optimal approach. Use html5 data to attach any kind of information in DOM. With the recent updates to the jQuery data() method, HTML5 data attributes are pulled automatically and are available as entries.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;d1&quot;</span> <span class="na">data-role=</span><span class="s">&quot;page&quot;</span> <span class="na">data-page_hash=</span><span class="s">&quot;H4jk8s00&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#d1&quot;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">);</span> <span class="c1">//page</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#d1&quot;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&quot;page_hash&quot;</span><span class="p">);</span> <span class="c1">//H4jk8s00</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Append style tag when styling 15 or more elements</h4>
+
+<p>When styling a few elements it is best to simply use jQuery’s css() method, however when styling 15 or more elements it is more efficient to append a style tag to the DOM instead of applying css to each items.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;style type=&quot;text/css&quot;&gt; div.activated { color: red; } &lt;/style&gt;&#39;</span><span class="p">).</span><span class="nx">appendTo</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>Always use the latest version</h5>
+
+<p>JQuery is always in constant development and improvement. The latest version always contains more bug fixes and performance improvements so it is always wise to keep upto date with the latest versions.</p>
+
+<h4>Combine jQuery with raw Javascript where needed</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#someAnchor&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">alert</span><span class="p">(</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#someAnchor&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">alert</span><span class="p">(</span> <span class="k">this</span><span class="p">.</span><span class="nx">id</span> <span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Load the framework from Google Code</h4>
+
+<p>I urge everyone to use the Google AJAX Libraries content delivery network to serve jQuery to users directly from Google’s network of datacenters. Doing so has several advantages over hosting jQuery on your server(s): decreased latency, increased parallelism, and better caching.</p>
+
+<p>The only disadvantage is that if the connection to the CDN were to fail, our site would be left with no jQuery library which could be a big deal if we run a jQuery intensive website. If it happens then there should be some mechanism to fetch the library from other source or from our own locally hosted location. Fortunately, you can easily reference a backup. You can have a copy of jQuery on your server, and use a little bit of JavaScript to load it only if the Google one doesn’t load for some reason.
+This little snippet, found in HTML5 Boilerplate, will do just that:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;script&gt;</span><span class="nb">window</span><span class="p">.</span><span class="nx">jQuery</span> <span class="o">||</span> <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">&#39;&lt;script src=&quot;js/libs/jquery-1.9.0.min.js&quot;&gt;&lt;\/script&gt;&#39;</span><span class="p">)</span><span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Feature flippers with rollout]]></title>
+    <link href="http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/"/>
+    <updated>2013-03-18T12:09:00+05:45</updated>
+    <id>http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout</id>
+    <content type="html"><![CDATA[<p>Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try it out before it goes massive.</p>
+
+<p>So lets rollout.</p>
+
+<p>First of all, make sure that you have redis, because rollout uses redis as its backend. Then add <code>gem 'rollout'</code> to gemfile and bundle install.</p>
+
+<p>Now, we need to create a rollout setup file inside initializer.</p>
+
+<p>Let&rsquo;s name it rollout_init.rb which looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>
+</span><span class='line'>  <span class="vg">$redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="vg">$rollout</span> <span class="o">=</span> <span class="no">Rollout</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$redis</span><span class="p">)</span>
+</span><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">define_group</span><span class="p">(</span><span class="ss">:admin</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">admin?</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Documentation suggests to use a global variables. So we create one with a new redis instance.
+Then, we create rollout instance passsing that redis instance. We can configure rollout in many ways, here we are defining an admin group by passing a block and checking whether the user belongs to that group or not.
+Complete documentation can be found <a href="https://github.com/jamesgolick/rollout">here</a>.</p>
+
+<p>Next, we can now use handy rollout method like for example let&rsquo;s say we need to activate chat feature for admin group only.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">if</span> <span class="vg">$rollout</span><span class="o">.</span><span class="n">active?</span> <span class="ss">:chat</span><span class="p">,</span> <span class="n">current_user</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!--more-->
+
+
+<p>The <code>$rollout.active?</code> method accepts the name of the feature and the user and returns true or false.</p>
+
+<p>This method is accessible in views as well as in controllers.
+That&rsquo;s not all, if you restart your server now and look at the app, you may find out that the feature is unavailable to admin groups also, it is because by default the feature is deactivated to all groups or users. We can make a rake task or an interface for activating the feature to subset of users. Activating code looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">activate_group</span><span class="p">(</span><span class="ss">:chat</span><span class="p">,</span> <span class="ss">:admin</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will activate the feature ( chat in our case ) for admin group.</p>
+
+<p>Also we can activate the feature to all users or specific user or to some percentage.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">activate_group</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="ss">:all</span> <span class="p">)</span> <span class="c1">#activate to all, there is all group already by default</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">activate_user</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by_email</span><span class="p">(</span><span class="s2">&quot;admin@myapp.com&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="c1">#activate to specific user</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">activate_percantage</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="mi">50</span> <span class="p">)</span> <span class="c1">#activate to 50% of users</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Each of these methods have deactivate version for deactivating the feature. You can also just call <code>$rollout.deactivate_all(:chat)</code> to deactivate the feature to all at once.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[VIM Quick Tips]]></title>
+    <link href="http://rohitrox.github.io/2012/12/19/vim-quick-tips/"/>
+    <updated>2012-12-19T11:50:00+05:45</updated>
+    <id>http://rohitrox.github.io/2012/12/19/vim-quick-tips</id>
+    <content type="html"><![CDATA[<p>Vim quick tips and tricks, listing some useful, essential and most often used Vim commands.</p>
+
+<h2>Moving Around</h2>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Command                             </th>
+<th> Action                          </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> j or Up Arrow                       </td>
+<td> Move the cursor up one line.            </td>
+</tr>
+<tr>
+<td></td>
+<td> k or Down Arrow                     </td>
+<td> Down one line.          </td>
+</tr>
+<tr>
+<td></td>
+<td> h or Left Arrow                     </td>
+<td> Left one character.</td>
+</tr>
+<tr>
+<td></td>
+<td> l or Right Arrow                    </td>
+<td> Right one character.</td>
+</tr>
+<tr>
+<td></td>
+<td> e                                   </td>
+<td> To the end of a word.</td>
+</tr>
+<tr>
+<td></td>
+<td> E                                   </td>
+<td> To the end of a whitespace-delimited word.</td>
+</tr>
+<tr>
+<td></td>
+<td> b                                   </td>
+<td> To the beginning of a word.</td>
+</tr>
+<tr>
+<td></td>
+<td> B                                   </td>
+<td> To the beginning of a whitespace-delimited word.</td>
+</tr>
+<tr>
+<td></td>
+<td> 0                                   </td>
+<td> To the beginning of a line.</td>
+</tr>
+<tr>
+<td></td>
+<td> $                                   </td>
+<td> To the end of a line.</td>
+</tr>
+<tr>
+<td></td>
+<td> H                                   </td>
+<td> To the first line of the screen.</td>
+</tr>
+<tr>
+<td></td>
+<td> M                                   </td>
+<td> To the middle line of the screen.</td>
+</tr>
+<tr>
+<td></td>
+<td> L                                   </td>
+<td> To the the last line of the screen.</td>
+</tr>
+<tr>
+<td></td>
+<td> :n                                  </td>
+<td> Jump to line number n. For example, to jump to line 42, you&rsquo;d type :42</td>
+</tr>
+<tr>
+<td></td>
+<td> gg                                  </td>
+<td> Goto start of file   </td>
+</tr>
+<tr>
+<td></td>
+<td> G                                   </td>
+<td> Goto end of file</td>
+</tr>
+<tr>
+<td></td>
+<td> I                                   </td>
+<td> go to the beginning of the line and go into insert</td>
+</tr>
+<tr>
+<td></td>
+<td> A                                   </td>
+<td> go to the end of the line and go into insert</td>
+</tr>
+<tr>
+<td></td>
+<td> Ctrl+g                              </td>
+<td> Show file info  including your position in the file</td>
+</tr>
+<tr>
+<td></td>
+<td> i                                   </td>
+<td> Insert at cursor</td>
+</tr>
+<tr>
+<td></td>
+<td> a                                   </td>
+<td> Append after cursor</td>
+</tr>
+<tr>
+<td></td>
+<td> A                                   </td>
+<td> Append at end of line</td>
+</tr>
+<tr>
+<td></td>
+<td> ESC                                 </td>
+<td> Terminate insert mode</td>
+</tr>
+<tr>
+<td></td>
+<td> u                                   </td>
+<td> Undo last change</td>
+</tr>
+<tr>
+<td></td>
+<td> U                                   </td>
+<td> Undo all changes to entire line</td>
+</tr>
+<tr>
+<td></td>
+<td> dd                                  </td>
+<td> Delete line</td>
+</tr>
+<tr>
+<td></td>
+<td> 3dd                                 </td>
+<td> Delete 3 lines.</td>
+</tr>
+<tr>
+<td></td>
+<td> D                                   </td>
+<td> Delete contents of line after cursor</td>
+</tr>
+</tbody>
+</table>
+
+
+<!--more-->
+
+
+<h2>Windows</h2>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Command                             </th>
+<th> Action                          </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> :sp                                 </td>
+<td> new window above</td>
+</tr>
+<tr>
+<td></td>
+<td> :vs                                 </td>
+<td> new window to left</td>
+</tr>
+<tr>
+<td></td>
+<td> :q                                  </td>
+<td> close current window   </td>
+</tr>
+<tr>
+<td></td>
+<td> :qa                                 </td>
+<td> close all windows add trailing ! to force</td>
+</tr>
+<tr>
+<td></td>
+<td> Ctrl+w                              </td>
+<td> {left,right,up,down} move to window   </td>
+</tr>
+<tr>
+<td></td>
+<td> Ctrl+w                              </td>
+<td> Ctrl+w toggle window focus</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>Vi/Vim modes</h2>
+
+<p>Turn on autoindent:   <strong>:set autoindent</strong></p>
+
+<p>Turn off autoindent:  <strong>:set noautoindent</strong></p>
+
+<p>Set indent width:   <strong>set shiftwidth=4</strong>
+Intelligent auto-indent:  <strong>set smartindent</strong>
+Toggle autoindent on/off when pasting text (press F2 key to toggle mode after one is in &ldquo;insert&rdquo; mode): set pastetoggle=<F2></p>
+
+<p><strong>:set tabstop=8</strong>
+Tab key displays 8 spaces</p>
+
+<p><strong>:set syntax on</strong>
+<strong>:set syntax off</strong>
+Set syntax highlighting and color highlighting for a file type (eg XML, HTML, C++, Java, etc). Also cursor shows matching &ldquo;)&rdquo; and &ldquo;}&rdquo;
+Also can set syntax highlighting explicitly: <strong>:set syntax=html</strong>
+Syntax definition files: /usr/share/vim/vim73/syntax/</p>
+
+<p><strong>:set number</strong>
+Show line number</p>
+
+<p><strong>:set bg=dark</strong>
+<strong>:set bg=light</strong>
+VIM: choose color scheme for &ldquo;dark&rdquo; or &ldquo;light&rdquo; console background.</p>
+
+<p><strong>:help</strong>
+Vim has a extensive on-line help system. You can access this by using :help.</p>
+
+<p><strong>:set cindent</strong>
+This turns on C style indentation. Each new line will be automatically indented the correct amount according to the C indentation standard.</p>
+
+<p>Word Completion
+When your typing and you enter a partial word, you can cause Vim to search for a completion by using the ^P (search for previous marching word) and ^N (search for next match).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MySql commands]]></title>
+    <link href="http://rohitrox.github.io/2012/11/03/mysql-commands/"/>
+    <updated>2012-11-03T14:26:00+05:45</updated>
+    <id>http://rohitrox.github.io/2012/11/03/mysql-commands</id>
+    <content type="html"><![CDATA[<p>This is a short-list of handy MySQL commands that I have to use time and time again, in my development machine as well as in servers and for importing and exporting databases.</p>
+
+<p>Login to mysql console (from unix bash)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mysql -u user -p
+</span><span class='line'><span class="c"># if host name is required</span>
+</span><span class='line'><span class="nv">$ </span>mysql -h hostname -u user -p
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create a new database</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; create database databasename;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>List all databases</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; show databases;
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!--more-->
+
+
+<p>Switch to a database</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; use database_name;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>List tables</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; show tables;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>See database&rsquo;s field formats.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'> mysql&gt; describe table_name;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Drop a db.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; drop database database_name;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Delete a table.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; drop table table_name;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Show all data in a table.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; SELECT * FROM table_name;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Returns the columns and column information pertaining to the designated table.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; show columns from table_name;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Set a root password if there is on root password.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mysqladmin -u root password newpassword
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Update a root password.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mysqladmin -u root -p oldpassword newpassword
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Recover a MySQL root password.
+Stop the MySQL server process. Start again with no grant tables. Login to MySQL as root. Set new password. Exit MySQL and restart MySQL server.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>/etc/init.d/mysql stop
+</span><span class='line'><span class="nv">$ </span>mysqld_safe --skip-grant-tables &amp;
+</span><span class='line'><span class="nv">$ </span>mysql -u root
+</span><span class='line'>mysql&gt; use mysql;
+</span><span class='line'>mysql&gt; update user <span class="nb">set </span><span class="nv">password</span><span class="o">=</span>PASSWORD<span class="o">(</span><span class="s2">&quot;newrootpassword&quot;</span><span class="o">)</span> where <span class="nv">User</span><span class="o">=</span><span class="s1">&#39;root&#39;</span>;
+</span><span class='line'>mysql&gt; flush privileges;
+</span><span class='line'>mysql&gt; quit
+</span><span class='line'><span class="nv">$ </span>/etc/init.d/mysql stop
+</span><span class='line'><span class="nv">$ </span>/etc/init.d/mysql start
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Export a database for backup.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mysqldump -u user -p database_name &gt; file.sql
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Import a database</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mysql -p -u username database_name &lt; file.sql
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Dump all databases</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mysqldump -u root -password --opt &gt; alldatabases.sql
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[OOP with Javascript]]></title>
+    <link href="http://rohitrox.github.io/2012/11/01/oop-with-javascript/"/>
+    <updated>2012-11-01T00:18:00+05:45</updated>
+    <id>http://rohitrox.github.io/2012/11/01/oop-with-javascript</id>
+    <content type="html"><![CDATA[<p>JavaScript has strong object-oriented programming capabilities, even though some debates have taken place due to the differences in object-oriented JavaScript compared to other languages.</p>
+
+<h2>Objects and Classes</h2>
+
+<p>JavaScript is a prototype-based language which contains no class statement, such as is found in C++ or Ruby. This is sometimes confusing for programmers accustomed to languages with a class statement. Instead, JavaScript uses functions as classes. Defining a class is as easy as defining a function. In the example below we define a new class called Person.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To create a new instance of an object new operator.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">my_person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<!-- more -->
+
+
+<h2>Constructors</h2>
+
+<p>Every action declared in the class gets executed at the time of instantiation which can act like the constructor, used to set the object&rsquo;s properties or to call methods to prepare the object for use.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">first_name</span><span class="p">,</span> <span class="nx">last_name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">first_name</span> <span class="o">=</span> <span class="nx">first_name</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">last_name</span> <span class="o">=</span> <span class="nx">last_name</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">full_name</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">first_name</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">last_name</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">full_name</span> <span class="o">+</span> <span class="s1">&#39; is instantiated.&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Methods</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// adding sayHello method to Person</span>
+</span><span class='line'><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sayHello</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nx">alert</span> <span class="p">(</span><span class="s1">&#39;Hello &#39;</span><span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">full_name</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Private and Public</h2>
+
+<p>Common issue in JavaScript is that there is no true sense of private variables. However, we can use closures to somewhat simulate privacy.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>   <span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">first_name</span><span class="p">,</span> <span class="nx">last_name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">balance</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span><span class='line'>      <span class="c1">// balance is private and cannot be accessed from outside</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nx">addBalance</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">balance</span> <span class="o">+=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">};</span>
+</span><span class='line'>      <span class="c1">// addBalance is private and cannot be accessed from outside</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">first_name</span> <span class="o">=</span> <span class="nx">first_name</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">last_name</span> <span class="o">=</span> <span class="nx">last_name</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">full_name</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">first_name</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">last_name</span><span class="p">;</span>
+</span><span class='line'>      <span class="c1">// first_name, last_name, full_name  are public variables</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">full_name</span> <span class="o">+</span> <span class="s1">&#39; is instantiated.&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">viewBalance</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span> <span class="nx">alert</span><span class="p">(</span><span class="nx">balance</span><span class="p">);</span> <span class="p">}</span>
+</span><span class='line'>      <span class="c1">// viewBalance is public</span>
+</span><span class='line'>  <span class="p">}</span>    
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Literal version fo creating Objects and defining Methods and Properties</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// Constructor version</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">myObject</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">iAm</span> <span class="o">=</span> <span class="s1">&#39;an object&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">whatAmI</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;I am &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">iAm</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Literal version</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">myObject</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">iAm</span> <span class="o">:</span> <span class="s1">&#39;an object&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">whatAmI</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;I am &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">iAm</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Literal is a preferred option for name spacing so that your JavaScript
+code doesn’t interfere (or vice versa) with other scripts running on the
+page and also if you are using this object as a single object and not requiring
+more than one instance of the object, whereas Constructor function type
+notation is preferred if you need to do some initial work before the object
+is created or require multiple instances of the object where each instance
+can be changed during the lifetime of the script.</p>
+
+<p>For a literally notated object, you simply use it by referencing its variable name,whereas with constructor functions you need to instantiate (create a new instance of) the object first.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Javascript Static and Instance methods]]></title>
+    <link href="http://rohitrox.github.io/2012/10/31/javascript-static-and-instance-methods/"/>
+    <updated>2012-10-31T23:05:00+05:45</updated>
+    <id>http://rohitrox.github.io/2012/10/31/javascript-static-and-instance-methods</id>
+    <content type="html"><![CDATA[<p>Custom JavaScript objects can have instance methods (function that are associated with a particular JavaScript object), but like other Object-Oriented languages, they can also have <em>static</em> methods, that is functions that are associated with the JavaScript class that created an object, as opposed to the object itself. This is useful in cases where a function (a.k.a. a method) will not be different in different object instances.</p>
+
+<!-- more -->
+
+
+<p>An instance method could be added to this class in one of two ways, either inside the constructor or through the class prototype.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">Calculator</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>          <span class="c1">// instance method in constructor</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">multiply</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">val1</span> <span class="p">,</span> <span class="nx">val2</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="p">(</span><span class="nx">val1</span><span class="o">*</span><span class="nx">val2</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// instance method via prototype</span>
+</span><span class='line'><span class="nx">Calculator</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">val1</span> <span class="p">,</span> <span class="nx">val2</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span><span class="nx">val1</span><span class="o">+</span><span class="nx">val2</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// calling </span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">calc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Calculator</span><span class="p">();</span>
+</span><span class='line'><span class="nx">alert</span><span class="p">(</span> <span class="nx">calc</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'><span class="nx">alert</span><span class="p">(</span> <span class="nx">calc</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, it shouldn’t really be necessary to create an object to use the multiply or add method, since the method isn’t dependent on the state of the object for its execution. The method can be moved to the class to clean up this code a bit. First the class definition is created, which looks almost identical to the instance method declaration above, with the exception of the prototype keyword being removed:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">Calculator</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="p">...</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Calculator</span><span class="p">.</span><span class="nx">multiply</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">val1</span> <span class="p">,</span> <span class="nx">val2</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">(</span><span class="nx">val1</span><span class="o">*</span><span class="nx">val2</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now the multiply method can be called through the class itself, instead of an instance of the class, like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">alert</span><span class="p">(</span> <span class="nx">Calculator</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ActiveRecord with Ruby alone]]></title>
+    <link href="http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone/"/>
+    <updated>2012-10-30T23:06:00+05:45</updated>
+    <id>http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone</id>
+    <content type="html"><![CDATA[<p>Active Record is the main tool that Rails developers use to communicate with and underlying database. Active Record does some wonderful things for a web developer looking for abstractions in  database setup, SQL connections and queries.  We can get a cool command line Ruby application or utility script for our daily tasks using Active Record going in about 5 minutes!</p>
+
+<p>First of all, get the activerecord gem using</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install activerecord
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At the top of Ruby program we need to require the Active Record gem previously installed.  Interacting with your database will be a pleasure now!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;activerecord&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Establishing a connection to database</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">establish_connection</span> <span class="p">{</span>
+</span><span class='line'>  <span class="ss">:adapter</span> <span class="o">=&gt;</span> <span class="s2">&quot;mysql&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:host</span> <span class="o">=&gt;</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="s2">&quot;password&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:database</span> <span class="o">=&gt;</span> <span class="s2">&quot;dbname&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<!-- more -->
+
+
+<p>After successfull database connection we can create a class that inherits from ActiveRecord::Base whose objects map to database a table. Suppose we have users table with name field:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="c1"># this maps database table users to this Ruby class User</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">all</span> <span class="c1"># select all from users table</span>
+</span><span class='line'><span class="n">usr</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span> <span class="c1"># returns the first object fetched by SELECT * FROM users  </span>
+</span><span class='line'><span class="n">usr</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;zappy&#39;</span>
+</span><span class='line'><span class="n">usr</span><span class="o">.</span><span class="n">save</span> <span class="c1"># name zappy is set for usr and saved in db</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Active Record objects don’t specify their attributes directly, but rather infer them from the table definition with which they’re linked. Adding, removing, and changing attributes and their type is done directly in the database. Any change is instantly reflected in the Active Record objects. The mapping that binds a given Active Record class to a certain database table will happen automatically in most common cases, but can be overwritten for the uncommon ones.</p>
+
+<p>All the goodness available from ActiveRecord is documented <a href="http://api.rubyonrails.org/classes/ActiveRecord/Base.html">here</a>.</p>
+
+<p>It should be noted that there are some conventions it assumes:</p>
+
+<ul>
+<li>an Active Record class maps to a database table.</li>
+<li>database table names, like variable names, have lowercase letters and underscores between the words.</li>
+<li>table names are always plural.
+ie.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>looks for database table named users.</p>
+
+<p>If you want table names to be singular instead of plural, you can set the configuration parameter pluralize_table_names:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">pluralize_table_names</span> <span class="o">=</span> <span class="kp">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Interacting to MySQL using Ruby]]></title>
+    <link href="http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby/"/>
+    <updated>2012-10-30T00:58:00+05:45</updated>
+    <id>http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby</id>
+    <content type="html"><![CDATA[<p>This tutorials guides you to go straight into interacting with MySQL database using Ruby alone. No Rails.
+It is assumed that MySQL has been installed in your computer.</p>
+
+<p>Now let&rsquo;s get started:</p>
+
+<p>First of all, lets begin with installing MySQL libraries via RubyGems</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">sudo</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">mysql</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is <a href="http://www.tmtm.org/en/mysql/ruby/">documentation</a> for the MySQL library online . So you can follow that.</p>
+
+<p>Now let&rsquo;s fire irb.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;mysql&#39;</span>
+</span><span class='line'><span class="n">db</span> <span class="o">=</span> <span class="no">Mysql</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;database&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<p>If you are using something like Lampp you may end up with error like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Mysql</span><span class="o">::</span><span class="no">Error</span><span class="p">:</span> <span class="no">Can</span><span class="s1">&#39;t connect to local MySQL server through socket &#39;</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">mysqld</span><span class="o">/</span><span class="n">mysqld</span><span class="o">.</span><span class="n">sock</span><span class="err">&#39;</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So you have to locate where your mysqld.sock is.</p>
+
+<p>For Lamp users, it&rsquo;s in
+/opt/lampp/var/mysql/mysql.sock
+For others you can find by using
+ps aux | grep mysql</p>
+
+<p>Next,create symlink at &lsquo;/var/run/mysqld/mysqld.sock&rsquo; to location of mysql.sock by ln -s command.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'> <span class="n">sudo</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="sr">/opt/</span><span class="n">lampp</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span> <span class="sr">/var/</span><span class="n">run</span><span class="o">/</span><span class="n">mysqld</span><span class="o">/</span><span class="n">mysqld</span><span class="o">.</span><span class="n">sock</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&rsquo;s it. Now we are ready to go.
+With successfull connection we can query to database.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'> <span class="k">begin</span>
+</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span> <span class="s2">&quot;SELECT * FROM users&quot;</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Number of users </span><span class="si">#{</span><span class="n">results</span><span class="o">.</span><span class="n">num_rows</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="n">results</span><span class="o">.</span><span class="n">each_hash</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;User </span><span class="si">#{</span><span class="n">row</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">row</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>    <span class="n">results</span><span class="o">.</span><span class="n">free</span>
+</span><span class='line'>  <span class="k">ensure</span>
+</span><span class='line'>    <span class="n">db</span><span class="o">.</span><span class="n">close</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The code is wrapped up in an exception handling block, to ensure that no matter what happens in the code. The database connection is closed.</p>
+
+<p>The returned result is of Mysql::Result class.Check the <a href="http://www.tmtm.org/en/mysql/ruby/">documentation</a> and scroll down to Mysql::Result for various methods available at your disposal.If you are familiar with other MySQL connectors, this should be a breeze.</p>
+
+<p>Lastly, Mysql Ruby connector also supports prepared statements, so you can use goodness out of it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'> <span class="k">begin</span>
+</span><span class='line'>      <span class="n">insert_new_user</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">prepare</span> <span class="s2">&quot;INSERT INTO users (name, age, gender) VALUES (?, ? ,?)&quot;</span>
+</span><span class='line'>      <span class="n">insert_new_user</span><span class="o">.</span><span class="n">execute</span> <span class="s1">&#39;travis&#39;</span><span class="p">,</span> <span class="s1">&#39;22&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span>
+</span><span class='line'>  
+</span><span class='line'>      <span class="n">insert_new_user</span><span class="o">.</span><span class="n">close</span>
+</span><span class='line'>  
+</span><span class='line'>      <span class="n">statement</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">prepare</span> <span class="s2">&quot;SELECT * FROM users WHERE name = ?&quot;</span>
+</span><span class='line'>      <span class="n">statement</span><span class="o">.</span><span class="n">execute</span> <span class="s1">&#39;travis&#39;</span>
+</span><span class='line'>      <span class="n">statement</span><span class="o">.</span><span class="n">fetch</span>
+</span><span class='line'>      <span class="n">statement</span><span class="o">.</span><span class="n">close</span>
+</span><span class='line'>  <span class="k">ensure</span>
+</span><span class='line'>      <span class="n">db</span><span class="o">.</span><span class="n">close</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>
