@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2013-08-09T02:11:04+05:45</updated>
+  <updated>2013-08-19T01:36:45+05:45</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -151,6 +151,81 @@ end
 <p><a href="http://stackoverflow.com/questions/14900038/rails-carrierwave-iphone-base64-image-upload">Rails carrierwave base-64 encoded image upload</a></p>
 
 <p><a href="https://gist.github.com/WizardOfOgz/1012107">Base64-encoded images with Paperclip</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Feature flippers with rollout]]></title>
+    <link href="http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/"/>
+    <updated>2013-03-18T12:09:00+05:45</updated>
+    <id>http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout</id>
+    <content type="html"><![CDATA[<p>Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try it out before it goes massive.</p>
+
+<p>So lets rollout.</p>
+
+<p>First of all, make sure that you have redis, because rollout uses redis as its backend. Then add <code>gem 'rollout'</code> to gemfile and bundle install.</p>
+
+<p>Now, we need to create a rollout setup file inside initializer.</p>
+
+<p>Let&rsquo;s name it rollout_init.rb which looks like this:</p>
+
+<p>```ruby</p>
+
+<p>  $redis = Redis.new
+  $rollout = Rollout.new($redis)
+  $rollout.define_group(:admin) do |user|</p>
+
+<pre><code>user.admin?
+</code></pre>
+
+<p>  end</p>
+
+<p>```
+Documentation suggests to use a global variables. So we create one with a new redis instance.
+Then, we create rollout instance passsing that redis instance. We can configure rollout in many ways, here we are defining an admin group by passing a block and checking whether the user belongs to that group or not.
+Complete documentation can be found <a href="https://github.com/jamesgolick/rollout">here</a>.</p>
+
+<p>Next, we can now use handy rollout method like for example let&rsquo;s say we need to activate chat feature for admin group only.</p>
+
+<p>``` ruby</p>
+
+<p>  if $rollout.active? :chat, current_user</p>
+
+<pre><code>....
+</code></pre>
+
+<p>  end</p>
+
+<p>```</p>
+
+<!--more-->
+
+
+<p>The <code>$rollout.active?</code> method accepts the name of the feature and the user and returns true or false.</p>
+
+<p>This method is accessible in views as well as in controllers.
+That&rsquo;s not all, if you restart your server now and look at the app, you may find out that the feature is unavailable to admin groups also, it is because by default the feature is deactivated to all groups or users. We can make a rake task or an interface for activating the feature to subset of users. Activating code looks like this:</p>
+
+<p>``` ruby</p>
+
+<p>  $rollout.activate_group(:chat, :admin)</p>
+
+<p>```
+This will activate the feature ( chat in our case ) for admin group.</p>
+
+<p>Also we can activate the feature to all users or specific user or to some percentage.</p>
+
+<p>``` ruby</p>
+
+<p>  $rollout.activate_group( :chat, :all ) #activate to all, there is all group already by default</p>
+
+<p>  $rollout.activate_user( :chat, User.find_by_email(&ldquo;<a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#58;&#97;&#100;&#109;&#x69;&#110;&#x40;&#109;&#x79;&#97;&#x70;&#112;&#x2e;&#x63;&#111;&#109;">&#x61;&#x64;&#x6d;&#x69;&#x6e;&#64;&#109;&#x79;&#x61;&#112;&#112;&#46;&#x63;&#x6f;&#x6d;</a>&rdquo;) ) #activate to specific user</p>
+
+<p>  $rollout.activate_percantage( :chat, 50 ) #activate to 50% of users</p>
+
+<p>```</p>
+
+<p>Each of these methods have deactivate version for deactivating the feature. You can also just call <code>$rollout.deactivate_all(:chat)</code> to deactivate the feature to all at once.</p>
 ]]></content>
   </entry>
   

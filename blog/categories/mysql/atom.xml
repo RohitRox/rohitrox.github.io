@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: MySql | Blog @ RohitRox]]></title>
+  <title><![CDATA[Category: MySQL | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/mysql/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2013-08-09T02:11:04+05:45</updated>
+  <updated>2013-08-19T01:36:45+05:45</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -156,6 +156,109 @@ Dump all databases
 </code> bash</p>
 
 <pre><code>$ mysqldump -u root -password --opt &gt; alldatabases.sql
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Interacting to MySQL using Ruby]]></title>
+    <link href="http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby/"/>
+    <updated>2012-10-30T00:58:00+05:45</updated>
+    <id>http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby</id>
+    <content type="html"><![CDATA[<p>This tutorials guides you to go straight into interacting with MySQL database using Ruby alone. No Rails.
+It is assumed that MySQL has been installed in your computer.</p>
+
+<p>Now let&rsquo;s get started:</p>
+
+<p>First of all, lets begin with installing MySQL libraries via RubyGems</p>
+
+<p>``` ruby</p>
+
+<pre><code>sudo gem install mysql
+</code></pre>
+
+<p>```
+There is <a href="http://www.tmtm.org/en/mysql/ruby/">documentation</a> for the MySQL library online . So you can follow that.</p>
+
+<p>Now let&rsquo;s fire irb.</p>
+
+<p>``` ruby</p>
+
+<pre><code>require 'mysql'
+db = Mysql.new('localhost', 'user', 'password', 'database')
+</code></pre>
+
+<p>```</p>
+
+<!-- more -->
+
+
+<p>If you are using something like Lampp you may end up with error like</p>
+
+<p>``` ruby</p>
+
+<pre><code>Mysql::Error: Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
+</code></pre>
+
+<p>```
+So you have to locate where your mysqld.sock is.</p>
+
+<p>For Lamp users, it&rsquo;s in
+/opt/lampp/var/mysql/mysql.sock
+For others you can find by using
+ps aux | grep mysql</p>
+
+<p>Next,create symlink at &lsquo;/var/run/mysqld/mysqld.sock&rsquo; to location of mysql.sock by ln -s command.</p>
+
+<p>``` ruby</p>
+
+<pre><code>sudo ln -s /opt/lampp/var/mysql/mysql.sock /var/run/mysqld/mysqld.sock
+</code></pre>
+
+<p>```</p>
+
+<p>That&rsquo;s it. Now we are ready to go.
+With successfull connection we can query to database.</p>
+
+<p>``` ruby</p>
+
+<pre><code>begin
+  results = db.query "SELECT * FROM users"
+  puts "Number of users #{results.num_rows}"
+  results.each_hash do |row|
+    puts "User #{row.id}: #{row.name}"
+  end
+  results.free
+ensure
+  db.close
+end
+</code></pre>
+
+<p>```</p>
+
+<p>The code is wrapped up in an exception handling block, to ensure that no matter what happens in the code. The database connection is closed.</p>
+
+<p>The returned result is of Mysql::Result class.Check the <a href="http://www.tmtm.org/en/mysql/ruby/">documentation</a> and scroll down to Mysql::Result for various methods available at your disposal.If you are familiar with other MySQL connectors, this should be a breeze.</p>
+
+<p>Lastly, Mysql Ruby connector also supports prepared statements, so you can use goodness out of it.</p>
+
+<p>``` ruby</p>
+
+<pre><code>begin
+    insert_new_user = db.prepare "INSERT INTO users (name, age, gender) VALUES (?, ? ,?)"
+    insert_new_user.execute 'travis', '22', 'male'
+
+    insert_new_user.close
+
+    statement = db.prepare "SELECT * FROM users WHERE name = ?"
+    statement.execute 'travis'
+    statement.fetch
+    statement.close
+ensure
+    db.close
+end
 </code></pre>
 
 <p>```</p>

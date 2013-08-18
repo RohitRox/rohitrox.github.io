@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: ruby | Blog @ RohitRox]]></title>
+  <title><![CDATA[Category: Ruby | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2013-08-09T02:11:04+05:45</updated>
+  <updated>2013-08-19T01:36:45+05:45</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -368,13 +368,197 @@ This will activate the feature ( chat in our case ) for admin group.</p>
 
 <p>  $rollout.activate_group( :chat, :all ) #activate to all, there is all group already by default</p>
 
-<p>  $rollout.activate_user( :chat, User.find_by_email(&ldquo;<a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#x61;&#100;&#x6d;&#x69;&#x6e;&#x40;&#109;&#x79;&#x61;&#112;&#112;&#x2e;&#99;&#111;&#109;">&#97;&#100;&#109;&#x69;&#110;&#64;&#x6d;&#x79;&#x61;&#x70;&#112;&#x2e;&#99;&#x6f;&#109;</a>&rdquo;) ) #activate to specific user</p>
+<p>  $rollout.activate_user( :chat, User.find_by_email(&ldquo;<a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#x3a;&#x61;&#100;&#109;&#x69;&#110;&#64;&#x6d;&#121;&#x61;&#x70;&#112;&#x2e;&#x63;&#x6f;&#x6d;">&#x61;&#100;&#x6d;&#105;&#110;&#x40;&#109;&#121;&#x61;&#x70;&#112;&#46;&#x63;&#111;&#x6d;</a>&rdquo;) ) #activate to specific user</p>
 
 <p>  $rollout.activate_percantage( :chat, 50 ) #activate to 50% of users</p>
 
 <p>```</p>
 
 <p>Each of these methods have deactivate version for deactivating the feature. You can also just call <code>$rollout.deactivate_all(:chat)</code> to deactivate the feature to all at once.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ActiveRecord with Ruby alone]]></title>
+    <link href="http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone/"/>
+    <updated>2012-10-30T23:06:00+05:45</updated>
+    <id>http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone</id>
+    <content type="html"><![CDATA[<p>Active Record is the main tool that Rails developers use to communicate with and underlying database. Active Record does some wonderful things for a web developer looking for abstractions in  database setup, SQL connections and queries.  We can get a cool command line Ruby application or utility script for our daily tasks using Active Record going in about 5 minutes!</p>
+
+<p>First of all, get the activerecord gem using
+```
+gem install activerecord</p>
+
+<p>```</p>
+
+<p>At the top of Ruby program we need to require the Active Record gem previously installed.  Interacting with your database will be a pleasure now!
+<code>ruby
+require 'activerecord'
+</code></p>
+
+<h3>Establishing a connection to database</h3>
+
+<p>``` ruby</p>
+
+<p>ActiveRecord::Base.establish_connection {
+  :adapter => &ldquo;mysql&rdquo;,
+  :host => &ldquo;localhost&rdquo;,
+  :username => &ldquo;root&rdquo;,
+  :password => &ldquo;password&rdquo;,
+  :database => &ldquo;dbname&rdquo;
+}</p>
+
+<p>```</p>
+
+<!-- more -->
+
+
+<p>After successfull database connection we can create a class that inherits from ActiveRecord::Base whose objects map to database a table. Suppose we have users table with name field:
+``` ruby</p>
+
+<p>class User &lt; ActiveRecord::Base</p>
+
+<pre><code># this maps database table users to this Ruby class User
+</code></pre>
+
+<p>end</p>
+
+<p>User.all # select all from users table
+usr = User.first # returns the first object fetched by SELECT * FROM users<br/>
+usr.name = &lsquo;zappy&rsquo;
+usr.save # name zappy is set for usr and saved in db</p>
+
+<p>```
+Active Record objects don’t specify their attributes directly, but rather infer them from the table definition with which they’re linked. Adding, removing, and changing attributes and their type is done directly in the database. Any change is instantly reflected in the Active Record objects. The mapping that binds a given Active Record class to a certain database table will happen automatically in most common cases, but can be overwritten for the uncommon ones.</p>
+
+<p>All the goodness available from ActiveRecord is documented <a href="http://api.rubyonrails.org/classes/ActiveRecord/Base.html">here</a>.</p>
+
+<p>It should be noted that there are some conventions it assumes:</p>
+
+<ul>
+<li>an Active Record class maps to a database table.</li>
+<li>database table names, like variable names, have lowercase letters and underscores between the words.</li>
+<li>table names are always plural.
+ie.
+```
+class User &lt; ActiveRecord::Base
+end</li>
+</ul>
+
+
+<p>```
+looks for database table named users.</p>
+
+<p>If you want table names to be singular instead of plural, you can set the configuration parameter pluralize_table_names:
+```</p>
+
+<pre><code>ActiveRecord::Base.pluralize_table_names = false
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Interacting to MySQL using Ruby]]></title>
+    <link href="http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby/"/>
+    <updated>2012-10-30T00:58:00+05:45</updated>
+    <id>http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby</id>
+    <content type="html"><![CDATA[<p>This tutorials guides you to go straight into interacting with MySQL database using Ruby alone. No Rails.
+It is assumed that MySQL has been installed in your computer.</p>
+
+<p>Now let&rsquo;s get started:</p>
+
+<p>First of all, lets begin with installing MySQL libraries via RubyGems</p>
+
+<p>``` ruby</p>
+
+<pre><code>sudo gem install mysql
+</code></pre>
+
+<p>```
+There is <a href="http://www.tmtm.org/en/mysql/ruby/">documentation</a> for the MySQL library online . So you can follow that.</p>
+
+<p>Now let&rsquo;s fire irb.</p>
+
+<p>``` ruby</p>
+
+<pre><code>require 'mysql'
+db = Mysql.new('localhost', 'user', 'password', 'database')
+</code></pre>
+
+<p>```</p>
+
+<!-- more -->
+
+
+<p>If you are using something like Lampp you may end up with error like</p>
+
+<p>``` ruby</p>
+
+<pre><code>Mysql::Error: Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
+</code></pre>
+
+<p>```
+So you have to locate where your mysqld.sock is.</p>
+
+<p>For Lamp users, it&rsquo;s in
+/opt/lampp/var/mysql/mysql.sock
+For others you can find by using
+ps aux | grep mysql</p>
+
+<p>Next,create symlink at &lsquo;/var/run/mysqld/mysqld.sock&rsquo; to location of mysql.sock by ln -s command.</p>
+
+<p>``` ruby</p>
+
+<pre><code>sudo ln -s /opt/lampp/var/mysql/mysql.sock /var/run/mysqld/mysqld.sock
+</code></pre>
+
+<p>```</p>
+
+<p>That&rsquo;s it. Now we are ready to go.
+With successfull connection we can query to database.</p>
+
+<p>``` ruby</p>
+
+<pre><code>begin
+  results = db.query "SELECT * FROM users"
+  puts "Number of users #{results.num_rows}"
+  results.each_hash do |row|
+    puts "User #{row.id}: #{row.name}"
+  end
+  results.free
+ensure
+  db.close
+end
+</code></pre>
+
+<p>```</p>
+
+<p>The code is wrapped up in an exception handling block, to ensure that no matter what happens in the code. The database connection is closed.</p>
+
+<p>The returned result is of Mysql::Result class.Check the <a href="http://www.tmtm.org/en/mysql/ruby/">documentation</a> and scroll down to Mysql::Result for various methods available at your disposal.If you are familiar with other MySQL connectors, this should be a breeze.</p>
+
+<p>Lastly, Mysql Ruby connector also supports prepared statements, so you can use goodness out of it.</p>
+
+<p>``` ruby</p>
+
+<pre><code>begin
+    insert_new_user = db.prepare "INSERT INTO users (name, age, gender) VALUES (?, ? ,?)"
+    insert_new_user.execute 'travis', '22', 'male'
+
+    insert_new_user.close
+
+    statement = db.prepare "SELECT * FROM users WHERE name = ?"
+    statement.execute 'travis'
+    statement.fetch
+    statement.close
+ensure
+    db.close
+end
+</code></pre>
+
+<p>```</p>
 ]]></content>
   </entry>
   
