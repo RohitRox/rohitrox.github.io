@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2013-08-19T01:36:45+05:45</updated>
+  <updated>2013-08-22T22:37:05+05:45</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -219,7 +219,7 @@ This will activate the feature ( chat in our case ) for admin group.</p>
 
 <p>  $rollout.activate_group( :chat, :all ) #activate to all, there is all group already by default</p>
 
-<p>  $rollout.activate_user( :chat, User.find_by_email(&ldquo;<a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#58;&#97;&#100;&#109;&#x69;&#110;&#x40;&#109;&#x79;&#97;&#x70;&#112;&#x2e;&#x63;&#111;&#109;">&#x61;&#x64;&#x6d;&#x69;&#x6e;&#64;&#109;&#x79;&#x61;&#112;&#112;&#46;&#x63;&#x6f;&#x6d;</a>&rdquo;) ) #activate to specific user</p>
+<p>  $rollout.activate_user( :chat, User.find_by_email(&ldquo;<a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x61;&#x64;&#x6d;&#105;&#110;&#x40;&#109;&#x79;&#97;&#112;&#x70;&#x2e;&#99;&#111;&#109;">&#x61;&#x64;&#109;&#105;&#110;&#x40;&#x6d;&#x79;&#x61;&#112;&#112;&#x2e;&#x63;&#111;&#x6d;</a>&rdquo;) ) #activate to specific user</p>
 
 <p>  $rollout.activate_percantage( :chat, 50 ) #activate to 50% of users</p>
 
