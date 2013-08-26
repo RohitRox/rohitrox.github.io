@@ -4,7 +4,7 @@
   <title><![CDATA[Category: JQuery | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/jquery/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2013-08-22T22:37:05+05:45</updated>
+  <updated>2013-08-26T23:12:22+05:45</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Get Selected text from Web Page]]></title>
+    <link href="http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage/"/>
+    <updated>2013-08-23T14:03:00+05:45</updated>
+    <id>http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage</id>
+    <content type="html"><![CDATA[<p>This is a quick tip you can use for getting the selected text from your webpage.</p>
+
+<p>``` html</p>
+
+<pre><code>&lt;p&gt;I am not selectable. You can test.&lt;/p&gt;
+&lt;div id="here"&gt;
+    How about selecting me. Try me.
+&lt;/div&gt;
+</code></pre>
+
+<p>```</p>
+
+<p>``` javascript</p>
+
+<pre><code>$(document).ready(function() {
+
+    function getSelectedText(){
+        var text = "";
+        if (window.getSelection) {
+            text = window.getSelection();
+        } else if (document.getSelection) {
+            text = document.getSelection();
+        } else if (document.selection) {
+            text = document.selection.createRange().text;
+        }
+        return text;
+    }
+
+    $('#here').bind("mouseup", function(){
+        alert(getSelectedText());
+    });
+
+});
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Jquery performance Tuning]]></title>

@@ -9,8 +9,7 @@
   <meta name="author" content="Rohit Rox">
 
   
-  <meta name="description" content="This tutorials guides you to go straight into interacting with MySQL database using Ruby alone. No Rails.
-It is assumed that MySQL has been installed &hellip;">
+  <meta name="description" content="Custom JavaScript objects can have instance methods (function that are associated with a particular JavaScript object), but like other Object- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,125 @@ It is assumed that MySQL has been installed &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/10/31/javascript-static-and-instance-methods/">Javascript Static and Instance Methods</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-31T23:05:00+05:45" pubdate data-updated="true">Oct 31<span>st</span>, 2012</time>
+        
+         | <a href="/2012/10/31/javascript-static-and-instance-methods/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Custom JavaScript objects can have instance methods (function that are associated with a particular JavaScript object), but like other Object-Oriented languages, they can also have <em>static</em> methods, that is functions that are associated with the JavaScript class that created an object, as opposed to the object itself. This is useful in cases where a function (a.k.a. a method) will not be different in different object instances.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/10/31/javascript-static-and-instance-methods/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/10/30/activerecord-with-ruby-alone/">ActiveRecord With Ruby Alone</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-30T23:06:00+05:45" pubdate data-updated="true">Oct 30<span>th</span>, 2012</time>
+        
+         | <a href="/2012/10/30/activerecord-with-ruby-alone/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Active Record is the main tool that Rails developers use to communicate with and underlying database. Active Record does some wonderful things for a web developer looking for abstractions in  database setup, SQL connections and queries.  We can get a cool command line Ruby application or utility script for our daily tasks using Active Record going in about 5 minutes!</p>
+
+<p>First of all, get the activerecord gem using</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install activerecord
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At the top of Ruby program we need to require the Active Record gem previously installed.  Interacting with your database will be a pleasure now!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;activerecord&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Establishing a connection to database</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">establish_connection</span> <span class="p">{</span>
+</span><span class='line'>  <span class="ss">:adapter</span> <span class="o">=&gt;</span> <span class="s2">&quot;mysql&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:host</span> <span class="o">=&gt;</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="s2">&quot;password&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:database</span> <span class="o">=&gt;</span> <span class="s2">&quot;dbname&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/10/30/activerecord-with-ruby-alone/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -163,6 +281,14 @@ It is assumed that MySQL has been installed in your computer.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/">Up and Running Ruby on Rails on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/08/23/get-selected-text-from-webpage/">Get Selected Text From Web Page</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/08/18/lets-learn-to-knockout/">Lets Learn to Knockout</a>
       </li>
     
@@ -174,27 +300,20 @@ It is assumed that MySQL has been installed in your computer.</p>
         <a href="/2013/07/02/ruby-dynamic-methods/">Ruby Dynamic Methods</a>
       </li>
     
-      <li class="post">
-        <a href="/2013/05/23/jquery-performance-tuning/">Jquery Performance Tuning</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/03/18/feature-flippers-with-rollout/">Feature Flippers With Rollout</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li class='category'><a href='/blog/categories/canvas/'>Canvas (1)</a></li>
 <li class='category'><a href='/blog/categories/html5/'>HTML5 (1)</a></li>
-<li class='category'><a href='/blog/categories/jquery/'>JQuery (1)</a></li>
-<li class='category'><a href='/blog/categories/javascript/'>Javascript (3)</a></li>
+<li class='category'><a href='/blog/categories/jquery/'>JQuery (2)</a></li>
+<li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
 <li class='category'><a href='/blog/categories/knockoutjs/'>KnockoutJs (1)</a></li>
 <li class='category'><a href='/blog/categories/metaprogramming/'>Metaprogramming (1)</a></li>
 <li class='category'><a href='/blog/categories/mysql/'>MySQL (2)</a></li>
-<li class='category'><a href='/blog/categories/rails/'>Rails (2)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>Rails (3)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (4)</a></li>
+<li class='category'><a href='/blog/categories/ubuntu/'>Ubuntu (1)</a></li>
 <li class='category'><a href='/blog/categories/vim/'>Vim (1)</a></li>
 </ul>
 </section><a class="twitter-timeline" href="https://twitter.com/roxxypoxxy" data-widget-id="365563816915902464" data-tweet-limit="5">Tweets</a>

@@ -5,11 +5,16 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Feature flippers with rollout - Blog @ RohitRox</title>
+  <title>Up and running Ruby on Rails on Ubuntu - Blog @ RohitRox</title>
   <meta name="author" content="Rohit Rox">
 
   
-  <meta name="description" content="Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try &hellip;">
+  <meta name="description" content="6 steps for setting ruby on rails development environment in Ubuntu. Step 1: Setting up RVM 1
+2
+3
+4
+$ sudo apt-get update
+$ sudo apt-get install curl &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +23,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout">
+  <link rel="canonical" href="http://rohitrox.github.io/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Blog @ RohitRox" type="application/atom+xml">
@@ -68,7 +73,7 @@
   
   <header>
     
-      <h1 class="entry-title">Feature Flippers With Rollout</h1>
+      <h1 class="entry-title">Up and Running Ruby on Rails on Ubuntu</h1>
     
     
       <p class="meta">
@@ -84,7 +89,7 @@
   
 
 
-<time datetime="2013-03-18T12:09:00+05:45" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
+<time datetime="2013-08-26T22:27:00+05:45" pubdate data-updated="true">Aug 26<span>th</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -93,15 +98,22 @@
   </header>
 
 
-<div class="entry-content"><p>Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try it out before it goes massive.</p>
+<div class="entry-content"><h3>6 steps for setting ruby on rails development environment in Ubuntu.</h3>
 
-<p>So lets rollout.</p>
+<h3>Step 1: Setting up RVM</h3>
 
-<p>First of all, make sure that you have redis, because rollout uses redis as its backend. Then add <code>gem 'rollout'</code> to gemfile and bundle install.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install curl
+</span><span class='line'><span class="nv">$ </span>curl -L https://get.rvm.io | bash -s stable
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> ~/.rvm/scripts/rvm
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Now, we need to create a rollout setup file inside initializer.</p>
 
-<p>Let&rsquo;s name it rollout_init.rb which looks like this:</p>
+<p>In order to work, RVM has some of its own dependancies that need to be installed. You can see what these are:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -109,67 +121,109 @@
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>
-</span><span class='line'>  <span class="vg">$redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>  <span class="vg">$rollout</span> <span class="o">=</span> <span class="no">Rollout</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$redis</span><span class="p">)</span>
-</span><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">define_group</span><span class="p">(</span><span class="ss">:admin</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
-</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">admin?</span>
-</span><span class='line'>  <span class="k">end</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvm requirements
+</span><span class='line'><span class="c"># In the text that RVM shows you, look for this paragraph.</span>
+</span><span class='line'><span class="c"># Additional Dependencies:</span>
+</span><span class='line'><span class="c"># For ruby:</span>
+</span><span class='line'><span class="c"># apt-get --no-install-recommends install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev  libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool bison subversion pkg-config libffi-dev</span>
+</span><span class='line'><span class="c"># Just follow the instructions to get your system up to date with all of the required dependancies.</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get --no-install-recommends install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool bison subversion pkg-config libffi-dev
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Documentation suggests to use a global variables. So we create one with a new redis instance.
-Then, we create rollout instance passsing that redis instance. We can configure rollout in many ways, here we are defining an admin group by passing a block and checking whether the user belongs to that group or not.
-Complete documentation can be found <a href="https://github.com/jamesgolick/rollout">here</a>.</p>
+<p>Then</p>
 
-<p>Next, we can now use handy rollout method like for example let&rsquo;s say we need to activate chat feature for admin group only.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;[[ -s &quot;$HOME/.rvm/scripts/rvm&quot; ]] &amp;&amp; source &quot;$HOME/.rvm/scripts/rvm&quot; &gt;&gt; ~/.bash_profile</span>
+</span><span class='line'><span class="s1"># or </span>
+</span><span class='line'><span class="s1">$ echo &#39;</span><span class="o">[[</span> -s <span class="s2">&quot;$HOME/.rvm/scripts/rvm&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> <span class="s2">&quot;$HOME/.rvm/scripts/rvm&quot;</span> &gt;&gt; ~/.bashrc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Step 2: Install ruby</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">if</span> <span class="vg">$rollout</span><span class="o">.</span><span class="n">active?</span> <span class="ss">:chat</span><span class="p">,</span> <span class="n">current_user</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">end</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvm install 1.9.3
+</span><span class='line'><span class="c"># after success you can verify your installation by </span>
+</span><span class='line'><span class="nv">$ </span>rvm list
+</span><span class='line'><span class="c"># should output something like </span>
+</span><span class='line'><span class="c"># rvm rubies</span>
+</span><span class='line'><span class="c"># =* ruby-1.9.3-p362 [ i686 ]</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-
-<!--more-->
-
-
-<p>The <code>$rollout.active?</code> method accepts the name of the feature and the user and returns true or false.</p>
-
-<p>This method is accessible in views as well as in controllers.
-That&rsquo;s not all, if you restart your server now and look at the app, you may find out that the feature is unavailable to admin groups also, it is because by default the feature is deactivated to all groups or users. We can make a rake task or an interface for activating the feature to subset of users. Activating code looks like this:</p>
+<h3>Step 3: RubyGems</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">activate_group</span><span class="p">(</span><span class="ss">:chat</span><span class="p">,</span> <span class="ss">:admin</span><span class="p">)</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvm rubygems current
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This will activate the feature ( chat in our case ) for admin group.</p>
-
-<p>Also we can activate the feature to all users or specific user or to some percentage.</p>
+<h3>Step 4: Rails</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">activate_group</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="ss">:all</span> <span class="p">)</span> <span class="c1">#activate to all, there is all group already by default</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># a Javascript runtime, NodeJs</span>
+</span><span class='line'><span class="nv">$ </span>sudo add-apt-repository ppa:chris-lea/node.js
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install nodejs
 </span><span class='line'>
-</span><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">activate_user</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by_email</span><span class="p">(</span><span class="s2">&quot;admin@myapp.com&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="c1">#activate to specific user</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">activate_percantage</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="mi">50</span> <span class="p">)</span> <span class="c1">#activate to 50% of users</span>
+</span><span class='line'><span class="nv">$ </span>gem install bundler
+</span><span class='line'><span class="nv">$ </span>gem install rails
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Each of these methods have deactivate version for deactivating the feature. You can also just call <code>$rollout.deactivate_all(:chat)</code> to deactivate the feature to all at once.</p>
+<h3>Step 5: First Rails app</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rails new my_app
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>my_app
+</span><span class='line'><span class="nv">$ </span>bundle install
+</span><span class='line'><span class="nv">$ </span>rails s
+</span><span class='line'><span class="c"># open browser and visit localhost:3000</span>
+</span><span class='line'><span class="c"># you should see the famous welcome abroad page</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Step 6: Development Extras</h3>
+
+<h4>Sublime Text 2</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/sublime-text-2
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install sublime-text
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Install sublime package manager from <a href="http://wbond.net/sublime_packages/package_control/installation">here</a> for other sublime goodies.</p>
+
+<h4>Configure Vim for Rails</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>curl -Lo- https://bit.ly/janus-bootstrap | bash
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -192,12 +246,12 @@ That&rsquo;s not all, if you restart your server now and look at the app, you ma
   
 
 
-<time datetime="2013-03-18T12:09:00+05:45" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
+<time datetime="2013-08-26T22:27:00+05:45" pubdate data-updated="true">Aug 26<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+    <a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ubuntu/'>Ubuntu</a>
   
 </span>
 
@@ -206,7 +260,7 @@ That&rsquo;s not all, if you restart your server now and look at the app, you ma
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/" data-via="roxxypoxxy" data-counturl="http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://rohitrox.github.io/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/" data-via="roxxypoxxy" data-counturl="http://rohitrox.github.io/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/" >Tweet</a>
   
   
   
@@ -215,10 +269,8 @@ That&rsquo;s not all, if you restart your server now and look at the app, you ma
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2012/12/19/vim-quick-tips/" title="Previous Post: VIM Quick Tips">&laquo; VIM Quick Tips</a>
+        <a class="basic-alignment left" href="/2013/08/23/get-selected-text-from-webpage/" title="Previous Post: Get Selected text from Web Page">&laquo; Get Selected text from Web Page</a>
       
-      
-        <a class="basic-alignment right" href="/2013/05/23/jquery-performance-tuning/" title="Next Post: Jquery performance Tuning">Jquery performance Tuning &raquo;</a>
       
     </p>
   </footer>
@@ -311,8 +363,8 @@ That&rsquo;s not all, if you restart your server now and look at the app, you ma
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/';
-        var disqus_url = 'http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/';
+        var disqus_identifier = 'http://rohitrox.github.io/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/';
+        var disqus_url = 'http://rohitrox.github.io/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/';
         var disqus_script = 'embed.js';
       
     (function () {
