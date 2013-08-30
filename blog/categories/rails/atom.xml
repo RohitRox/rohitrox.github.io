@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2013-08-26T23:12:22+05:45</updated>
+  <updated>2013-08-31T01:27:39+05:45</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -12,6 +12,132 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Single Table Inheritance in Mongoid]]></title>
+    <link href="http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid/"/>
+    <updated>2013-08-30T14:04:00+05:45</updated>
+    <id>http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid</id>
+    <content type="html"><![CDATA[<p>Single table inheritance is a software pattern described by Martin Fowler. STI is basically an idea of using a single table(colection in case of mongo) to reflect multiple models that inherit from a base model.</p>
+
+<p>We use STI pattern when we are dealing with classes that have same attributes and behaviour. Rather than duplicate the same code over and over, STI helps us to use a common base model and write specific behaviours in its inherited class while keeeping data on a same table.</p>
+
+<p>Mongoid supports inheritance in both root and embedded documents. In
+scenarios where documents are inherited from their fields, relations, validations and scopes get copied down into their child documents, but not vice-versa.</p>
+
+<p>A very simple example:</p>
+
+<p>``` ruby</p>
+
+<pre><code>class Employee
+  include Mongoid::Document
+  field :name, type: String
+  field :employee_code, type: Integer
+end
+
+class FullTimeEmployee &lt; Employee
+  field status, type: String, default: "Temporary"
+end
+
+class InternEmployee &lt; Employee
+  field intern_period, type: Integer
+end
+</code></pre>
+
+<p>```</p>
+
+<!-- more -->
+
+
+<p>In the above example, both FullTimeEmployee and InternEmployee will be saved in the Employee collection. An additional attribute _type is automatically stored in order to make sure when loaded from the database the correct document is returned.</p>
+
+<p>Following behaviour can be seen, much similar to Single Table Inheritance in ActiveRecord.</p>
+
+<p>``` ruby</p>
+
+<p>  emp1 = Employee.new
+  emp2 = FullTimeEmployee.new
+  emp3 = InternEmployee.new</p>
+
+<p>  Employee.count
+  #=> 3
+  FullTimeEmployee.count
+  #=> 1
+  InternEmployee.count
+  #=> 1
+  emp1.<em>type
+  #=> &ldquo;Employee&rdquo;
+  emp2.</em>type
+  #=> &ldquo;FullTimeEmployee&rdquo;
+  emp3._type
+  #=> &ldquo;InternEmployee&rdquo;</p>
+
+<p>  Employee.where(name: &ldquo;&hellip;&rdquo;)
+  #=> Returns Employee documents and subclasses
+  FullTimeEmployee.where(name: &ldquo;&hellip;&rdquo;)
+  #=> returns only FullTimeEmployee documents</p>
+
+<p>```</p>
+
+<p>An advance example:</p>
+
+<p>``` ruby</p>
+
+<pre><code>class Canvas
+  include Mongoid::Document
+  field :name, type: String
+  embeds_many :shapes
+end
+
+class Browser &lt; Canvas
+  field :version, type: Integer
+  scope :recent, where(:version.gt =&gt; 3)
+end
+
+class Firefox &lt; Browser
+end
+
+class Shape
+  include Mongoid::Document
+  field :x, type: Integer
+  field :y, type: Integer
+  embedded_in :canvas
+end
+
+class Circle &lt; Shape
+  field :radius, type: Float
+end
+
+class Rectangle &lt; Shape
+  field :width, type: Float
+  field :height, type: Float
+end
+</code></pre>
+
+<p>```</p>
+
+<p>Canvas, Browser and Firefox will all save in the canvases collection.This also holds true for the embedded documents Circle, Rectangle, and Shape.</p>
+
+<p>To query for subclasses within an embedded collection you need to leverage the <em>type attribute in each subclassed object. Canvas and Shape documents, would not have it, but Browser, Firefox, Circle, and Rectangle would. Keep in mind that </em>type is a string that stores the name of the document&rsquo;s class, and as such can only be used to query for a specific subclass, and not anything it is a subclass of.</p>
+
+<p>If, for example, Rectangle was a subclass of Parallelogram which was in turn a subclass of Shape, you could search the Canvas&rsquo;s shapes collection for objects with a _type of &ldquo;Parallelogram&rdquo; but it would never return a Rectangle object, and vice-versa.</p>
+
+<p>``` ruby</p>
+
+<p>  # Returns all the Rectangle shapes in a previously found Canvas
+  my_canvas.shapes.where(_type: &ldquo;Rectangle&rdquo;)</p>
+
+<p>  # Returns no entries (see above)
+  my_canvas.shapes.where(_type: &ldquo;Shape&rdquo;)</p>
+
+<p>  # Returns all the Canvasas that have Circles
+  Canvas.where(&ldquo;shapes._type&rdquo;=>&ldquo;Circle&rdquo;)</p>
+
+<p>  # Returns no entries (see above)
+  Canvas.where(&ldquo;shapes._type'=>"Shape&rdquo;)
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Up and running Ruby on Rails on Ubuntu]]></title>
@@ -340,7 +466,7 @@ This will activate the feature ( chat in our case ) for admin group.</p>
 
 <p>  $rollout.activate_group( :chat, :all ) #activate to all, there is all group already by default</p>
 
-<p>  $rollout.activate_user( :chat, User.find_by_email(&ldquo;<a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#x3a;&#x61;&#x64;&#109;&#x69;&#110;&#x40;&#x6d;&#121;&#97;&#x70;&#112;&#46;&#x63;&#111;&#x6d;">&#x61;&#100;&#x6d;&#105;&#x6e;&#x40;&#109;&#x79;&#97;&#x70;&#112;&#x2e;&#x63;&#111;&#x6d;</a>&rdquo;) ) #activate to specific user</p>
+<p>  $rollout.activate_user( :chat, User.find_by_email(&ldquo;<a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#58;&#x61;&#100;&#x6d;&#x69;&#x6e;&#64;&#109;&#x79;&#x61;&#x70;&#112;&#x2e;&#99;&#x6f;&#x6d;">&#97;&#x64;&#x6d;&#105;&#110;&#64;&#x6d;&#121;&#97;&#112;&#x70;&#46;&#99;&#111;&#109;</a>&rdquo;) ) #activate to specific user</p>
 
 <p>  $rollout.activate_percantage( :chat, 50 ) #activate to 50% of users</p>
 

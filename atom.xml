@@ -4,7 +4,7 @@
   <title><![CDATA[Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2013-08-26T23:12:22+05:45</updated>
+  <updated>2013-08-31T01:27:39+05:45</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -12,6 +12,201 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Single Table Inheritance in Mongoid]]></title>
+    <link href="http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid/"/>
+    <updated>2013-08-30T14:04:00+05:45</updated>
+    <id>http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid</id>
+    <content type="html"><![CDATA[<p>Single table inheritance is a software pattern described by Martin Fowler. STI is basically an idea of using a single table(colection in case of mongo) to reflect multiple models that inherit from a base model.</p>
+
+<p>We use STI pattern when we are dealing with classes that have same attributes and behaviour. Rather than duplicate the same code over and over, STI helps us to use a common base model and write specific behaviours in its inherited class while keeeping data on a same table.</p>
+
+<p>Mongoid supports inheritance in both root and embedded documents. In
+scenarios where documents are inherited from their fields, relations, validations and scopes get copied down into their child documents, but not vice-versa.</p>
+
+<p>A very simple example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>    <span class="k">class</span> <span class="nc">Employee</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Document</span>
+</span><span class='line'>      <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+</span><span class='line'>      <span class="n">field</span> <span class="ss">:employee_code</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Integer</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="nc">FullTimeEmployee</span> <span class="o">&lt;</span> <span class="no">Employee</span>
+</span><span class='line'>      <span class="n">field</span> <span class="n">status</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="s2">&quot;Temporary&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="nc">InternEmployee</span> <span class="o">&lt;</span> <span class="no">Employee</span>
+</span><span class='line'>      <span class="n">field</span> <span class="n">intern_period</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Integer</span>
+</span><span class='line'>    <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<p>In the above example, both FullTimeEmployee and InternEmployee will be saved in the Employee collection. An additional attribute _type is automatically stored in order to make sure when loaded from the database the correct document is returned.</p>
+
+<p>Following behaviour can be seen, much similar to Single Table Inheritance in ActiveRecord.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">emp1</span> <span class="o">=</span> <span class="no">Employee</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="n">emp2</span> <span class="o">=</span> <span class="no">FullTimeEmployee</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="n">emp3</span> <span class="o">=</span> <span class="no">InternEmployee</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="no">Employee</span><span class="o">.</span><span class="n">count</span>
+</span><span class='line'>  <span class="c1">#=&gt; 3</span>
+</span><span class='line'>  <span class="no">FullTimeEmployee</span><span class="o">.</span><span class="n">count</span>
+</span><span class='line'>  <span class="c1">#=&gt; 1</span>
+</span><span class='line'>  <span class="no">InternEmployee</span><span class="o">.</span><span class="n">count</span>
+</span><span class='line'>  <span class="c1">#=&gt; 1</span>
+</span><span class='line'>  <span class="n">emp1</span><span class="o">.</span><span class="n">_type</span>
+</span><span class='line'>  <span class="c1">#=&gt; &quot;Employee&quot;</span>
+</span><span class='line'>  <span class="n">emp2</span><span class="o">.</span><span class="n">_type</span>
+</span><span class='line'>  <span class="c1">#=&gt; &quot;FullTimeEmployee&quot;</span>
+</span><span class='line'>  <span class="n">emp3</span><span class="o">.</span><span class="n">_type</span>
+</span><span class='line'>  <span class="c1">#=&gt; &quot;InternEmployee&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="no">Employee</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">#=&gt; Returns Employee documents and subclasses</span>
+</span><span class='line'>  <span class="no">FullTimeEmployee</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">#=&gt; returns only FullTimeEmployee documents</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>An advance example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>    <span class="k">class</span> <span class="nc">Canvas</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Document</span>
+</span><span class='line'>      <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+</span><span class='line'>      <span class="n">embeds_many</span> <span class="ss">:shapes</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="nc">Browser</span> <span class="o">&lt;</span> <span class="no">Canvas</span>
+</span><span class='line'>      <span class="n">field</span> <span class="ss">:version</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Integer</span>
+</span><span class='line'>      <span class="n">scope</span> <span class="ss">:recent</span><span class="p">,</span> <span class="n">where</span><span class="p">(</span><span class="ss">:version</span><span class="o">.</span><span class="n">gt</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="nc">Firefox</span> <span class="o">&lt;</span> <span class="no">Browser</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="nc">Shape</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Document</span>
+</span><span class='line'>      <span class="n">field</span> <span class="ss">:x</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Integer</span>
+</span><span class='line'>      <span class="n">field</span> <span class="ss">:y</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Integer</span>
+</span><span class='line'>      <span class="n">embedded_in</span> <span class="ss">:canvas</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="nc">Circle</span> <span class="o">&lt;</span> <span class="no">Shape</span>
+</span><span class='line'>      <span class="n">field</span> <span class="ss">:radius</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Float</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="nc">Rectangle</span> <span class="o">&lt;</span> <span class="no">Shape</span>
+</span><span class='line'>      <span class="n">field</span> <span class="ss">:width</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Float</span>
+</span><span class='line'>      <span class="n">field</span> <span class="ss">:height</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Float</span>
+</span><span class='line'>    <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Canvas, Browser and Firefox will all save in the canvases collection.This also holds true for the embedded documents Circle, Rectangle, and Shape.</p>
+
+<p>To query for subclasses within an embedded collection you need to leverage the <em>type attribute in each subclassed object. Canvas and Shape documents, would not have it, but Browser, Firefox, Circle, and Rectangle would. Keep in mind that </em>type is a string that stores the name of the document&rsquo;s class, and as such can only be used to query for a specific subclass, and not anything it is a subclass of.</p>
+
+<p>If, for example, Rectangle was a subclass of Parallelogram which was in turn a subclass of Shape, you could search the Canvas&rsquo;s shapes collection for objects with a _type of &ldquo;Parallelogram&rdquo; but it would never return a Rectangle object, and vice-versa.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>
+</span><span class='line'>  <span class="c1"># Returns all the Rectangle shapes in a previously found Canvas</span>
+</span><span class='line'>  <span class="n">my_canvas</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">_type</span><span class="p">:</span> <span class="s2">&quot;Rectangle&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Returns no entries (see above)</span>
+</span><span class='line'>  <span class="n">my_canvas</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">_type</span><span class="p">:</span> <span class="s2">&quot;Shape&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Returns all the Canvasas that have Circles</span>
+</span><span class='line'>  <span class="no">Canvas</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;shapes._type&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;Circle&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Returns no entries (see above)</span>
+</span><span class='line'>  <span class="no">Canvas</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;shapes._type&#39;=&gt;&quot;</span><span class="no">Shape</span><span class="s2">&quot;)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Up and running Ruby on Rails on Ubuntu]]></title>

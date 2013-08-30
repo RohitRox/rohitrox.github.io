@@ -9,12 +9,7 @@
   <meta name="author" content="Rohit Rox">
 
   
-  <meta name="description" content="6 steps for setting ruby on rails development environment in Ubuntu. Step 1: Setting up RVM 1
-2
-3
-4
-$ sudo apt-get update
-$ sudo apt-get install curl &hellip;">
+  <meta name="description" content="Single table inheritance is a software pattern described by Martin Fowler. STI is basically an idea of using a single table(colection in case of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +65,87 @@ $ sudo apt-get install curl &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/08/30/single-table-inheritance-in-mongoid/">Single Table Inheritance in Mongoid</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-30T14:04:00+05:45" pubdate data-updated="true">Aug 30<span>th</span>, 2013</time>
+        
+         | <a href="/2013/08/30/single-table-inheritance-in-mongoid/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Single table inheritance is a software pattern described by Martin Fowler. STI is basically an idea of using a single table(colection in case of mongo) to reflect multiple models that inherit from a base model.</p>
+
+<p>We use STI pattern when we are dealing with classes that have same attributes and behaviour. Rather than duplicate the same code over and over, STI helps us to use a common base model and write specific behaviours in its inherited class while keeeping data on a same table.</p>
+
+<p>Mongoid supports inheritance in both root and embedded documents. In
+scenarios where documents are inherited from their fields, relations, validations and scopes get copied down into their child documents, but not vice-versa.</p>
+
+<p>A very simple example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>    <span class="k">class</span> <span class="nc">Employee</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Document</span>
+</span><span class='line'>      <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+</span><span class='line'>      <span class="n">field</span> <span class="ss">:employee_code</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Integer</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="nc">FullTimeEmployee</span> <span class="o">&lt;</span> <span class="no">Employee</span>
+</span><span class='line'>      <span class="n">field</span> <span class="n">status</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="s2">&quot;Temporary&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="nc">InternEmployee</span> <span class="o">&lt;</span> <span class="no">Employee</span>
+</span><span class='line'>      <span class="n">field</span> <span class="n">intern_period</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Integer</span>
+</span><span class='line'>    <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/08/30/single-table-inheritance-in-mongoid/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -1060,65 +1136,6 @@ Complete documentation can be found <a href="https://github.com/jamesgolick/roll
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/11/01/oop-with-javascript/">OOP With Javascript</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-01T00:18:00+05:45" pubdate data-updated="true">Nov 1<span>st</span>, 2012</time>
-        
-         | <a href="/2012/11/01/oop-with-javascript/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>JavaScript has strong object-oriented programming capabilities, even though some debates have taken place due to the differences in object-oriented JavaScript compared to other languages.</p>
-
-<h2>Objects and Classes</h2>
-
-<p>JavaScript is a prototype-based language which contains no class statement, such as is found in C++ or Ruby. This is sometimes confusing for programmers accustomed to languages with a class statement. Instead, JavaScript uses functions as classes. Defining a class is as easy as defining a function. In the example below we define a new class called Person.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To create a new instance of an object new operator.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">my_person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/11/01/oop-with-javascript/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1149,6 +1166,10 @@ Complete documentation can be found <a href="https://github.com/jamesgolick/roll
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/08/30/single-table-inheritance-in-mongoid/">Single Table Inheritance in Mongoid</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/">Up and Running Ruby on Rails on Ubuntu</a>
       </li>
     
@@ -1164,10 +1185,6 @@ Complete documentation can be found <a href="https://github.com/jamesgolick/roll
         <a href="/2013/07/19/canvas-images-and-rails/">Canvas Images and Rails</a>
       </li>
     
-      <li class="post">
-        <a href="/2013/07/02/ruby-dynamic-methods/">Ruby Dynamic Methods</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -1178,8 +1195,9 @@ Complete documentation can be found <a href="https://github.com/jamesgolick/roll
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
 <li class='category'><a href='/blog/categories/knockoutjs/'>KnockoutJs (1)</a></li>
 <li class='category'><a href='/blog/categories/metaprogramming/'>Metaprogramming (1)</a></li>
+<li class='category'><a href='/blog/categories/mongoid/'>Mongoid (1)</a></li>
 <li class='category'><a href='/blog/categories/mysql/'>MySQL (2)</a></li>
-<li class='category'><a href='/blog/categories/rails/'>Rails (3)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>Rails (4)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (4)</a></li>
 <li class='category'><a href='/blog/categories/ubuntu/'>Ubuntu (1)</a></li>
 <li class='category'><a href='/blog/categories/vim/'>Vim (1)</a></li>
