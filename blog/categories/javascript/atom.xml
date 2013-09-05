@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Javascript | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2013-08-31T01:27:39+05:45</updated>
+  <updated>2013-09-05T23:39:57+05:45</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -12,6 +12,196 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Javascript Array Tricks]]></title>
+    <link href="http://rohitrox.github.io/2013/09/05/javascript-array-tricks/"/>
+    <updated>2013-09-05T12:07:00+05:45</updated>
+    <id>http://rohitrox.github.io/2013/09/05/javascript-array-tricks</id>
+    <content type="html"><![CDATA[<p>JavaScript, at its base, is a very simple language. Due to burst of Js framework usage, in which many new developers jumps right into, there are very useful basic JavaScript techniques and tricks which many people are unaware of.</p>
+
+<p>Today I want share some tricks with Javascript Arrays, which many developers are not using.</p>
+
+<h3>Cloning Array</h3>
+
+<p>``` javascript</p>
+
+<pre><code>var a = [1,2,3];
+var b = a;
+// bad
+// why
+
+a.pop();
+console.log(b);
+//=&gt; [1,2]
+
+var b = a.slice(0);
+a.pop();
+console.log(b);
+//=&gt; [1,2,4]
+// Good :-)
+</code></pre>
+
+<p>```</p>
+
+<!-- more -->
+
+
+<h3>Sorting</h3>
+
+<p>``` javascript</p>
+
+<pre><code>var a = [1,4,2,3];
+console.log(a.reverse());
+//=&gt; [3,2,4,1]
+console.log(a.sort());
+//=&gt; [1,2,3,4]
+
+// Sort is more powerful than we think
+// sort descending
+console.log(a.sort(function(a,b){  return (b-a); }));
+//=&gt; [4,3,2,1]
+</code></pre>
+
+<p>```</p>
+
+<p> Array.sort() accepts an optional parameter in the form of a function, which accepts two paramameters. The array elements can sorted based on the relationship between each pair of elements &ldquo;a&rdquo; and &ldquo;b&rdquo; and the function&rsquo;s return value.</p>
+
+<p> The three possible return numbers are:</p>
+
+<ul>
+<li>Less than 0: Sort &ldquo;a&rdquo; to be a lower index than &ldquo;b&rdquo;</li>
+<li>Zero: &ldquo;a&rdquo; and &ldquo;b&rdquo; should be considered equal, and no sorting performed.</li>
+<li>Greater than 0: Sort &ldquo;b&rdquo; to be a lower index than &ldquo;a&rdquo;.</li>
+</ul>
+
+
+<p>This enables us to to an array of objects also.</p>
+
+<p>``` javascript</p>
+
+<pre><code>var employees=[]
+employees[0]={name:"George", age:32, retiredate:"March 12, 2014"}
+employees[1]={name:"Edward", age:17, retiredate:"June 2, 2023"}
+employees[2]={name:"Christine", age:58, retiredate:"December 20, 2036"}
+employees[3]={name:"Sarah", age:62, retiredate:"April 30, 2020"}
+
+// Sort by employee age
+
+employees.sort(function(a, b){
+ return a.age-b.age
+});
+
+// Sort by employee name
+
+employees.sort(function(a, b){
+    var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+    if (nameA &lt; nameB) //sort string ascending
+        return -1 
+    if (nameA &gt; nameB)
+    return 1
+    return 0 //default return value (no sorting)
+ });
+
+// Sort by date (retirement date)
+
+employees.sort(function(a, b){
+var dateA=new Date(a.retiredate), dateB=new Date(b.retiredate)
+    return dateA-dateB //sort by date ascending
+});
+</code></pre>
+
+<p>})</p>
+
+<p>```</p>
+
+<p>We can even use it to randomize an array.</p>
+
+<p>``` javascript</p>
+
+<pre><code>//Randomize the order of the array:
+var myarray=[25, 8, "George", "John"]
+myarray.sort(function() {return 0.5 - Math.random()}) //Array elements now scrambled
+</code></pre>
+
+<p>```</p>
+
+<h3>Array Length for Truncation</h3>
+
+<p>``` javascript</p>
+
+<pre><code>var a = b = [1, 2, 3];
+
+a = [];
+
+// caught by JavaScript's pass-objects-by-reference nature
+// :-(  a is still [1,2,3]
+
+a.length = 0;
+// :-) // a and b both []
+</code></pre>
+
+<p>```</p>
+
+<h3>Array Merging</h3>
+
+<p>We can merge arrays with the push method.</p>
+
+<p>``` javascript</p>
+
+<pre><code>var a = [1,2,3];
+var b = [4,5];
+
+// Array.prototype.push.apply(mergeTo, mergeFrom);
+
+Array.prototype.push.apply(a, b);
+
+// a is [1,2,3,4,5]
+</code></pre>
+
+<p>```</p>
+
+<h3>Checking existence of element</h3>
+
+<p>``` javascript</p>
+
+<pre><code>a = [1,2,3];
+// use indexOf method, returns a value greater that -1 if the element existes
+if (arr.indexOf(3) &gt; -1){
+    console.log('exists');
+}else{
+    console.log('does not exist');
+}
+</code></pre>
+
+<p>```</p>
+
+<h3>Remove Array element by Index</h3>
+
+<p>``` javascript</p>
+
+<pre><code>test = new Array();
+test[0] = 'Apple';
+test[1] = 'Ball';
+test[2] = 'Cat';
+test[3] = 'Dog';
+
+// array.splice(index,1);
+
+// lets remove index 2
+
+popped = test.splice(2,1);
+// test is ['Apple', 'Ball', 'Dog']
+// popped is ['Cat']
+</code></pre>
+
+<p>```</p>
+
+<p>More about splice <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice">here</a>.</p>
+
+<h3></h3>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Get Selected text from Web Page]]></title>

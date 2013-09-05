@@ -4,7 +4,7 @@
   <title><![CDATA[Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2013-08-31T01:27:39+05:45</updated>
+  <updated>2013-09-05T23:39:57+05:45</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -12,6 +12,267 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Javascript Array Tricks]]></title>
+    <link href="http://rohitrox.github.io/2013/09/05/javascript-array-tricks/"/>
+    <updated>2013-09-05T12:07:00+05:45</updated>
+    <id>http://rohitrox.github.io/2013/09/05/javascript-array-tricks</id>
+    <content type="html"><![CDATA[<p>JavaScript, at its base, is a very simple language. Due to burst of Js framework usage, in which many new developers jumps right into, there are very useful basic JavaScript techniques and tricks which many people are unaware of.</p>
+
+<p>Today I want share some tricks with Javascript Arrays, which many developers are not using.</p>
+
+<h3>Cloning Array</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
+</span><span class='line'>    <span class="c1">// bad</span>
+</span><span class='line'>    <span class="c1">// why</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">a</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
+</span><span class='line'>    <span class="c1">//=&gt; [1,2]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">a</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
+</span><span class='line'>    <span class="c1">//=&gt; [1,2,4]</span>
+</span><span class='line'>    <span class="c1">// Good :-)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<h3>Sorting</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">reverse</span><span class="p">());</span>
+</span><span class='line'>    <span class="c1">//=&gt; [3,2,4,1]</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">sort</span><span class="p">());</span>
+</span><span class='line'>    <span class="c1">//=&gt; [1,2,3,4]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Sort is more powerful than we think</span>
+</span><span class='line'>    <span class="c1">// sort descending</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">){</span>  <span class="k">return</span> <span class="p">(</span><span class="nx">b</span><span class="o">-</span><span class="nx">a</span><span class="p">);</span> <span class="p">}));</span>
+</span><span class='line'>    <span class="c1">//=&gt; [4,3,2,1]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p> Array.sort() accepts an optional parameter in the form of a function, which accepts two paramameters. The array elements can sorted based on the relationship between each pair of elements &ldquo;a&rdquo; and &ldquo;b&rdquo; and the function&rsquo;s return value.</p>
+
+<p> The three possible return numbers are:</p>
+
+<ul>
+<li>Less than 0: Sort &ldquo;a&rdquo; to be a lower index than &ldquo;b&rdquo;</li>
+<li>Zero: &ldquo;a&rdquo; and &ldquo;b&rdquo; should be considered equal, and no sorting performed.</li>
+<li>Greater than 0: Sort &ldquo;b&rdquo; to be a lower index than &ldquo;a&rdquo;.</li>
+</ul>
+
+
+<p>This enables us to to an array of objects also.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">employees</span><span class="o">=</span><span class="p">[]</span>
+</span><span class='line'>    <span class="nx">employees</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="s2">&quot;George&quot;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span><span class="mi">32</span><span class="p">,</span> <span class="nx">retiredate</span><span class="o">:</span><span class="s2">&quot;March 12, 2014&quot;</span><span class="p">}</span>
+</span><span class='line'>    <span class="nx">employees</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="s2">&quot;Edward&quot;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span><span class="mi">17</span><span class="p">,</span> <span class="nx">retiredate</span><span class="o">:</span><span class="s2">&quot;June 2, 2023&quot;</span><span class="p">}</span>
+</span><span class='line'>    <span class="nx">employees</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="s2">&quot;Christine&quot;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span><span class="mi">58</span><span class="p">,</span> <span class="nx">retiredate</span><span class="o">:</span><span class="s2">&quot;December 20, 2036&quot;</span><span class="p">}</span>
+</span><span class='line'>    <span class="nx">employees</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="s2">&quot;Sarah&quot;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span><span class="mi">62</span><span class="p">,</span> <span class="nx">retiredate</span><span class="o">:</span><span class="s2">&quot;April 30, 2020&quot;</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Sort by employee age</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">employees</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+</span><span class='line'>     <span class="k">return</span> <span class="nx">a</span><span class="p">.</span><span class="nx">age</span><span class="o">-</span><span class="nx">b</span><span class="p">.</span><span class="nx">age</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Sort by employee name</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">employees</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">nameA</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">(),</span> <span class="nx">nameB</span><span class="o">=</span><span class="nx">b</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">nameA</span> <span class="o">&lt;</span> <span class="nx">nameB</span><span class="p">)</span> <span class="c1">//sort string ascending</span>
+</span><span class='line'>            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">nameA</span> <span class="o">&gt;</span> <span class="nx">nameB</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">0</span> <span class="c1">//default return value (no sorting)</span>
+</span><span class='line'>     <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Sort by date (retirement date)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">employees</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">dateA</span><span class="o">=</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">retiredate</span><span class="p">),</span> <span class="nx">dateB</span><span class="o">=</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">retiredate</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">dateA</span><span class="o">-</span><span class="nx">dateB</span> <span class="c1">//sort by date ascending</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can even use it to randomize an array.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//Randomize the order of the array:</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">myarray</span><span class="o">=</span><span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;George&quot;</span><span class="p">,</span> <span class="s2">&quot;John&quot;</span><span class="p">]</span>
+</span><span class='line'><span class="nx">myarray</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="mf">0.5</span> <span class="o">-</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()})</span> <span class="c1">//Array elements now scrambled</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Array Length for Truncation</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">a</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// caught by JavaScript&#39;s pass-objects-by-reference nature</span>
+</span><span class='line'><span class="c1">// :-(  a is still [1,2,3]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">a</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="c1">// :-) // a and b both []</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Array Merging</h3>
+
+<p>We can merge arrays with the push method.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Array.prototype.push.apply(mergeTo, mergeFrom);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">push</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// a is [1,2,3,4,5]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Checking existence of element</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+</span><span class='line'><span class="c1">// use indexOf method, returns a value greater that -1 if the element existes</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;exists&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;does not exist&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Remove Array element by Index</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="nx">test</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">test</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Apple&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">test</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Ball&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">test</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Cat&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">test</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Dog&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// array.splice(index,1);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// lets remove index 2</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">popped</span> <span class="o">=</span> <span class="nx">test</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>    <span class="c1">// test is [&#39;Apple&#39;, &#39;Ball&#39;, &#39;Dog&#39;]</span>
+</span><span class='line'>    <span class="c1">// popped is [&#39;Cat&#39;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>More about splice <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice">here</a>.</p>
+
+<h3></h3>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Single Table Inheritance in Mongoid]]></title>

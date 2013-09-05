@@ -9,7 +9,7 @@
   <meta name="author" content="Rohit Rox">
 
   
-  <meta name="description" content="Single table inheritance is a software pattern described by Martin Fowler. STI is basically an idea of using a single table(colection in case of &hellip;">
+  <meta name="description" content="JavaScript, at its base, is a very simple language. Due to burst of Js framework usage, in which many new developers jumps right into, there are very &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,86 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/09/05/javascript-array-tricks/">Javascript Array Tricks</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-05T12:07:00+05:45" pubdate data-updated="true">Sep 5<span>th</span>, 2013</time>
+        
+         | <a href="/2013/09/05/javascript-array-tricks/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>JavaScript, at its base, is a very simple language. Due to burst of Js framework usage, in which many new developers jumps right into, there are very useful basic JavaScript techniques and tricks which many people are unaware of.</p>
+
+<p>Today I want share some tricks with Javascript Arrays, which many developers are not using.</p>
+
+<h3>Cloning Array</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
+</span><span class='line'>    <span class="c1">// bad</span>
+</span><span class='line'>    <span class="c1">// why</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">a</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
+</span><span class='line'>    <span class="c1">//=&gt; [1,2]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">a</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
+</span><span class='line'>    <span class="c1">//=&gt; [1,2,4]</span>
+</span><span class='line'>    <span class="c1">// Good :-)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/09/05/javascript-array-tricks/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -1066,76 +1146,6 @@ Complete documentation can be found <a href="https://github.com/jamesgolick/roll
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/11/03/mysql-commands/">MySql Commands</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-03T14:26:00+05:45" pubdate data-updated="true">Nov 3<span>rd</span>, 2012</time>
-        
-         | <a href="/2012/11/03/mysql-commands/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This is a short-list of handy MySQL commands that I have to use time and time again, in my development machine as well as in servers and for importing and exporting databases.</p>
-
-<p>Login to mysql console (from unix bash)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mysql -u user -p
-</span><span class='line'><span class="c"># if host name is required</span>
-</span><span class='line'><span class="nv">$ </span>mysql -h hostname -u user -p
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Create a new database</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; create database databasename;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>List all databases</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; show databases;
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/11/03/mysql-commands/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1166,6 +1176,10 @@ Complete documentation can be found <a href="https://github.com/jamesgolick/roll
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/09/05/javascript-array-tricks/">Javascript Array Tricks</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/08/30/single-table-inheritance-in-mongoid/">Single Table Inheritance in Mongoid</a>
       </li>
     
@@ -1181,10 +1195,6 @@ Complete documentation can be found <a href="https://github.com/jamesgolick/roll
         <a href="/2013/08/18/lets-learn-to-knockout/">Lets Learn to Knockout</a>
       </li>
     
-      <li class="post">
-        <a href="/2013/07/19/canvas-images-and-rails/">Canvas Images and Rails</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -1192,7 +1202,7 @@ Complete documentation can be found <a href="https://github.com/jamesgolick/roll
     <ul id="category-list"><li class='category'><a href='/blog/categories/canvas/'>Canvas (1)</a></li>
 <li class='category'><a href='/blog/categories/html5/'>HTML5 (1)</a></li>
 <li class='category'><a href='/blog/categories/jquery/'>JQuery (2)</a></li>
-<li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
+<li class='category'><a href='/blog/categories/javascript/'>Javascript (5)</a></li>
 <li class='category'><a href='/blog/categories/knockoutjs/'>KnockoutJs (1)</a></li>
 <li class='category'><a href='/blog/categories/metaprogramming/'>Metaprogramming (1)</a></li>
 <li class='category'><a href='/blog/categories/mongoid/'>Mongoid (1)</a></li>
