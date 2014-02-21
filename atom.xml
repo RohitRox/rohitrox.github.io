@@ -4,7 +4,7 @@
   <title><![CDATA[Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2013-09-05T23:39:57+05:45</updated>
+  <updated>2014-02-21T17:21:34+05:45</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -12,6 +12,146 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[hangman game with emberjs]]></title>
+    <link href="http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs/"/>
+    <updated>2014-02-20T18:00:00+05:45</updated>
+    <id>http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs</id>
+    <content type="html"><![CDATA[<p>I built hangman game with emberjs, <a href="http://rohitrox.github.io/hangman-with-ember">quick prevew</a>. The game deals with more of view stuffs than other parts, I would like to share some thoughts and tricks I learned during the process.</p>
+
+<p><img src="http://rohitrox.github.io/images/blog_post_images/hangman-ember.png" alt="hangman game with emberjs" /></p>
+
+<p>I am not an ember expert so the way I have done may not be the optimal way of doing things in ember. Instead of walking through each steps, the code is well commented you can easily walk through, here I will describe striking stuffs.</p>
+
+<!-- more -->
+
+
+<h3>View and Controller back-and-forth</h3>
+
+<p>As you can see in the UI we have buttons with alphabets through which we capture user input. For this, I created my own input view that extended from Ember.TextField.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="c1"># app/views/hangman_input.coffee</span>
+</span><span class='line'><span class="nv">App.HangmanInputView = </span><span class="nx">Ember</span><span class="p">.</span><span class="nx">TextField</span><span class="p">.</span><span class="nx">extend</span>
+</span><span class='line'>  <span class="nv">type: </span><span class="s">&quot;button&quot;</span>
+</span><span class='line'>  <span class="nv">resetted: </span><span class="kc">false</span>
+</span><span class='line'>  <span class="nv">didInsertElement: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">@get</span><span class="p">(</span><span class="s">&#39;targetObject&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s">&#39;reset&#39;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="nx">@reset</span><span class="p">,</span> <span class="nx">@</span><span class="p">));</span>
+</span><span class='line'>  <span class="nv">click: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nv">value = </span><span class="nx">@get</span><span class="p">(</span><span class="s">&#39;value&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="nv">controller = </span><span class="nx">@get</span><span class="p">(</span><span class="s">&#39;targetObject&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">controller</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s">&#39;submit&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nx">@resetted</span>
+</span><span class='line'>      <span class="nx">@set</span><span class="p">(</span><span class="s">&#39;resetted&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="nx">@toggleProperty</span><span class="p">(</span><span class="s">&#39;disabled&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nv">reset: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">@set</span><span class="p">(</span><span class="s">&#39;disabled&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">@set</span><span class="p">(</span><span class="s">&#39;resetted&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We get the current controller via <code>@get('targetObject')</code> then we can call action of controller with send.</p>
+
+<p>We also need to be able to trigger view action &lsquo;reset&rsquo; from the controller. The reset action resets the the input panel.</p>
+
+<p>The trick is well described <a href="http://stackoverflow.com/questions/15991871/ember-js-how-to-trigger-view-method-from-controller">here</a> using Ember.Evented mixin.</p>
+
+<h2>Controller properties sortable</h2>
+
+<p>I have set scores in the setupConctroller of IndexRoute. What I want to do it, for each game session I create a Score model and push it to scores but I want to be auto sorted by latest &lsquo;id&rsquo;. For this we can do something like this</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="c1"># app/routes/index.coffee</span>
+</span><span class='line'><span class="nv">App.IndexRoute = </span><span class="nx">Ember</span><span class="p">.</span><span class="nx">Route</span><span class="p">.</span><span class="nx">extend</span>
+</span><span class='line'>  <span class="nv">model: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="c1"># ...</span>
+</span><span class='line'>    <span class="nv">score = </span><span class="nx">@store</span><span class="p">.</span><span class="nx">createRecord</span><span class="p">(</span><span class="s">&#39;score&#39;</span><span class="p">,{</span><span class="nv">value: </span><span class="mi">0</span><span class="p">})</span>
+</span><span class='line'>    <span class="c1"># sort scores by id desc so that latest score comes on top in UI</span>
+</span><span class='line'>    <span class="nv">scores = </span><span class="nx">Ember</span><span class="p">.</span><span class="nx">ArrayProxy</span><span class="p">.</span><span class="nx">createWithMixins</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">SortableMixin</span><span class="p">,</span>
+</span><span class='line'>      <span class="nv">content: </span><span class="p">[</span><span class="nx">controller</span><span class="p">.</span><span class="nx">current_score</span><span class="p">]</span>
+</span><span class='line'>      <span class="nv">sortProperties: </span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span>
+</span><span class='line'>      <span class="nv">sortAscending: </span><span class="kc">false</span>
+</span><span class='line'>    <span class="nx">controller</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s">&#39;scores&#39;</span><span class="p">,</span> <span class="nx">scores</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Helpers Gotchas</h2>
+
+<p>I wrote a helper to display the green bars that represents the life.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="c1"># app/helpers/life_blocks.coffee</span>
+</span><span class='line'>  <span class="nx">Ember</span><span class="p">.</span><span class="nx">Handlebars</span><span class="p">.</span><span class="nx">registerHelper</span> <span class="s">&quot;life_blocks&quot;</span><span class="p">,</span> <span class="nf">(n) -&gt;</span>
+</span><span class='line'>    <span class="nv">accum = </span><span class="s">&quot;&quot;</span>
+</span><span class='line'>    <span class="nv">i = </span><span class="mi">0</span>
+</span><span class='line'>    <span class="nv">n = </span><span class="nx">@get</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span>
+</span><span class='line'>      <span class="nx">accum</span> <span class="o">+=</span> <span class="s">&#39;&lt;div&gt;&lt;/div&gt;&#39;</span>
+</span><span class='line'>      <span class="o">++</span><span class="nx">i</span>
+</span><span class='line'>    <span class="nx">accum</span>
+</span><span class='line'>    <span class="k">new</span> <span class="nx">Handlebars</span><span class="p">.</span><span class="nx">SafeString</span><span class="p">(</span><span class="nx">accum</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And from template we could do something like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;life&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    {{ life_blocks life }}
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>life is a property in the controller.</p>
+
+<p>Now what happens is by default life here is not bound to the life property in controller. So the trick is register helper with  &lsquo;Ember.Handlebars.registerBoundHelper&rsquo;</p>
+
+<p>Rest others are pretty straight forward.</p>
+
+<p>I have used brunch with tapas-with-ember. I found brunch better than grunt.</p>
+
+<p>I would love to hear feedback and corrections where necessary.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Javascript Array Tricks]]></title>
