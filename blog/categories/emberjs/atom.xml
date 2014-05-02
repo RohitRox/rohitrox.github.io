@@ -4,7 +4,7 @@
   <title><![CDATA[Category: emberjs | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/emberjs/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2014-02-21T17:21:34+05:45</updated>
+  <updated>2014-05-03T00:14:38+05:45</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -12,6 +12,127 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Emberjs and Highcharts]]></title>
+    <link href="http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts/"/>
+    <updated>2014-03-16T15:13:00+05:45</updated>
+    <id>http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts</id>
+    <content type="html"><![CDATA[<p>Lets write a reusable ember view for rendering graphs and charts powered by <a href="http://highcharts.com">highcharts</a>.</p>
+
+<p>``` coffeescript</p>
+
+<pre><code>App.HighChartsView = Ember.View.extend
+  tagName: 'div'
+  classNames: [ 'highcharts' ]
+  chartConfig = {}
+
+  setConfig: (type)-&gt;
+    config = {
+      chart:
+        type: type
+      title:
+        text: @title || 'Highcharts'
+      xAxis:
+        categories: @dataset.categories || []
+      yAxis:
+          title:
+            text: @yAxisTitle
+      series: @series()
+    }
+    # Merge highcharts config if it is present
+    Ember.merge(config, @highChartConfig) if @highChartConfig
+    @set('chartConfig', config)
+
+  series: -&gt;
+    @dataset.data
+
+  prepareConfig: -&gt;
+    # if custom config is present then directly set it to chartConfig
+    if @customHighChartConfig
+      @set('chartConfig', @customHighChartConfig)
+    else
+      type = @type || 'line'
+      @setConfig(type)
+
+  didInsertElement: -&gt;
+    @prepareConfig()
+    @renderHighchart()
+
+  renderHighchart: -&gt;
+    @$().highcharts(@chartConfig)
+</code></pre>
+
+<p>```</p>
+
+<p>Usage:</p>
+
+<p>
+<code>
+  {{ view App.HighChartsView dataset=dataset title="Sample Analytics" type="line" yAxisTitle='Temperature C' }}
+</code>
+</p>
+
+<p>Th dataset can be set at controller or may be at route.</p>
+
+<p>
+```
+  App.IndexController = Ember.ArrayController.extend</p>
+
+<pre><code>dataset: {
+  categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  data: [{
+            name: 'Tokyo',
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        }, {
+            name: 'New York',
+            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+        }, {
+            name: 'Berlin',
+            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+        }, {
+            name: 'London',
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+        }]
+  }
+</code></pre>
+
+<p>```
+</p>
+
+<p>Usage with control over config</p>
+
+<p>
+<code>
+  {{ view App.HighChartsView dataset=dataset highChartConfig=highChartConfig title="Sample Analytics" type="line" }}
+</code>
+</p>
+
+<p>
+```
+  App.IndexController = Ember.ArrayController.extend</p>
+
+<pre><code>highChartConfig: {
+  yAxis: {
+    title: {
+        text: 'Temperature (°C)'
+    },
+    plotLines: [{
+        value: 0,
+        width: 1,
+        color: '#808080'
+    }]
+  },
+  tooltip: {
+      valueSuffix: '°C'
+    }
+  }
+</code></pre>
+
+<p>```
+</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[hangman game with emberjs]]></title>

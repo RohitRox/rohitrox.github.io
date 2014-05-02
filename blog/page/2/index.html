@@ -9,7 +9,7 @@
   <meta name="author" content="Rohit Rox">
 
   
-  <meta name="description" content="Vim quick tips and tricks, listing some useful, essential and most often used Vim commands. Moving Around Command Action j or Up Arrow Move the &hellip;">
+  <meta name="description" content="Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,93 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/03/18/feature-flippers-with-rollout/">Feature Flippers With Rollout</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-18T12:09:00+05:45" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
+        
+         | <a href="/2013/03/18/feature-flippers-with-rollout/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try it out before it goes massive.</p>
+
+<p>So lets rollout.</p>
+
+<p>First of all, make sure that you have redis, because rollout uses redis as its backend. Then add <code>gem 'rollout'</code> to gemfile and bundle install.</p>
+
+<p>Now, we need to create a rollout setup file inside initializer.</p>
+
+<p>Let&rsquo;s name it rollout_init.rb which looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>
+</span><span class='line'>  <span class="vg">$redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="vg">$rollout</span> <span class="o">=</span> <span class="no">Rollout</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$redis</span><span class="p">)</span>
+</span><span class='line'>  <span class="vg">$rollout</span><span class="o">.</span><span class="n">define_group</span><span class="p">(</span><span class="ss">:admin</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">admin?</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Documentation suggests to use a global variables. So we create one with a new redis instance.
+Then, we create rollout instance passsing that redis instance. We can configure rollout in many ways, here we are defining an admin group by passing a block and checking whether the user belongs to that group or not.
+Complete documentation can be found <a href="https://github.com/jamesgolick/rollout">here</a>.</p>
+
+<p>Next, we can now use handy rollout method like for example let&rsquo;s say we need to activate chat feature for admin group only.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">if</span> <span class="vg">$rollout</span><span class="o">.</span><span class="n">active?</span> <span class="ss">:chat</span><span class="p">,</span> <span class="n">current_user</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/03/18/feature-flippers-with-rollout/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -608,6 +695,10 @@ It is assumed that MySQL has been installed in your computer.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/16/emberjs-and-highcharts/">Emberjs and Highcharts</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/02/20/hangman-game-with-emberjs/">Hangman Game With Emberjs</a>
       </li>
     
@@ -621,10 +712,6 @@ It is assumed that MySQL has been installed in your computer.</p>
     
       <li class="post">
         <a href="/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/">Up and Running Ruby on Rails on Ubuntu</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/08/23/get-selected-text-from-webpage/">Get Selected Text From Web Page</a>
       </li>
     
   </ul>
@@ -643,7 +730,8 @@ It is assumed that MySQL has been installed in your computer.</p>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (4)</a></li>
 <li class='category'><a href='/blog/categories/ubuntu/'>Ubuntu (1)</a></li>
 <li class='category'><a href='/blog/categories/vim/'>Vim (1)</a></li>
-<li class='category'><a href='/blog/categories/emberjs/'>emberjs (1)</a></li>
+<li class='category'><a href='/blog/categories/emberjs/'>emberjs (2)</a></li>
+<li class='category'><a href='/blog/categories/highcharts/'>highcharts (1)</a></li>
 </ul>
 </section><a class="twitter-timeline" href="https://twitter.com/roxxypoxxy" data-widget-id="365563816915902464" data-tweet-limit="5">Tweets</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>

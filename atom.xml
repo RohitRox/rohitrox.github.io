@@ -4,7 +4,7 @@
   <title><![CDATA[Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2014-02-21T17:21:34+05:45</updated>
+  <updated>2014-05-03T00:14:38+05:45</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -12,6 +12,188 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Emberjs and Highcharts]]></title>
+    <link href="http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts/"/>
+    <updated>2014-03-16T15:13:00+05:45</updated>
+    <id>http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts</id>
+    <content type="html"><![CDATA[<p>Lets write a reusable ember view for rendering graphs and charts powered by <a href="http://highcharts.com">highcharts</a>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">App.HighChartsView = </span><span class="nx">Ember</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span>
+</span><span class='line'>  <span class="nv">tagName: </span><span class="s">&#39;div&#39;</span>
+</span><span class='line'>  <span class="nv">classNames: </span><span class="p">[</span> <span class="s">&#39;highcharts&#39;</span> <span class="p">]</span>
+</span><span class='line'>  <span class="nv">chartConfig = </span><span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">setConfig: </span><span class="nf">(type)-&gt;</span>
+</span><span class='line'>    <span class="nv">config = </span><span class="p">{</span>
+</span><span class='line'>      <span class="nv">chart:</span>
+</span><span class='line'>        <span class="nv">type: </span><span class="nx">type</span>
+</span><span class='line'>      <span class="nv">title:</span>
+</span><span class='line'>        <span class="nv">text: </span><span class="nx">@title</span> <span class="o">||</span> <span class="s">&#39;Highcharts&#39;</span>
+</span><span class='line'>      <span class="nv">xAxis:</span>
+</span><span class='line'>        <span class="nv">categories: </span><span class="nx">@dataset</span><span class="p">.</span><span class="nx">categories</span> <span class="o">||</span> <span class="p">[]</span>
+</span><span class='line'>      <span class="nv">yAxis:</span>
+</span><span class='line'>          <span class="nv">title:</span>
+</span><span class='line'>            <span class="nv">text: </span><span class="nx">@yAxisTitle</span>
+</span><span class='line'>      <span class="nv">series: </span><span class="nx">@series</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1"># Merge highcharts config if it is present</span>
+</span><span class='line'>    <span class="nx">Ember</span><span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="nx">config</span><span class="p">,</span> <span class="nx">@highChartConfig</span><span class="p">)</span> <span class="k">if</span> <span class="nx">@highChartConfig</span>
+</span><span class='line'>    <span class="nx">@set</span><span class="p">(</span><span class="s">&#39;chartConfig&#39;</span><span class="p">,</span> <span class="nx">config</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">series: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">@dataset</span><span class="p">.</span><span class="nx">data</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">prepareConfig: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="c1"># if custom config is present then directly set it to chartConfig</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nx">@customHighChartConfig</span>
+</span><span class='line'>      <span class="nx">@set</span><span class="p">(</span><span class="s">&#39;chartConfig&#39;</span><span class="p">,</span> <span class="nx">@customHighChartConfig</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="nv">type = </span><span class="nx">@type</span> <span class="o">||</span> <span class="s">&#39;line&#39;</span>
+</span><span class='line'>      <span class="nx">@setConfig</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">didInsertElement: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">@prepareConfig</span><span class="p">()</span>
+</span><span class='line'>    <span class="nx">@renderHighchart</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">renderHighchart: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">@$</span><span class="p">().</span><span class="nx">highcharts</span><span class="p">(</span><span class="nx">@chartConfig</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Usage:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="p">{{</span> <span class="nx">view</span> <span class="nx">App</span><span class="p">.</span><span class="nx">HighChartsView</span> <span class="nx">dataset</span><span class="o">=</span><span class="nx">dataset</span> <span class="nx">title</span><span class="o">=</span><span class="s">&quot;Sample Analytics&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span> <span class="nx">yAxisTitle</span><span class="o">=</span><span class="s">&#39;Temperature C&#39;</span> <span class="p">}}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Th dataset can be set at controller or may be at route.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="nv">App.IndexController = </span><span class="nx">Ember</span><span class="p">.</span><span class="nx">ArrayController</span><span class="p">.</span><span class="nx">extend</span>
+</span><span class='line'>    <span class="nv">dataset: </span><span class="p">{</span>
+</span><span class='line'>      <span class="nv">categories: </span><span class="p">[</span><span class="s">&#39;Jan&#39;</span><span class="p">,</span> <span class="s">&#39;Feb&#39;</span><span class="p">,</span> <span class="s">&#39;Mar&#39;</span><span class="p">,</span> <span class="s">&#39;Apr&#39;</span><span class="p">,</span> <span class="s">&#39;May&#39;</span><span class="p">,</span> <span class="s">&#39;Jun&#39;</span><span class="p">,</span><span class="s">&#39;Jul&#39;</span><span class="p">,</span> <span class="s">&#39;Aug&#39;</span><span class="p">,</span> <span class="s">&#39;Sep&#39;</span><span class="p">,</span> <span class="s">&#39;Oct&#39;</span><span class="p">,</span> <span class="s">&#39;Nov&#39;</span><span class="p">,</span> <span class="s">&#39;Dec&#39;</span><span class="p">],</span>
+</span><span class='line'>      <span class="nv">data: </span><span class="p">[{</span>
+</span><span class='line'>                <span class="nv">name: </span><span class="s">&#39;Tokyo&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nv">data: </span><span class="p">[</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">6.9</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">,</span> <span class="mf">14.5</span><span class="p">,</span> <span class="mf">18.2</span><span class="p">,</span> <span class="mf">21.5</span><span class="p">,</span> <span class="mf">25.2</span><span class="p">,</span> <span class="mf">26.5</span><span class="p">,</span> <span class="mf">23.3</span><span class="p">,</span> <span class="mf">18.3</span><span class="p">,</span> <span class="mf">13.9</span><span class="p">,</span> <span class="mf">9.6</span><span class="p">]</span>
+</span><span class='line'>            <span class="p">},</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nv">name: </span><span class="s">&#39;New York&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nv">data: </span><span class="p">[</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">5.7</span><span class="p">,</span> <span class="mf">11.3</span><span class="p">,</span> <span class="mf">17.0</span><span class="p">,</span> <span class="mf">22.0</span><span class="p">,</span> <span class="mf">24.8</span><span class="p">,</span> <span class="mf">24.1</span><span class="p">,</span> <span class="mf">20.1</span><span class="p">,</span> <span class="mf">14.1</span><span class="p">,</span> <span class="mf">8.6</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">]</span>
+</span><span class='line'>            <span class="p">},</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nv">name: </span><span class="s">&#39;Berlin&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nv">data: </span><span class="p">[</span><span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">8.4</span><span class="p">,</span> <span class="mf">13.5</span><span class="p">,</span> <span class="mf">17.0</span><span class="p">,</span> <span class="mf">18.6</span><span class="p">,</span> <span class="mf">17.9</span><span class="p">,</span> <span class="mf">14.3</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">3.9</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+</span><span class='line'>            <span class="p">},</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nv">name: </span><span class="s">&#39;London&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nv">data: </span><span class="p">[</span><span class="mf">3.9</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">,</span> <span class="mf">5.7</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">,</span> <span class="mf">11.9</span><span class="p">,</span> <span class="mf">15.2</span><span class="p">,</span> <span class="mf">17.0</span><span class="p">,</span> <span class="mf">16.6</span><span class="p">,</span> <span class="mf">14.2</span><span class="p">,</span> <span class="mf">10.3</span><span class="p">,</span> <span class="mf">6.6</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">]</span>
+</span><span class='line'>            <span class="p">}]</span>
+</span><span class='line'>      <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Usage with control over config</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="p">{{</span> <span class="nx">view</span> <span class="nx">App</span><span class="p">.</span><span class="nx">HighChartsView</span> <span class="nx">dataset</span><span class="o">=</span><span class="nx">dataset</span> <span class="nx">highChartConfig</span><span class="o">=</span><span class="nx">highChartConfig</span> <span class="nx">title</span><span class="o">=</span><span class="s">&quot;Sample Analytics&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span> <span class="p">}}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="nv">App.IndexController = </span><span class="nx">Ember</span><span class="p">.</span><span class="nx">ArrayController</span><span class="p">.</span><span class="nx">extend</span>
+</span><span class='line'>    <span class="nv">highChartConfig: </span><span class="p">{</span>
+</span><span class='line'>      <span class="nv">yAxis: </span><span class="p">{</span>
+</span><span class='line'>        <span class="nv">title: </span><span class="p">{</span>
+</span><span class='line'>            <span class="nv">text: </span><span class="s">&#39;Temperature (°C)&#39;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nv">plotLines: </span><span class="p">[{</span>
+</span><span class='line'>            <span class="nv">value: </span><span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>            <span class="nv">width: </span><span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>            <span class="nv">color: </span><span class="s">&#39;#808080&#39;</span>
+</span><span class='line'>        <span class="p">}]</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nv">tooltip: </span><span class="p">{</span>
+</span><span class='line'>          <span class="nv">valueSuffix: </span><span class="s">&#39;°C&#39;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[hangman game with emberjs]]></title>
