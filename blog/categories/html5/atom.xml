@@ -4,7 +4,7 @@
   <title><![CDATA[Category: HTML5 | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/html5/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2014-05-03T00:14:38+05:45</updated>
+  <updated>2014-12-07T15:17:08-05:00</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Canvas Images and Rails]]></title>
     <link href="http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/"/>
-    <updated>2013-07-19T15:15:00+05:45</updated>
+    <updated>2013-07-19T15:15:00-04:00</updated>
     <id>http://rohitrox.github.io/2013/07/19/canvas-images-and-rails</id>
     <content type="html"><![CDATA[<p>With the introduction of Canvas, HTML5 has empower us to draw shapes, graphs, render texts, make gradients and patterns, manipulate images pixels, set an animations, even creating a stunning games!
 All this stuffs occur on the client side in the browsers.

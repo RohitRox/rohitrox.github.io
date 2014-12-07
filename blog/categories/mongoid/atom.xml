@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mongoid | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/mongoid/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2014-05-03T00:14:38+05:45</updated>
+  <updated>2014-12-07T15:17:08-05:00</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Single Table Inheritance in Mongoid]]></title>
     <link href="http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid/"/>
-    <updated>2013-08-30T14:04:00+05:45</updated>
+    <updated>2013-08-30T14:04:00-04:00</updated>
     <id>http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid</id>
     <content type="html"><![CDATA[<p>Single table inheritance is a software pattern described by Martin Fowler. STI is basically an idea of using a single table(colection in case of mongo) to reflect multiple models that inherit from a base model.</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Metaprogramming | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/metaprogramming/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2014-05-03T00:14:38+05:45</updated>
+  <updated>2014-12-07T15:17:08-05:00</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Ruby Dynamic Methods]]></title>
     <link href="http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/"/>
-    <updated>2013-07-02T11:27:00+05:45</updated>
+    <updated>2013-07-02T11:27:00-04:00</updated>
     <id>http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods</id>
     <content type="html"><![CDATA[<p>We define methods using <strong><em>def</em></strong> keywords which is fine for most of the cases.</p>
 

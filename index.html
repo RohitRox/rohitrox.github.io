@@ -9,29 +9,7 @@
   <meta name="author" content="Rohit Rox">
 
   
-  <meta name="description" content="Lets write a reusable ember view for rendering graphs and charts powered by highcharts. 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23 &hellip;">
+  <meta name="description" content="Ember Cli and Rails Setup Rails setup is pretty staright forward with rails new .. and new ember cli app with ember new .. but with following folder &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +71,114 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/2014/12/06/embercli-and-rails-and-beyond/">Ember Cli and Rails and Beyond</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-06T16:44:00-05:00" pubdate data-updated="true">Dec 6<span>th</span>, 2014</time>
+        
+         | <a href="/2014/12/06/embercli-and-rails-and-beyond/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Ember Cli and Rails Setup</h3>
+
+<p>Rails setup is pretty staright forward with <code>rails new ..</code> and new ember cli app with <code>ember new ..</code>  but with following folder configuration</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  | embercli-rails-app
+</span><span class='line'>  |-- rails  
+</span><span class='line'>  |-- ember</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Inside of main project folder we&rsquo;ll have a folder which will contain the rails code and another folder which will contain ember code only.</p>
+
+<p>We would like to have coffeescript.</p>
+
+<p>For coffeescript</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  $ npm install --save-dev ember-cli-coffeescript</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and renaming .js files to .coffee and correcting the js syntax to coffee will do the trick.</p>
+
+<p>Make sure that ember app is all well by using <code>ember server</code> and visiting <a href="http://localhost:4200.">http://localhost:4200.</a></p>
+
+<p>Before proceeding, it would be nice to have some tests.</p>
+
+<p>Lets create a new test at &lsquo;ember/tests/integration/home-page-test.coffee&rsquo;.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="o">`</span><span class="nx">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">&#39;ember&#39;</span><span class="o">`</span>
+</span><span class='line'>  <span class="o">`</span><span class="nx">import</span> <span class="nx">startApp</span> <span class="nx">from</span> <span class="s">&#39;cli-app/tests/helpers/start-app&#39;</span><span class="o">`</span>
+</span><span class='line'>  <span class="o">`</span><span class="nx">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">&#39;ember&#39;</span><span class="o">`</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">App = </span><span class="kc">null</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">module</span> <span class="s">&#39;Integration - Home Page&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nv">setup: </span><span class="nf">-&gt;</span>
+</span><span class='line'>      <span class="nv">App = </span><span class="nx">startApp</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">,</span>
+</span><span class='line'>    <span class="nv">teardown: </span><span class="nf">-&gt;</span>
+</span><span class='line'>      <span class="nx">Ember</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">App</span><span class="p">,</span> <span class="s">&#39;destroy&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">test</span> <span class="s">&#39;Should have Welcome test&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">visit</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">).</span><span class="nx">then</span> <span class="nf">-&gt;</span>
+</span><span class='line'>      <span class="nx">equal</span><span class="p">(</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;h2#title&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(),</span> <span class="s">&#39;Welcome to Ember.js&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Visit <a href="http://localhost:4200/tests">http://localhost:4200/tests</a> to run the tests.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2014/12/06/embercli-and-rails-and-beyond/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/2014/03/16/emberjs-and-highcharts/">Emberjs and Highcharts</a></h1>
     
     
@@ -109,7 +195,7 @@
   
 
 
-<time datetime="2014-03-16T15:13:00+05:45" pubdate data-updated="true">Mar 16<span>th</span>, 2014</time>
+<time datetime="2014-03-16T15:13:00-04:00" pubdate data-updated="true">Mar 16<span>th</span>, 2014</time>
         
          | <a href="/2014/03/16/emberjs-and-highcharts/#disqus_thread">Comments</a>
         
@@ -118,7 +204,7 @@
   </header>
 
 
-  <div class="entry-content"><p>Lets write a reusable ember view for rendering graphs and charts powered by <a href="http://highcharts.com">highcharts</a>.</p>
+  <div class="entry-content"><p>Let&rsquo;s write a reusable ember view for rendering graphs and charts powered by <a href="http://highcharts.com">highcharts</a>.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -320,7 +406,7 @@
   
 
 
-<time datetime="2014-02-20T18:00:00+05:45" pubdate data-updated="true">Feb 20<span>th</span>, 2014</time>
+<time datetime="2014-02-20T18:00:00-05:00" pubdate data-updated="true">Feb 20<span>th</span>, 2014</time>
         
          | <a href="/2014/02/20/hangman-game-with-emberjs/#disqus_thread">Comments</a>
         
@@ -367,7 +453,7 @@
   
 
 
-<time datetime="2013-09-05T12:07:00+05:45" pubdate data-updated="true">Sep 5<span>th</span>, 2013</time>
+<time datetime="2013-09-05T12:07:00-04:00" pubdate data-updated="true">Sep 5<span>th</span>, 2013</time>
         
          | <a href="/2013/09/05/javascript-array-tricks/#disqus_thread">Comments</a>
         
@@ -447,7 +533,7 @@
   
 
 
-<time datetime="2013-08-30T14:04:00+05:45" pubdate data-updated="true">Aug 30<span>th</span>, 2013</time>
+<time datetime="2013-08-30T14:04:00-04:00" pubdate data-updated="true">Aug 30<span>th</span>, 2013</time>
         
          | <a href="/2013/08/30/single-table-inheritance-in-mongoid/#disqus_thread">Comments</a>
         
@@ -528,7 +614,7 @@ scenarios where documents are inherited from their fields, relations, validation
   
 
 
-<time datetime="2013-08-26T22:27:00+05:45" pubdate data-updated="true">Aug 26<span>th</span>, 2013</time>
+<time datetime="2013-08-26T22:27:00-04:00" pubdate data-updated="true">Aug 26<span>th</span>, 2013</time>
         
          | <a href="/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/#disqus_thread">Comments</a>
         
@@ -691,7 +777,7 @@ scenarios where documents are inherited from their fields, relations, validation
   
 
 
-<time datetime="2013-08-23T14:03:00+05:45" pubdate data-updated="true">Aug 23<span>rd</span>, 2013</time>
+<time datetime="2013-08-23T14:03:00-04:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2013</time>
         
          | <a href="/2013/08/23/get-selected-text-from-webpage/#disqus_thread">Comments</a>
         
@@ -783,7 +869,7 @@ scenarios where documents are inherited from their fields, relations, validation
   
 
 
-<time datetime="2013-08-18T23:55:00+05:45" pubdate data-updated="true">Aug 18<span>th</span>, 2013</time>
+<time datetime="2013-08-18T23:55:00-04:00" pubdate data-updated="true">Aug 18<span>th</span>, 2013</time>
         
          | <a href="/2013/08/18/lets-learn-to-knockout/#disqus_thread">Comments</a>
         
@@ -930,7 +1016,7 @@ learn.knockoutjs.com before proceeding.</p>
   
 
 
-<time datetime="2013-07-19T15:15:00+05:45" pubdate data-updated="true">Jul 19<span>th</span>, 2013</time>
+<time datetime="2013-07-19T15:15:00-04:00" pubdate data-updated="true">Jul 19<span>th</span>, 2013</time>
         
          | <a href="/2013/07/19/canvas-images-and-rails/#disqus_thread">Comments</a>
         
@@ -1028,7 +1114,7 @@ Now lets render that canvas as an image.</p>
   
 
 
-<time datetime="2013-07-02T11:27:00+05:45" pubdate data-updated="true">Jul 2<span>nd</span>, 2013</time>
+<time datetime="2013-07-02T11:27:00-04:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2013</time>
         
          | <a href="/2013/07/02/ruby-dynamic-methods/#disqus_thread">Comments</a>
         
@@ -1087,60 +1173,6 @@ Now lets render that canvas as an image.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/05/23/jquery-performance-tuning/">Jquery Performance Tuning</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-23T15:35:00+05:45" pubdate data-updated="true">May 23<span>rd</span>, 2013</time>
-        
-         | <a href="/2013/05/23/jquery-performance-tuning/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>After searching and digging a lot of artciles about improving jquery performance in web apps, I decided to make a list of best common performance tips and bect practices. We&rsquo;ll also reveal some of JQuery&rsquo;s hidden feature and how we can use them for performance tuning.</p>
-
-<p>Lets divide this post into 4 main categoris.</p>
-
-<ul>
-<li>Selector Performace</li>
-<li>DOM Manipulation</li>
-<li>Events</li>
-<li>Digging into JQuery Secrets</li>
-<li>General and All-Time performance tricks</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2013/05/23/jquery-performance-tuning/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1171,6 +1203,10 @@ Now lets render that canvas as an image.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/12/06/embercli-and-rails-and-beyond/">Ember Cli and Rails and Beyond</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/16/emberjs-and-highcharts/">Emberjs and Highcharts</a>
       </li>
     
@@ -1186,27 +1222,25 @@ Now lets render that canvas as an image.</p>
         <a href="/2013/08/30/single-table-inheritance-in-mongoid/">Single Table Inheritance in Mongoid</a>
       </li>
     
-      <li class="post">
-        <a href="/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/">Up and Running Ruby on Rails on Ubuntu</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li class='category'><a href='/blog/categories/canvas/'>Canvas (1)</a></li>
+<li class='category'><a href='/blog/categories/embercli/'>EmberCli (1)</a></li>
+<li class='category'><a href='/blog/categories/emberjs/'>EmberJs (2)</a></li>
 <li class='category'><a href='/blog/categories/html5/'>HTML5 (1)</a></li>
 <li class='category'><a href='/blog/categories/jquery/'>JQuery (2)</a></li>
-<li class='category'><a href='/blog/categories/javascript/'>Javascript (5)</a></li>
+<li class='category'><a href='/blog/categories/javascript/'>Javascript (6)</a></li>
 <li class='category'><a href='/blog/categories/knockoutjs/'>KnockoutJs (1)</a></li>
 <li class='category'><a href='/blog/categories/metaprogramming/'>Metaprogramming (1)</a></li>
 <li class='category'><a href='/blog/categories/mongoid/'>Mongoid (1)</a></li>
 <li class='category'><a href='/blog/categories/mysql/'>MySQL (2)</a></li>
-<li class='category'><a href='/blog/categories/rails/'>Rails (4)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>Rails (5)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (4)</a></li>
 <li class='category'><a href='/blog/categories/ubuntu/'>Ubuntu (1)</a></li>
 <li class='category'><a href='/blog/categories/vim/'>Vim (1)</a></li>
-<li class='category'><a href='/blog/categories/emberjs/'>emberjs (2)</a></li>
+<li class='category'><a href='/blog/categories/emberjs/'>emberjs (1)</a></li>
 <li class='category'><a href='/blog/categories/highcharts/'>highcharts (1)</a></li>
 </ul>
 </section><a class="twitter-timeline" href="https://twitter.com/roxxypoxxy" data-widget-id="365563816915902464" data-tweet-limit="5">Tweets</a>

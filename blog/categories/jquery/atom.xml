@@ -4,7 +4,7 @@
   <title><![CDATA[Category: JQuery | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/jquery/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2014-05-03T00:14:38+05:45</updated>
+  <updated>2014-12-07T15:17:08-05:00</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Get Selected text from Web Page]]></title>
     <link href="http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage/"/>
-    <updated>2013-08-23T14:03:00+05:45</updated>
+    <updated>2013-08-23T14:03:00-04:00</updated>
     <id>http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage</id>
     <content type="html"><![CDATA[<p>This is a quick tip you can use for getting the selected text from your webpage.</p>
 
@@ -60,7 +60,7 @@
   <entry>
     <title type="html"><![CDATA[Jquery performance Tuning]]></title>
     <link href="http://rohitrox.github.io/2013/05/23/jquery-performance-tuning/"/>
-    <updated>2013-05-23T15:35:00+05:45</updated>
+    <updated>2013-05-23T15:35:00-04:00</updated>
     <id>http://rohitrox.github.io/2013/05/23/jquery-performance-tuning</id>
     <content type="html"><![CDATA[<p>After searching and digging a lot of artciles about improving jquery performance in web apps, I decided to make a list of best common performance tips and bect practices. We&rsquo;ll also reveal some of JQuery&rsquo;s hidden feature and how we can use them for performance tuning.</p>
 

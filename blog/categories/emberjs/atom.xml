@@ -4,7 +4,7 @@
   <title><![CDATA[Category: emberjs | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/emberjs/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2014-05-03T00:14:38+05:45</updated>
+  <updated>2014-12-07T15:17:08-05:00</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -16,9 +16,9 @@
   <entry>
     <title type="html"><![CDATA[Emberjs and Highcharts]]></title>
     <link href="http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts/"/>
-    <updated>2014-03-16T15:13:00+05:45</updated>
+    <updated>2014-03-16T15:13:00-04:00</updated>
     <id>http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts</id>
-    <content type="html"><![CDATA[<p>Lets write a reusable ember view for rendering graphs and charts powered by <a href="http://highcharts.com">highcharts</a>.</p>
+    <content type="html"><![CDATA[<p>Let&rsquo;s write a reusable ember view for rendering graphs and charts powered by <a href="http://highcharts.com">highcharts</a>.</p>
 
 <p>``` coffeescript</p>
 
@@ -131,119 +131,6 @@
 
 <p>```
 </p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[hangman game with emberjs]]></title>
-    <link href="http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs/"/>
-    <updated>2014-02-20T18:00:00+05:45</updated>
-    <id>http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs</id>
-    <content type="html"><![CDATA[<p>I built hangman game with emberjs, <a href="http://rohitrox.github.io/hangman-with-ember">quick prevew</a>. The game deals with more of view stuffs than other parts, I would like to share some thoughts and tricks I learned during the process.</p>
-
-<p><img src="/images/blog_post_images/hangman-ember.png" alt="hangman game with emberjs" /></p>
-
-<p>I am not an ember expert so the way I have done may not be the optimal way of doing things in ember. Instead of walking through each steps, the code is well commented you can easily walk through, here I will describe striking stuffs.</p>
-
-<!-- more -->
-
-
-<h3>View and Controller back-and-forth</h3>
-
-<p>As you can see in the UI we have buttons with alphabets through which we capture user input. For this, I created my own input view that extended from Ember.TextField.</p>
-
-<p>``` coffeescript</p>
-
-<pre><code># app/views/hangman_input.coffee
-App.HangmanInputView = Ember.TextField.extend
-  type: "button"
-  resetted: false
-  didInsertElement: -&gt;
-    @get('targetObject').on('reset', $.proxy(@reset, @));
-  click: -&gt;
-    value = @get('value')
-    controller = @get('targetObject')
-    controller.send('submit', value)
-    if @resetted
-      @set('resetted', false)
-    else
-      @toggleProperty('disabled')
-  reset: -&gt;
-    @set('disabled', false)
-    @set('resetted', true)
-</code></pre>
-
-<p>```</p>
-
-<p>We get the current controller via <code>@get('targetObject')</code> then we can call action of controller with send.</p>
-
-<p>We also need to be able to trigger view action &lsquo;reset&rsquo; from the controller. The reset action resets the the input panel.</p>
-
-<p>The trick is well described <a href="http://stackoverflow.com/questions/15991871/ember-js-how-to-trigger-view-method-from-controller">here</a> using Ember.Evented mixin.</p>
-
-<h2>Controller properties sortable</h2>
-
-<p>I have set scores in the setupConctroller of IndexRoute. What I want to do it, for each game session I create a Score model and push it to scores but I want to be auto sorted by latest &lsquo;id&rsquo;. For this we can do something like this</p>
-
-<p>``` coffeescript</p>
-
-<pre><code># app/routes/index.coffee
-App.IndexRoute = Ember.Route.extend
-  model: -&gt;
-    # ...
-    score = @store.createRecord('score',{value: 0})
-    # sort scores by id desc so that latest score comes on top in UI
-    scores = Ember.ArrayProxy.createWithMixins Ember.SortableMixin,
-      content: [controller.current_score]
-      sortProperties: ['id']
-      sortAscending: false
-    controller.set('scores', scores)
-</code></pre>
-
-<p>```</p>
-
-<h2>Helpers Gotchas</h2>
-
-<p>I wrote a helper to display the green bars that represents the life.</p>
-
-<p>``` coffeescript
-  # app/helpers/life_blocks.coffee
-  Ember.Handlebars.registerHelper &ldquo;life_blocks&rdquo;, (n) &ndash;></p>
-
-<pre><code>accum = ""
-i = 0
-n = @get(n)
-while i &lt; n
-  accum += '&lt;div&gt;&lt;/div&gt;'
-  ++i
-accum
-new Handlebars.SafeString(accum)
-</code></pre>
-
-<p>```</p>
-
-<p>And from template we could do something like</p>
-
-<p>
-``` html
-  <div class="life"></p>
-
-<pre><code>{{ life_blocks life }}
-</code></pre>
-
-<p>  </div></p>
-
-<p>```
-
-life is a property in the controller.</p>
-
-<p>Now what happens is by default life here is not bound to the life property in controller. So the trick is register helper with  &lsquo;Ember.Handlebars.registerBoundHelper&rsquo;</p>
-
-<p>Rest others are pretty straight forward.</p>
-
-<p>I have used brunch with tapas-with-ember. I found brunch better than grunt.</p>
-
-<p>I would love to hear feedback and corrections where necessary.</p>
 ]]></content>
   </entry>
   

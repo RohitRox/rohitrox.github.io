@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MySQL | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/mysql/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2014-05-03T00:14:38+05:45</updated>
+  <updated>2014-12-07T15:17:08-05:00</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[MySql commands]]></title>
     <link href="http://rohitrox.github.io/2012/11/03/mysql-commands/"/>
-    <updated>2012-11-03T14:26:00+05:45</updated>
+    <updated>2012-11-03T14:26:00-04:00</updated>
     <id>http://rohitrox.github.io/2012/11/03/mysql-commands</id>
     <content type="html"><![CDATA[<p>This is a short-list of handy MySQL commands that I have to use time and time again, in my development machine as well as in servers and for importing and exporting databases.</p>
 
@@ -165,7 +165,7 @@ Dump all databases
   <entry>
     <title type="html"><![CDATA[Interacting to MySQL using Ruby]]></title>
     <link href="http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby/"/>
-    <updated>2012-10-30T00:58:00+05:45</updated>
+    <updated>2012-10-30T00:58:00-04:00</updated>
     <id>http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby</id>
     <content type="html"><![CDATA[<p>This tutorials guides you to go straight into interacting with MySQL database using Ruby alone. No Rails.
 It is assumed that MySQL has been installed in your computer.</p>

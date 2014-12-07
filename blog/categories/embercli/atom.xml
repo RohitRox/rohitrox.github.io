@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: EmberCli | Blog @ RohitRox]]></title>
+  <link href="http://rohitrox.github.io/blog/categories/embercli/atom.xml" rel="self"/>
+  <link href="http://rohitrox.github.io/"/>
+  <updated>2014-12-07T15:17:08-05:00</updated>
+  <id>http://rohitrox.github.io/</id>
+  <author>
+    <name><![CDATA[Rohit Rox]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ember Cli and Rails And Beyond]]></title>
+    <link href="http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond/"/>
+    <updated>2014-12-06T16:44:00-05:00</updated>
+    <id>http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond</id>
+    <content type="html"><![CDATA[<h3>Ember Cli and Rails Setup</h3>
+
+<p>Rails setup is pretty staright forward with <code>rails new ..</code> and new ember cli app with <code>ember new ..</code>  but with following folder configuration</p>
+
+<p><code>
+  | embercli-rails-app
+  |-- rails  
+  |-- ember
+</code>
+Inside of main project folder we&rsquo;ll have a folder which will contain the rails code and another folder which will contain ember code only.</p>
+
+<p>We would like to have coffeescript.</p>
+
+<p>For coffeescript</p>
+
+<p><code>
+  $ npm install --save-dev ember-cli-coffeescript
+</code></p>
+
+<p>and renaming .js files to .coffee and correcting the js syntax to coffee will do the trick.</p>
+
+<p>Make sure that ember app is all well by using <code>ember server</code> and visiting <a href="http://localhost:4200.">http://localhost:4200.</a></p>
+
+<p>Before proceeding, it would be nice to have some tests.</p>
+
+<p>Lets create a new test at &lsquo;ember/tests/integration/home-page-test.coffee&rsquo;.</p>
+
+<p>``` coffeescript</p>
+
+<p>  <code>import Ember from 'ember'</code>
+  <code>import startApp from 'cli-app/tests/helpers/start-app'</code>
+  <code>import Ember from 'ember'</code></p>
+
+<p>  App = null</p>
+
+<p>  module &lsquo;Integration &ndash; Home Page&rsquo;,</p>
+
+<pre><code>setup: -&gt;
+  App = startApp()
+,
+teardown: -&gt;
+  Ember.run(App, 'destroy')
+</code></pre>
+
+<p>  test &lsquo;Should have Welcome test&rsquo;, &ndash;></p>
+
+<pre><code>visit('/').then -&gt;
+  equal(find('h2#title').text(), 'Welcome to Ember.js');
+</code></pre>
+
+<p>```
+Visit <a href="http://localhost:4200/tests">http://localhost:4200/tests</a> to run the tests.</p>
+
+<!-- more -->
+
+
+<h3>Rails Api</h3>
+
+<p>Let&rsquo;s quickly build an api that can be consumed by our ember app. We are skipping out the tests.</p>
+
+<p><code>
+  rails g model post title:string body:text
+  rake db:create db:migrate db:seed
+  rails g serializer post
+</code>
+We are going to make our api under api namespace so routes and controllers are as follows:</p>
+
+<p>``` ruby
+  // config/routes.rb
+  namespace :api do</p>
+
+<pre><code>resources :posts
+</code></pre>
+
+<p>  end
+```</p>
+
+<p>``` ruby
+  // app/controllers/api/posts_controller.rb
+  class Api::PostsController &lt; ApplicationController</p>
+
+<pre><code>def index
+  render json: Post.all
+end
+
+def show
+  render json: Post.find(params[:id])
+end
+</code></pre>
+
+<p>  end
+<code>``
+Boot rails server and make sure api is working using curl command</code>curl <a href="http://0.0.0.0:3000/api/posts">http://0.0.0.0:3000/api/posts</a>` and see if it outputs json data.</p>
+
+<h3>Ember Data and stuffs</h3>
+
+<p>First, create ember model for Post model.</p>
+
+<p><code>
+  $ ember generate model post title:string body:string
+</code></p>
+
+<p>Then setup routes and templates.</p>
+
+<p>``` coffeescript
+  # app/router.coffee
+  Router.map &ndash;></p>
+
+<pre><code>@resource 'posts'
+</code></pre>
+
+<p><code>
+
+</code> html
+  # app/templates/posts.hbs
+  <h3>Listing All Posts:</h3>
+  <ul>
+  {{ #each }}</p>
+
+<pre><code>&lt;li&gt;{{ title }}&lt;/li&gt;
+</code></pre>
+
+<p>  {{ /each }}
+  </ul>
+```
+
+Finally, let&rsquo;s setup the adapter.</p>
+
+<p><code>`` coffeescript
+  # ember/app/adapters/application.coffee
+ </code>import DS from &lsquo;ember-data&rsquo;`</p>
+
+<p>  ApplicationAdapter = DS.ActiveModelAdapter.extend</p>
+
+<pre><code>namespace: "api"
+</code></pre>
+
+<p>  <code>export default ApplicationAdapter</code>
+```</p>
+
+<p>Now let&rsquo;s fire the ember server and visit <a href="http://localhost:4200/posts.">http://localhost:4200/posts.</a>
+Nothing happens! In console we can see that there was request was made on url <a href="http://localhost:4200/api/posts.">http://localhost:4200/api/posts.</a>
+We need a way to redirect this resource to rails app.</p>
+
+<p>This can be fixed by one line using ember server with proxy enabled.
+<code>
+  $ ember server --proxy http://localhost:3000
+</code></p>
+
+<h3>More Tests</h3>
+
+<p>Let&rsquo;s try to test this new posts page feature. In test we cannot hit rails server to get posts so we will use a tool called <a href="https://github.com/trek/pretender">Pretender</a> to mock the request-response.</p>
+
+<p><code>
+  $ npm install --save-dev ember-cli-pretender
+  $ ember generate ember-cli-pretender
+</code></p>
+
+<p>Our test setup and test would be something like below:</p>
+
+<p><code>`` coffeescript
+  # tests/integration/posts-page-test.coffee
+ </code>import Ember from &lsquo;ember&rsquo;<code>
+ </code>import startApp from &lsquo;cli-app/tests/helpers/start-app&rsquo;<code>
+ </code>import Ember from &lsquo;ember&rsquo;<code>
+ </code>import Pretender from &lsquo;pretender&rsquo;`</p>
+
+<p>  App = null</p>
+
+<p>  module &lsquo;Integration &ndash; Posts Page&rsquo;,</p>
+
+<pre><code>setup: -&gt;
+  App = startApp()
+  posts = [
+    {
+      id: 1,
+      title: 'Posts 1'
+    },
+    {
+      id: 2,
+      title: 'Posts 2'
+    }
+  ]
+  # pretender for faking ajax request
+  server = new Pretender -&gt;
+    @get '/api/posts', (request) -&gt;
+      [200, {"Content-Type": "application/json"}, JSON.stringify({posts: posts})]
+,
+teardown: -&gt;
+  Ember.run(App, 'destroy')
+</code></pre>
+
+<p>  test &lsquo;Should display posts&rsquo;, &ndash;></p>
+
+<pre><code>visit('/').then -&gt;
+  click('a').then -&gt;
+    equal(find('h3').text(), 'Listing All Posts:');
+    equal(find('li:contains("Posts 1")').length, 1);
+    equal(find('li:contains("Posts 2")').length, 1);
+</code></pre>
+
+<p>```
+Visit <a href="http://localhost:4200/tests">http://localhost:4200/tests</a> to run the tests.</p>
+
+<h3>Integration and Deployment</h3>
+
+<p>We would like to compile and move the ember-cli produced css and js files to rails in production environment. This little script helps us to automate this task:</p>
+
+<p>``` bash</p>
+
+<p>  #!/bin/bash
+  # Based on <a href="https://github.com/knomedia/ember-cli-rails/blob/master/build.sh">https://github.com/knomedia/ember-cli-rails/blob/master/build.sh</a></p>
+
+<p>  function printMessage {</p>
+
+<pre><code>color=$(tput setaf $1)
+message=$2
+reset=$(tput sgr0)
+echo -e "${color}${message}${reset}"
+</code></pre>
+
+<p>  }</p>
+
+<p>  function boldMessage {</p>
+
+<pre><code>color=$(tput setaf $1)
+message=$2
+reset=$(tput sgr0)
+echo -e "${color}*************************************${reset}"
+echo -e "${color}${message}${reset}"
+echo -e "${color}*************************************${reset}"
+</code></pre>
+
+<p>  }</p>
+
+<p>  cd cli-app
+  boldMessage 4 &ldquo;Building Ember app&rdquo;</p>
+
+<p>  ember build &mdash;environment production
+  cd ../rails/</p>
+
+<p>  rm -rf public/ember-assets</p>
+
+<p>  printMessage 4 &ldquo;Copying ember build files to rails&rdquo;
+  cp -r ../cli-app/dist/ public/</p>
+
+<p>  printMessage 4 &ldquo;Swaping assets dir for ember-assets&rdquo;
+  mv public/assets public/ember-assets</p>
+
+<p>  printMessage 4 &ldquo;Replacing references s/assets/ember-assets/ in public/index.html&rdquo;
+  sed -i .bck s/assets/ember-assets/ public/index.html</p>
+
+<p>  printMessage 4 &ldquo;inserting csrf_meta_tags in head&rdquo;
+  sed -i .bck &rsquo;s/&lt;\/head>/&lt;%= csrf_meta_tags %>&amp;/&lsquo; public/index.html</p>
+
+<p>  printMessage 4 &ldquo;inserting yield in body&rdquo;
+  sed -i .bck &rsquo;s/<body>/&amp;&lt;%= yield %>/&lsquo; public/index.html</p>
+
+<p>  printMessage 4 &ldquo;Replacing application.html.erb with index.html&rdquo;
+  mv public/index.html app/views/layouts/application.html.erb</p>
+
+<p>  printMessage 4 &ldquo;Cleaning Up&rdquo;
+  rm -rf public_bk/
+  rm public/index.html.bck</p>
+
+<p>  boldMessage 4 &ldquo;Done&rdquo;
+```</p>
+
+<p>Now, we can shutdown ember server and visit localhost:3000, we can still see our ember app there.</p>
+
+<p>To deploy our app we need to deploy our rails app only. We can put out both frontend and backend in single repo or in different repo. I have put both in a single <a href="https://github.com/RohitRox/embercli-rails">repo</a>. Do <code>config.serve_static_assets = true</code> in production.rb We can deploy like any other rails app. I have deployed this app to <a href="https://embercli-rails.herokuapp.com/posts">heroku</a>. One gotcha is that heroku expects the app directory structure at the root of the repository. So to deploy we will have to push differently:
+<code>
+  $ git subtree push --prefix rails heroku master
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

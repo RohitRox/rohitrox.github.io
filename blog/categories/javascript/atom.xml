@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Javascript | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2014-05-03T00:14:38+05:45</updated>
+  <updated>2014-12-07T15:17:08-05:00</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -14,9 +14,122 @@
 
   
   <entry>
+    <title type="html"><![CDATA[hangman game with emberjs]]></title>
+    <link href="http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs/"/>
+    <updated>2014-02-20T18:00:00-05:00</updated>
+    <id>http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs</id>
+    <content type="html"><![CDATA[<p>I built hangman game with emberjs, <a href="http://rohitrox.github.io/hangman-with-ember">quick prevew</a>. The game deals with more of view stuffs than other parts, I would like to share some thoughts and tricks I learned during the process.</p>
+
+<p><img src="/images/blog_post_images/hangman-ember.png" alt="hangman game with emberjs" /></p>
+
+<p>I am not an ember expert so the way I have done may not be the optimal way of doing things in ember. Instead of walking through each steps, the code is well commented you can easily walk through, here I will describe striking stuffs.</p>
+
+<!-- more -->
+
+
+<h3>View and Controller back-and-forth</h3>
+
+<p>As you can see in the UI we have buttons with alphabets through which we capture user input. For this, I created my own input view that extended from Ember.TextField.</p>
+
+<p>``` coffeescript</p>
+
+<pre><code># app/views/hangman_input.coffee
+App.HangmanInputView = Ember.TextField.extend
+  type: "button"
+  resetted: false
+  didInsertElement: -&gt;
+    @get('targetObject').on('reset', $.proxy(@reset, @));
+  click: -&gt;
+    value = @get('value')
+    controller = @get('targetObject')
+    controller.send('submit', value)
+    if @resetted
+      @set('resetted', false)
+    else
+      @toggleProperty('disabled')
+  reset: -&gt;
+    @set('disabled', false)
+    @set('resetted', true)
+</code></pre>
+
+<p>```</p>
+
+<p>We get the current controller via <code>@get('targetObject')</code> then we can call action of controller with send.</p>
+
+<p>We also need to be able to trigger view action &lsquo;reset&rsquo; from the controller. The reset action resets the the input panel.</p>
+
+<p>The trick is well described <a href="http://stackoverflow.com/questions/15991871/ember-js-how-to-trigger-view-method-from-controller">here</a> using Ember.Evented mixin.</p>
+
+<h2>Controller properties sortable</h2>
+
+<p>I have set scores in the setupConctroller of IndexRoute. What I want to do it, for each game session I create a Score model and push it to scores but I want to be auto sorted by latest &lsquo;id&rsquo;. For this we can do something like this</p>
+
+<p>``` coffeescript</p>
+
+<pre><code># app/routes/index.coffee
+App.IndexRoute = Ember.Route.extend
+  model: -&gt;
+    # ...
+    score = @store.createRecord('score',{value: 0})
+    # sort scores by id desc so that latest score comes on top in UI
+    scores = Ember.ArrayProxy.createWithMixins Ember.SortableMixin,
+      content: [controller.current_score]
+      sortProperties: ['id']
+      sortAscending: false
+    controller.set('scores', scores)
+</code></pre>
+
+<p>```</p>
+
+<h2>Helpers Gotchas</h2>
+
+<p>I wrote a helper to display the green bars that represents the life.</p>
+
+<p>``` coffeescript
+  # app/helpers/life_blocks.coffee
+  Ember.Handlebars.registerHelper &ldquo;life_blocks&rdquo;, (n) &ndash;></p>
+
+<pre><code>accum = ""
+i = 0
+n = @get(n)
+while i &lt; n
+  accum += '&lt;div&gt;&lt;/div&gt;'
+  ++i
+accum
+new Handlebars.SafeString(accum)
+</code></pre>
+
+<p>```</p>
+
+<p>And from template we could do something like</p>
+
+<p>
+``` html
+  <div class="life"></p>
+
+<pre><code>{{ life_blocks life }}
+</code></pre>
+
+<p>  </div></p>
+
+<p>```
+
+life is a property in the controller.</p>
+
+<p>Now what happens is by default life here is not bound to the life property in controller. So the trick is register helper with  &lsquo;Ember.Handlebars.registerBoundHelper&rsquo;</p>
+
+<p>Rest others are pretty straight forward.</p>
+
+<p>I have used brunch with tapas-with-ember. I found brunch better than grunt.</p>
+
+<p>I would love to hear feedback and corrections where necessary.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Javascript Array Tricks]]></title>
     <link href="http://rohitrox.github.io/2013/09/05/javascript-array-tricks/"/>
-    <updated>2013-09-05T12:07:00+05:45</updated>
+    <updated>2013-09-05T12:07:00-04:00</updated>
     <id>http://rohitrox.github.io/2013/09/05/javascript-array-tricks</id>
     <content type="html"><![CDATA[<p>JavaScript, at its base, is a very simple language. Due to burst of Js framework usage, in which many new developers jumps right into, there are very useful basic JavaScript techniques and tricks which many people are unaware of.</p>
 
@@ -206,7 +319,7 @@ popped = test.splice(2,1);
   <entry>
     <title type="html"><![CDATA[Get Selected text from Web Page]]></title>
     <link href="http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage/"/>
-    <updated>2013-08-23T14:03:00+05:45</updated>
+    <updated>2013-08-23T14:03:00-04:00</updated>
     <id>http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage</id>
     <content type="html"><![CDATA[<p>This is a quick tip you can use for getting the selected text from your webpage.</p>
 
@@ -250,7 +363,7 @@ popped = test.splice(2,1);
   <entry>
     <title type="html"><![CDATA[Canvas Images and Rails]]></title>
     <link href="http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/"/>
-    <updated>2013-07-19T15:15:00+05:45</updated>
+    <updated>2013-07-19T15:15:00-04:00</updated>
     <id>http://rohitrox.github.io/2013/07/19/canvas-images-and-rails</id>
     <content type="html"><![CDATA[<p>With the introduction of Canvas, HTML5 has empower us to draw shapes, graphs, render texts, make gradients and patterns, manipulate images pixels, set an animations, even creating a stunning games!
 All this stuffs occur on the client side in the browsers.
@@ -391,7 +504,7 @@ end
   <entry>
     <title type="html"><![CDATA[OOP with Javascript]]></title>
     <link href="http://rohitrox.github.io/2012/11/01/oop-with-javascript/"/>
-    <updated>2012-11-01T00:18:00+05:45</updated>
+    <updated>2012-11-01T00:18:00-04:00</updated>
     <id>http://rohitrox.github.io/2012/11/01/oop-with-javascript</id>
     <content type="html"><![CDATA[<p>JavaScript has strong object-oriented programming capabilities, even though some debates have taken place due to the differences in object-oriented JavaScript compared to other languages.</p>
 
@@ -503,66 +616,6 @@ is created or require multiple instances of the object where each instance
 can be changed during the lifetime of the script.</p>
 
 <p>For a literally notated object, you simply use it by referencing its variable name,whereas with constructor functions you need to instantiate (create a new instance of) the object first.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Javascript Static and Instance methods]]></title>
-    <link href="http://rohitrox.github.io/2012/10/31/javascript-static-and-instance-methods/"/>
-    <updated>2012-10-31T23:05:00+05:45</updated>
-    <id>http://rohitrox.github.io/2012/10/31/javascript-static-and-instance-methods</id>
-    <content type="html"><![CDATA[<p>Custom JavaScript objects can have instance methods (function that are associated with a particular JavaScript object), but like other Object-Oriented languages, they can also have <em>static</em> methods, that is functions that are associated with the JavaScript class that created an object, as opposed to the object itself. This is useful in cases where a function (a.k.a. a method) will not be different in different object instances.</p>
-
-<!-- more -->
-
-
-<p>An instance method could be added to this class in one of two ways, either inside the constructor or through the class prototype.
-``` javascript</p>
-
-<pre><code>function Calculator()
-    {       
-            // instance method in constructor
-        this.multiply = function(val1 , val2)
-        {
-            return (val1*val2);
-        }
-    }
-
-// instance method via prototype
-Calculator.prototype.add = function(val1 , val2)
-    {
-        return (val1+val2);
-    }
-
-// calling 
-var calc = new Calculator();
-alert( calc.multiply(4,3) );
-alert( calc.add(4,3) );
-</code></pre>
-
-<p><code>
-However, it shouldn’t really be necessary to create an object to use the multiply or add method, since the method isn’t dependent on the state of the object for its execution. The method can be moved to the class to clean up this code a bit. First the class definition is created, which looks almost identical to the instance method declaration above, with the exception of the prototype keyword being removed:
-</code> javascript</p>
-
-<pre><code>function Calculator()
-{
-    ...
-}
-
-Calculator.multiply = function(val1 , val2)
-{
-    return (val1*val2);
-}
-</code></pre>
-
-<p><code>
-Now the multiply method can be called through the class itself, instead of an instance of the class, like so:
-</code> javascript</p>
-
-<pre><code>alert( Calculator.multiply(4,3) );
-</code></pre>
-
-<p>```</p>
 ]]></content>
   </entry>
   
