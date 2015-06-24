@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2014-12-07T15:17:08-05:00</updated>
+  <updated>2015-06-24T02:14:43-04:00</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -12,6 +12,180 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[So you want to create an awesome rails api backed with jwt]]></title>
+    <link href="http://rohitrox.github.io/2015/06/23/so-you-want-to-create-an-awesome-rails-api-backed-with-jwt/"/>
+    <updated>2015-06-23T21:23:00-04:00</updated>
+    <id>http://rohitrox.github.io/2015/06/23/so-you-want-to-create-an-awesome-rails-api-backed-with-jwt</id>
+    <content type="html"><![CDATA[<p>Stand-alone client side applications, REST, API, JSON Web Token is all over the web. Last week I sat with one of my friend (Front-End Developer) to hack an Javascript MVC app with Rails-Api.</p>
+
+<p>An awesome api, in the minds have following characterstics:</p>
+
+<ul>
+<li>Excellent docs with success and failure sample response</li>
+<li>A standard authorization mechanism</li>
+<li>Consistent response body and codes</li>
+</ul>
+
+
+<p>However, being an api developer in addition to that, I would like to have an automated tool that would help me to make sure that docs are always upto date with the api and I would like to use the latest and adopted authentication mechanism.</p>
+
+<p>I would like to share my story of api development with Rails-api, Rspec, Rspec-api-documentation and JSON Web Token(JWT).</p>
+
+<p>This is not a long tutorial about getting started with rails-devise-jwt, there is already lots of articles about what and why JWT and using JWT with ruby and rails. This is a blueprint of an end-to-end solution I adopted for development of an api.</p>
+
+<p>The sample app is available <a href="https://github.com/RohitRox/Rails-API-and-JWT">here at github</a>.</p>
+
+<p>The <a href="https://github.com/RohitRox/Rails-API-and-JWT/commits/master">commit</a> in the speaks itself for steps that were done.</p>
+
+<!-- more -->
+
+
+<p>The first seven commits are all about setting up an rails-api app, getting required gems, creating CRUD resource, devise user installation. I used jbuilder for building json responses and kaminari for pagination.</p>
+
+<p>I used Rspec and Rspec-api-documentation for testing. Setting up Rspec-api-documentation is quite straight forward and I didn&rsquo;t feel any difficulty in folowing their readme. I really like this gem, works very well, the dsl it provides is decent, the page it generates looks good and it can generate in various formats. The strategy I took, was, to have controller and model specs as it would be, but put the api-documentation specs in a special folder &lsquo;specs/acceptance&rsquo;. The api-documentation specs would assert only for response codes and have examples for requests with valid as well invalid params. This way, my usual controller and model specs make sure the api are up and good and api-documentation will make sure that the docs have the up-to-date params, request body and response body specifications.</p>
+
+<p>To make the response body consistent, I have followed following schema:</p>
+
+<p>```json</p>
+
+<pre><code>// POST /api/posts
+{
+  "data": {
+    "id": 1,
+    "title": "My Title",
+    "content": "Some long long awesome content."
+  },
+  "response": {
+    "code": 201
+  },
+  "links": {
+    "self": "http://example.org/api/posts/1"
+  }
+}
+</code></pre>
+
+<p>```</p>
+
+<p>```json
+  // GET /api/posts
+  {</p>
+
+<pre><code>"data": [
+  {
+    "id": 2,
+    "title": "Vel sit in molestias iste voluptas nam ad.",
+    "content": "Facilis rem quia quas repudiandae non. Dignissimos dolores rerum aperiam inventore non doloremque laborum. Ex aut autem deserunt molestiae quae repellendus consequatur."
+  },
+  {
+    "id": 1,
+    "title": "Aliquid atque distinctio ab quaerat qui adipisci.",
+    "content": "Facilis rem quia quas repudiandae non. Dignissimos dolores rerum aperiam inventore non doloremque laborum. Ex aut autem deserunt molestiae quae repellendus consequatur."
+  }
+],
+"meta": {
+  "current_page": 1,
+  "next_page": null,
+  "prev_page": null,
+  "total_pages": 1,
+  "total_count": 2,
+  "sort": "created_at",
+  "order": "desc"
+},
+"response": {
+  "code": 200
+}
+</code></pre>
+
+<p>  }</p>
+
+<p>```</p>
+
+<p>I would not say this is the standard json response structure for a REST Api, but my front-end developer friend found it pretty neat.</p>
+
+<p>Finally, devise, I do not have any specific reason why I was using devise, I mean the solution I was doing could be done without devise but somewhere in the future a couple of devise modules may be useful. I have a <a href="https://github.com/RohitRox/Rails-API-and-JWT/commit/10a17cb0c5a8e24015a5f2f77607b0e390f6acca">commit</a> for using devise and overiding devise controller for signing-in and signing-up users. At that time, I looked at different approaches and decided to go with that. Basically we hijack devise controller actions for signing-up and signing-in, this is necessary because later we need to generate and inject auth-token there.</p>
+
+<p>Next step is to use &lsquo;jwt&rsquo; gem to generate auth-tokens and decode the tokens to extract claims and verify its authenticty.
+This <a href="http://nebulab.it/blog/authentication-with-rails-jwt-and-react">article</a> describes really well. The steps are pretty straight forward, we generate JSON Web token and send them in response at sign-in or sign-up actions, client requests resource with token set in Authorization headers, we decode the token and extract the information we had set. The commits <a href="https://github.com/RohitRox/Rails-API-and-JWT/commit/548a1268c943a8895d3f67ad33358150e45449ec">here</a> and <a href="https://github.com/RohitRox/Rails-API-and-JWT/commit/a7714cf68f62e4b0342b155bc3308ca20fa2ae2b">this</a> is where I have integrated the JWT authentication mechanisms.</p>
+
+<p>This is what the code looks like:</p>
+
+<p>```ruby
+  #lib/json_web_token.rb
+  require &lsquo;jwt&rsquo;</p>
+
+<p>  class JsonWebToken</p>
+
+<pre><code>def self.encode(payload, expiration = 24.hours.from_now)
+  payload = payload.dup
+  payload['exp'] = expiration.to_i
+  JWT.encode(payload, Rails.application.secrets.json_web_token_secret)
+end
+
+def self.decode(token)
+  JWT.decode(token, Rails.application.secrets.json_web_token_secret)
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>```</p>
+
+<p>```ruby
+  #app/controllers/api/base_controller.rb
+  class Api::BaseController &lt; ApplicationController
+  include ActionController::ImplicitRender
+  respond_to :json</p>
+
+<p>  before_filter :authenticate_user_from_token!</p>
+
+<p>  protected</p>
+
+<pre><code>def authenticate_user_from_token!
+  if claims and user = User.find_by(email: claims[0]['user'])
+    @current_user = user
+  else
+    return render_unauthorized errors: { unauthorized: ["You are not authorized perform this action."] }
+  end
+end
+
+def claims
+  auth_header = request.headers['Authorization'] and
+    token = auth_header.split(' ').last and
+    ::JsonWebToken.decode(token)
+rescue
+  nil
+end
+
+def jwt_token user
+  JsonWebToken.encode('user' =&gt; user.email)
+end
+
+def render_unauthorized(payload)
+  render json: payload.merge(response: { code: 401 })
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>```</p>
+
+<p>I have the sample app running at heroku and docs at <a href="https://rails-api-jwt.herokuapp.com/api/docs/">https://rails-api-jwt.herokuapp.com/api/docs/</a>.</p>
+
+<p>I have drawn a lot of inspiration and some code from following blog posts to create this.</p>
+
+<ul>
+<li><a href="http://nebulab.it/blog/authentication-with-rails-jwt-and-react">http://nebulab.it/blog/authentication-with-rails-jwt-and-react</a></li>
+<li><a href="http://adamalbrecht.com/2014/12/04/add-json-web-token-authentication-to-your-angular-rails-app/">http://adamalbrecht.com/2014/12/04/add-json-web-token-authentication-to-your-angular-rails-app/</a></li>
+<li><a href="http://blog.moove-it.com/token-based-authentication-json-web-tokenjwt/">http://blog.moove-it.com/token-based-authentication-json-web-tokenjwt/</a></li>
+<li><a href="http://zacstewart.com/2015/05/14/using-json-web-tokens-to-authenticate-javascript-front-ends-on-rails.html">http://zacstewart.com/2015/05/14/using-json-web-tokens-to-authenticate-javascript-front-ends-on-rails.html</a></li>
+</ul>
+
+
+<p>Note that there is no error handling when decoding the token in the sample app. These as well as other algorithm information are well described in the <a href="https://github.com/progrium/ruby-jwt">&lsquo;ruby-jwt&rsquo; gem github page</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ember Cli and Rails And Beyond]]></title>
@@ -680,81 +854,6 @@ end
 <p><a href="http://stackoverflow.com/questions/14900038/rails-carrierwave-iphone-base64-image-upload">Rails carrierwave base-64 encoded image upload</a></p>
 
 <p><a href="https://gist.github.com/WizardOfOgz/1012107">Base64-encoded images with Paperclip</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Feature flippers with rollout]]></title>
-    <link href="http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/"/>
-    <updated>2013-03-18T12:09:00-04:00</updated>
-    <id>http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout</id>
-    <content type="html"><![CDATA[<p>Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try it out before it goes massive.</p>
-
-<p>So lets rollout.</p>
-
-<p>First of all, make sure that you have redis, because rollout uses redis as its backend. Then add <code>gem 'rollout'</code> to gemfile and bundle install.</p>
-
-<p>Now, we need to create a rollout setup file inside initializer.</p>
-
-<p>Let&rsquo;s name it rollout_init.rb which looks like this:</p>
-
-<p>```ruby</p>
-
-<p>  $redis = Redis.new
-  $rollout = Rollout.new($redis)
-  $rollout.define_group(:admin) do |user|</p>
-
-<pre><code>user.admin?
-</code></pre>
-
-<p>  end</p>
-
-<p>```
-Documentation suggests to use a global variables. So we create one with a new redis instance.
-Then, we create rollout instance passsing that redis instance. We can configure rollout in many ways, here we are defining an admin group by passing a block and checking whether the user belongs to that group or not.
-Complete documentation can be found <a href="https://github.com/jamesgolick/rollout">here</a>.</p>
-
-<p>Next, we can now use handy rollout method like for example let&rsquo;s say we need to activate chat feature for admin group only.</p>
-
-<p>``` ruby</p>
-
-<p>  if $rollout.active? :chat, current_user</p>
-
-<pre><code>....
-</code></pre>
-
-<p>  end</p>
-
-<p>```</p>
-
-<!--more-->
-
-
-<p>The <code>$rollout.active?</code> method accepts the name of the feature and the user and returns true or false.</p>
-
-<p>This method is accessible in views as well as in controllers.
-That&rsquo;s not all, if you restart your server now and look at the app, you may find out that the feature is unavailable to admin groups also, it is because by default the feature is deactivated to all groups or users. We can make a rake task or an interface for activating the feature to subset of users. Activating code looks like this:</p>
-
-<p>``` ruby</p>
-
-<p>  $rollout.activate_group(:chat, :admin)</p>
-
-<p>```
-This will activate the feature ( chat in our case ) for admin group.</p>
-
-<p>Also we can activate the feature to all users or specific user or to some percentage.</p>
-
-<p>``` ruby</p>
-
-<p>  $rollout.activate_group( :chat, :all ) #activate to all, there is all group already by default</p>
-
-<p>  $rollout.activate_user( :chat, User.find_by_email(&ldquo;<a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#58;&#x61;&#100;&#109;&#105;&#x6e;&#x40;&#109;&#x79;&#x61;&#x70;&#112;&#x2e;&#99;&#x6f;&#x6d;">&#x61;&#100;&#109;&#x69;&#110;&#64;&#x6d;&#x79;&#x61;&#x70;&#112;&#x2e;&#x63;&#x6f;&#x6d;</a>&rdquo;) ) #activate to specific user</p>
-
-<p>  $rollout.activate_percantage( :chat, 50 ) #activate to 50% of users</p>
-
-<p>```</p>
-
-<p>Each of these methods have deactivate version for deactivating the feature. You can also just call <code>$rollout.deactivate_all(:chat)</code> to deactivate the feature to all at once.</p>
 ]]></content>
   </entry>
   

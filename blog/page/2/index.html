@@ -9,7 +9,7 @@
   <meta name="author" content="Rohit Rox">
 
   
-  <meta name="description" content="After searching and digging a lot of artciles about improving jquery performance in web apps, I decided to make a list of best common performance &hellip;">
+  <meta name="description" content="We define methods using def keywords which is fine for most of the cases. But consider a situation where you have to create a series of methods all &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,86 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/07/02/ruby-dynamic-methods/">Ruby Dynamic Methods</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-02T11:27:00-04:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2013</time>
+        
+         | <a href="/2013/07/02/ruby-dynamic-methods/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We define methods using <strong><em>def</em></strong> keywords which is fine for most of the cases.</p>
+
+<p>But consider a situation where you have to create a series of methods all of which have the same basic structure and logic then it seems repititive and not dry.</p>
+
+<p>Ruby, being a dynamic language, you can create methods on the fly.</p>
+
+<p>So, what does that mean?</p>
+
+<p>lets see this simplest example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">A</span>
+</span><span class='line'>    <span class="n">define_method</span> <span class="ss">:a</span> <span class="k">do</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;hello&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">define_method</span> <span class="ss">:greeting</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="n">message</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">A</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">a</span> <span class="c1">#=&gt; hello</span>
+</span><span class='line'>  <span class="n">A</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">greeting</span> <span class="s1">&#39;Ram ram&#39;</span> <span class="c1">#=&gt; Ram ram</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/07/02/ruby-dynamic-methods/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -749,6 +829,10 @@ It is assumed that MySQL has been installed in your computer.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2015/06/23/so-you-want-to-create-an-awesome-rails-api-backed-with-jwt/">So You Want to Create an Awesome Rails Api Backed With Jwt</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/12/06/embercli-and-rails-and-beyond/">Ember Cli and Rails and Beyond</a>
       </li>
     
@@ -764,25 +848,23 @@ It is assumed that MySQL has been installed in your computer.</p>
         <a href="/2013/09/05/javascript-array-tricks/">Javascript Array Tricks</a>
       </li>
     
-      <li class="post">
-        <a href="/2013/08/30/single-table-inheritance-in-mongoid/">Single Table Inheritance in Mongoid</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li class='category'><a href='/blog/categories/canvas/'>Canvas (1)</a></li>
+    <ul id="category-list"><li class='category'><a href='/blog/categories/api/'>Api (1)</a></li>
+<li class='category'><a href='/blog/categories/canvas/'>Canvas (1)</a></li>
 <li class='category'><a href='/blog/categories/embercli/'>EmberCli (1)</a></li>
 <li class='category'><a href='/blog/categories/emberjs/'>EmberJs (2)</a></li>
 <li class='category'><a href='/blog/categories/html5/'>HTML5 (1)</a></li>
 <li class='category'><a href='/blog/categories/jquery/'>JQuery (2)</a></li>
+<li class='category'><a href='/blog/categories/jwt/'>JWT (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (6)</a></li>
 <li class='category'><a href='/blog/categories/knockoutjs/'>KnockoutJs (1)</a></li>
 <li class='category'><a href='/blog/categories/metaprogramming/'>Metaprogramming (1)</a></li>
 <li class='category'><a href='/blog/categories/mongoid/'>Mongoid (1)</a></li>
 <li class='category'><a href='/blog/categories/mysql/'>MySQL (2)</a></li>
-<li class='category'><a href='/blog/categories/rails/'>Rails (5)</a></li>
+<li class='category'><a href='/blog/categories/rails/'>Rails (6)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (4)</a></li>
 <li class='category'><a href='/blog/categories/ubuntu/'>Ubuntu (1)</a></li>
 <li class='category'><a href='/blog/categories/vim/'>Vim (1)</a></li>
@@ -798,7 +880,7 @@ It is assumed that MySQL has been installed in your computer.</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Rohit Rox -
+  Copyright &copy; 2015 - Rohit Rox -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

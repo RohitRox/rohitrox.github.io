@@ -73,12 +73,18 @@
         <lastmod>2014-12-07T15:13:56-05:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://rohitrox.github.io/2015/06/23/so-you-want-to-create-an-awesome-rails-api-backed-with-jwt/
+        </loc>
+        <lastmod>2015-06-24T02:14:43-04:00</lastmod>
+    </url>
+    <url>
         <loc>http://rohitrox.github.io/blog/archives/</loc>
-        <lastmod>2014-12-07T15:17:08-05:00</lastmod>
+        <lastmod>2015-06-24T02:14:43-04:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/</loc>
-        <lastmod>2014-12-07T15:17:08-05:00</lastmod>
+        <lastmod>2015-06-24T02:14:43-04:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/robots.txt</loc>
