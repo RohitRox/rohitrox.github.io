@@ -4,7 +4,7 @@
   <title><![CDATA[Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2015-06-24T02:14:43-04:00</updated>
+  <updated>2015-11-16T11:06:40-05:00</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[So you want to create an awesome rails api backed with jwt]]></title>
-    <link href="http://rohitrox.github.io/2015/06/23/so-you-want-to-create-an-awesome-rails-api-backed-with-jwt/"/>
+    <title type="html"><![CDATA[Rails api backed with jwt]]></title>
+    <link href="http://rohitrox.github.io/2015/06/23/rails-api-backed-with-jwt/"/>
     <updated>2015-06-23T21:23:00-04:00</updated>
-    <id>http://rohitrox.github.io/2015/06/23/so-you-want-to-create-an-awesome-rails-api-backed-with-jwt</id>
+    <id>http://rohitrox.github.io/2015/06/23/rails-api-backed-with-jwt</id>
     <content type="html"><![CDATA[<p>Stand-alone client side applications, REST, API, JSON Web Token is all over the web. Last week I sat with one of my friend (Front-End Developer) to hack an Javascript MVC app with Rails-Api.</p>
 
 <p>An awesome api, in the minds have following characterstics:</p>
@@ -2346,11 +2346,11 @@ For this we use the Blob object. Simply it&rsquo;s an object that represent a fi
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="nf">inactive?</span>
-</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">::</span><span class="no">INACTIVE</span>
+</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="ss">User</span><span class="p">:</span><span class="ss">:INACTIVE</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="nf">pending?</span>
-</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">::</span><span class="no">PENDING</span>
+</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="ss">User</span><span class="p">:</span><span class="ss">:PENDING</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">end</span>
@@ -2617,7 +2617,7 @@ For this we use the Blob object. Simply it&rsquo;s an object that represent a fi
 <span class='line-number'>26</span>
 <span class='line-number'>27</span>
 <span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="ss">ActionController</span><span class="p">:</span><span class="ss">:Base</span>
 </span><span class='line'>    <span class="n">protect_from_forgery</span>
 </span><span class='line'>    <span class="n">helper_method</span> <span class="ss">:current_staff</span><span class="p">,</span> <span class="ss">:current_employee</span><span class="p">,</span> <span class="n">current_admin</span>
 </span><span class='line'>
@@ -3788,7 +3788,7 @@ can be changed during the lifetime of the script.</p>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">establish_connection</span> <span class="p">{</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">establish_connection</span> <span class="p">{</span>
 </span><span class='line'>  <span class="ss">:adapter</span> <span class="o">=&gt;</span> <span class="s2">&quot;mysql&quot;</span><span class="p">,</span>
 </span><span class='line'>  <span class="ss">:host</span> <span class="o">=&gt;</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span>
 </span><span class='line'>  <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
@@ -3811,7 +3811,7 @@ can be changed during the lifetime of the script.</p>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
 </span><span class='line'>  <span class="c1"># this maps database table users to this Ruby class User</span>
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
@@ -3838,7 +3838,7 @@ ie.</li>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -3848,7 +3848,7 @@ ie.</li>
 <p>If you want table names to be singular instead of plural, you can set the configuration parameter pluralize_table_names:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">pluralize_table_names</span> <span class="o">=</span> <span class="kp">false</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">pluralize_table_names</span> <span class="o">=</span> <span class="kp">false</span>
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
@@ -3890,7 +3890,7 @@ It is assumed that MySQL has been installed in your computer.</p>
 <p>If you are using something like Lampp you may end up with error like</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Mysql</span><span class="o">::</span><span class="no">Error</span><span class="p">:</span> <span class="no">Can</span><span class="s1">&#39;t connect to local MySQL server through socket &#39;</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">mysqld</span><span class="o">/</span><span class="n">mysqld</span><span class="o">.</span><span class="n">sock</span><span class="err">&#39;</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Mysql</span><span class="p">:</span><span class="ss">:Error</span><span class="p">:</span> <span class="no">Can</span><span class="s1">&#39;t connect to local MySQL server through socket &#39;</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">mysqld</span><span class="o">/</span><span class="n">mysqld</span><span class="o">.</span><span class="n">sock</span><span class="err">&#39;</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

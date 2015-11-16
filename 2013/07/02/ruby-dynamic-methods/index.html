@@ -181,11 +181,11 @@
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="nf">inactive?</span>
-</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">::</span><span class="no">INACTIVE</span>
+</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="ss">User</span><span class="p">:</span><span class="ss">:INACTIVE</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="nf">pending?</span>
-</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">::</span><span class="no">PENDING</span>
+</span><span class='line'>      <span class="n">status</span> <span class="o">==</span> <span class="ss">User</span><span class="p">:</span><span class="ss">:PENDING</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">end</span>
@@ -452,7 +452,7 @@
 <span class='line-number'>26</span>
 <span class='line-number'>27</span>
 <span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="ss">ActionController</span><span class="p">:</span><span class="ss">:Base</span>
 </span><span class='line'>    <span class="n">protect_from_forgery</span>
 </span><span class='line'>    <span class="n">helper_method</span> <span class="ss">:current_staff</span><span class="p">,</span> <span class="ss">:current_employee</span><span class="p">,</span> <span class="n">current_admin</span>
 </span><span class='line'>
@@ -593,7 +593,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2015/06/23/so-you-want-to-create-an-awesome-rails-api-backed-with-jwt/">So You Want to Create an Awesome Rails Api Backed With Jwt</a>
+        <a href="/2015/06/23/rails-api-backed-with-jwt/">Rails Api Backed With Jwt</a>
       </li>
     
       <li class="post">

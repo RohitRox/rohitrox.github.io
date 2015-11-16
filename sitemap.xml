@@ -2,92 +2,90 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby/</loc>
-        <lastmod>2013-08-07T16:56:26-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone/</loc>
-        <lastmod>2013-08-07T16:56:26-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2012/10/31/javascript-static-and-instance-methods/</loc>
-        <lastmod>2013-08-07T16:56:26-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2012/11/01/oop-with-javascript/</loc>
-        <lastmod>2013-08-07T16:56:26-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2012/11/03/mysql-commands/</loc>
-        <lastmod>2013-08-18T15:47:19-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2012/12/19/vim-quick-tips/</loc>
-        <lastmod>2013-08-07T16:56:26-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/</loc>
-        <lastmod>2013-08-18T15:47:29-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2013/05/23/jquery-performance-tuning/</loc>
-        <lastmod>2013-08-07T16:56:26-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/</loc>
-        <lastmod>2013-08-18T15:47:38-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/</loc>
-        <lastmod>2013-08-07T16:56:26-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2013/08/18/lets-learn-to-knockout/</loc>
-        <lastmod>2013-08-22T12:52:53-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage/</loc>
-        <lastmod>2013-08-24T12:27:08-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/</loc>
-        <lastmod>2013-08-26T13:27:22-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid/</loc>
-        <lastmod>2013-08-30T15:42:09-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2013/09/05/javascript-array-tricks/</loc>
-        <lastmod>2013-09-05T13:54:51-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs/</loc>
-        <lastmod>2014-12-06T22:09:20-05:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts/</loc>
-        <lastmod>2014-12-07T15:17:08-05:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond/</loc>
-        <lastmod>2014-12-07T15:13:56-05:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
     <url>
-        <loc>
-            http://rohitrox.github.io/2015/06/23/so-you-want-to-create-an-awesome-rails-api-backed-with-jwt/
-        </loc>
-        <lastmod>2015-06-24T02:14:43-04:00</lastmod>
+        <loc>http://rohitrox.github.io/2015/06/23/rails-api-backed-with-jwt/</loc>
+        <lastmod>2015-11-16T10:56:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/blog/archives/</loc>
-        <lastmod>2015-06-24T02:14:43-04:00</lastmod>
+        <lastmod>2015-11-16T10:56:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/</loc>
-        <lastmod>2015-06-24T02:14:43-04:00</lastmod>
+        <lastmod>2015-11-16T10:56:56-05:00</lastmod>
     </url>
     <url>
         <loc>http://rohitrox.github.io/robots.txt</loc>
-        <lastmod>2013-08-08T13:39:10-04:00</lastmod>
+        <lastmod>2015-11-16T10:52:56-05:00</lastmod>
     </url>
 </urlset>

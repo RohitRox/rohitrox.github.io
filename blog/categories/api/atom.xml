@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Api | Blog @ RohitRox]]></title>
   <link href="http://rohitrox.github.io/blog/categories/api/atom.xml" rel="self"/>
   <link href="http://rohitrox.github.io/"/>
-  <updated>2015-06-24T02:14:43-04:00</updated>
+  <updated>2015-11-16T11:06:40-05:00</updated>
   <id>http://rohitrox.github.io/</id>
   <author>
     <name><![CDATA[Rohit Rox]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[So you want to create an awesome rails api backed with jwt]]></title>
-    <link href="http://rohitrox.github.io/2015/06/23/so-you-want-to-create-an-awesome-rails-api-backed-with-jwt/"/>
+    <title type="html"><![CDATA[Rails api backed with jwt]]></title>
+    <link href="http://rohitrox.github.io/2015/06/23/rails-api-backed-with-jwt/"/>
     <updated>2015-06-23T21:23:00-04:00</updated>
-    <id>http://rohitrox.github.io/2015/06/23/so-you-want-to-create-an-awesome-rails-api-backed-with-jwt</id>
+    <id>http://rohitrox.github.io/2015/06/23/rails-api-backed-with-jwt</id>
     <content type="html"><![CDATA[<p>Stand-alone client side applications, REST, API, JSON Web Token is all over the web. Last week I sat with one of my friend (Front-End Developer) to hack an Javascript MVC app with Rails-Api.</p>
 
 <p>An awesome api, in the minds have following characterstics:</p>

@@ -118,7 +118,7 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">establish_connection</span> <span class="p">{</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">establish_connection</span> <span class="p">{</span>
 </span><span class='line'>  <span class="ss">:adapter</span> <span class="o">=&gt;</span> <span class="s2">&quot;mysql&quot;</span><span class="p">,</span>
 </span><span class='line'>  <span class="ss">:host</span> <span class="o">=&gt;</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span>
 </span><span class='line'>  <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
@@ -141,7 +141,7 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
 </span><span class='line'>  <span class="c1"># this maps database table users to this Ruby class User</span>
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
@@ -168,7 +168,7 @@ ie.</li>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -178,7 +178,7 @@ ie.</li>
 <p>If you want table names to be singular instead of plural, you can set the configuration parameter pluralize_table_names:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">pluralize_table_names</span> <span class="o">=</span> <span class="kp">false</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">pluralize_table_names</span> <span class="o">=</span> <span class="kp">false</span>
 </span></code></pre></td></tr></table></div></figure>
 
 </div>
@@ -265,7 +265,7 @@ ie.</li>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2015/06/23/so-you-want-to-create-an-awesome-rails-api-backed-with-jwt/">So You Want to Create an Awesome Rails Api Backed With Jwt</a>
+        <a href="/2015/06/23/rails-api-backed-with-jwt/">Rails Api Backed With Jwt</a>
       </li>
     
       <li class="post">
