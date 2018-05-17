@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blog @ RohitRox</title>
-    <description>RohitRox's Tech blog</description>
+    <title>Rohit Joshi's Homepage</title>
+    <description>All about Rohit Joshi and his tech stuff</description>
     <link>http://rohitrox.github.io/</link>
     <atom:link href="http://rohitrox.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 17 May 2018 15:16:00 +0545</pubDate>
-    <lastBuildDate>Thu, 17 May 2018 15:16:00 +0545</lastBuildDate>
+    <pubDate>Thu, 17 May 2018 15:53:08 +0545</pubDate>
+    <lastBuildDate>Thu, 17 May 2018 15:53:08 +0545</lastBuildDate>
     <generator>Jekyll v3.8.1</generator>
     
       <item>
