@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://rohitrox.github.io/sitemap.xml 

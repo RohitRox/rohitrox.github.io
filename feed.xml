@@ -1,23 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-
- <title>Blog @ RohitRox</title>
- <link href="http://rohitrox.github.io/atom.xml" rel="self"/>
- <link href="http://rohitrox.github.io/"/>
- <updated>2018-05-17T15:08:33+05:45</updated>
- <id>http://rohitrox.github.io</id>
- <author>
-   <name>Rohit Joshi</name>
-   <email></email>
- </author>
-
- 
- <entry>
-   <title>Rails api backed with jwt</title>
-   <link href="http://rohitrox.github.io/2015/06/23/rails-api-backed-with-jwt/"/>
-   <updated>2015-06-23T21:23:00+05:45</updated>
-   <id>http://rohitrox.github.io/2015/06/23/rails-api-backed-with-jwt</id>
-   <content type="html">&lt;p&gt;Stand-alone client side applications, REST, API, JSON Web Token is all over the web. Last week I sat with one of my friend (Front-End Developer) to hack an Javascript MVC app with Rails-Api.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog @ RohitRox</title>
+    <description>RohitRox's Tech blog</description>
+    <link>http://rohitrox.github.io/</link>
+    <atom:link href="http://rohitrox.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 17 May 2018 15:08:33 +0545</pubDate>
+    <lastBuildDate>Thu, 17 May 2018 15:08:33 +0545</lastBuildDate>
+    <generator>Jekyll v3.8.1</generator>
+    
+      <item>
+        <title>Rails api backed with jwt</title>
+        <description>&lt;p&gt;Stand-alone client side applications, REST, API, JSON Web Token is all over the web. Last week I sat with one of my friend (Front-End Developer) to hack an Javascript MVC app with Rails-Api.&lt;/p&gt;
 
 &lt;p&gt;An awesome api, in the minds have following characterstics:&lt;/p&gt;
 
@@ -163,15 +157,23 @@ This &lt;a href=&quot;http://nebulab.it/blog/authentication-with-rails-jwt-and-r
 &lt;/ul&gt;
 
 &lt;p&gt;Note that there is no error handling when decoding the token in the sample app. These as well as other algorithm information are well described in the &lt;a href=&quot;https://github.com/progrium/ruby-jwt&quot;&gt;‘ruby-jwt’ gem github page&lt;/a&gt;.&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Ember Cli and Rails And Beyond</title>
-   <link href="http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond/"/>
-   <updated>2014-12-06T16:44:00+05:45</updated>
-   <id>http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond</id>
-   <content type="html">&lt;h3 id=&quot;ember-cli-and-rails-setup&quot;&gt;Ember Cli and Rails Setup&lt;/h3&gt;
+</description>
+        <pubDate>Tue, 23 Jun 2015 21:23:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2015/06/23/rails-api-backed-with-jwt/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2015/06/23/rails-api-backed-with-jwt/</guid>
+        
+        <category>rails</category>
+        
+        <category>jwt</category>
+        
+        
+        <category>Rails</category>
+        
+      </item>
+    
+      <item>
+        <title>Ember Cli and Rails And Beyond</title>
+        <description>&lt;h3 id=&quot;ember-cli-and-rails-setup&quot;&gt;Ember Cli and Rails Setup&lt;/h3&gt;
 
 &lt;p&gt;Rails setup is pretty staright forward with &lt;code class=&quot;highlighter-rouge&quot;&gt;rails new ..&lt;/code&gt; and new ember cli app with &lt;code class=&quot;highlighter-rouge&quot;&gt;ember new ..&lt;/code&gt;  but with following folder configuration&lt;/p&gt;
 
@@ -402,15 +404,25 @@ We need a way to redirect this resource to rails app.&lt;/p&gt;
 &lt;p&gt;To deploy our app we need to deploy our rails app only. We can put out both frontend and backend in single repo or in different repo. I have put both in a single &lt;a href=&quot;https://github.com/RohitRox/embercli-rails&quot;&gt;repo&lt;/a&gt;. Do &lt;code class=&quot;highlighter-rouge&quot;&gt;config.serve_static_assets = true&lt;/code&gt; in production.rb We can deploy like any other rails app. I have deployed this app to &lt;a href=&quot;https://embercli-rails.herokuapp.com/posts&quot;&gt;heroku&lt;/a&gt;. One gotcha is that heroku expects the app directory structure at the root of the repository. So to deploy we will have to push differently:&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  $ git subtree push --prefix rails heroku master
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Emberjs and Highcharts</title>
-   <link href="http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts/"/>
-   <updated>2014-03-16T15:13:00+05:45</updated>
-   <id>http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts</id>
-   <content type="html">&lt;p&gt;Let’s write a reusable ember view for rendering graphs and charts powered by &lt;a href=&quot;http://highcharts.com&quot;&gt;highcharts&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 06 Dec 2014 16:44:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond/</guid>
+        
+        <category>emberjs</category>
+        
+        <category>rails</category>
+        
+        
+        <category>Rails</category>
+        
+        <category>Javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>Emberjs and Highcharts</title>
+        <description>&lt;p&gt;Let’s write a reusable ember view for rendering graphs and charts powered by &lt;a href=&quot;http://highcharts.com&quot;&gt;highcharts&lt;/a&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;language-coffeescript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nx&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;HighChartsView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Ember&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;View&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;extend&lt;/span&gt;
       &lt;span class=&quot;na&quot;&gt;tagName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'div'&lt;/span&gt;
@@ -503,15 +515,23 @@ We need a way to redirect this resource to rails app.&lt;/p&gt;
       }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-</content>
- </entry>
- 
- <entry>
-   <title>Hangman game with EmberJs</title>
-   <link href="http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs/"/>
-   <updated>2014-02-20T18:00:00+05:45</updated>
-   <id>http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs</id>
-   <content type="html">&lt;p&gt;I built hangman game with emberjs, &lt;a href=&quot;http://rohitrox.github.io/hangman-with-ember&quot;&gt;quick prevew&lt;/a&gt;. The game deals with more of view stuffs than other parts, I would like to share some thoughts and tricks I learned during the process.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 16 Mar 2014 15:13:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts/</guid>
+        
+        <category>emberjs</category>
+        
+        <category>highcharts</category>
+        
+        
+        <category>Javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>Hangman game with EmberJs</title>
+        <description>&lt;p&gt;I built hangman game with emberjs, &lt;a href=&quot;http://rohitrox.github.io/hangman-with-ember&quot;&gt;quick prevew&lt;/a&gt;. The game deals with more of view stuffs than other parts, I would like to share some thoughts and tricks I learned during the process.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/hangman-ember.png&quot; alt=&quot;hangman game with emberjs&quot; /&gt;&lt;/p&gt;
 
@@ -602,15 +622,23 @@ We need a way to redirect this resource to rails app.&lt;/p&gt;
 
 &lt;p&gt;I would love to hear feedback and corrections where necessary.&lt;/p&gt;
 
-</content>
- </entry>
- 
- <entry>
-   <title>Javascript Array Tricks</title>
-   <link href="http://rohitrox.github.io/2013/09/05/javascript-array-tricks/"/>
-   <updated>2013-09-05T12:07:00+05:45</updated>
-   <id>http://rohitrox.github.io/2013/09/05/javascript-array-tricks</id>
-   <content type="html">&lt;p&gt;JavaScript, at its base, is a very simple language. Due to burst of Js framework usage, in which many new developers jumps right into, there are very useful basic JavaScript techniques and tricks which many people are unaware of.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 20 Feb 2014 18:00:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs/</guid>
+        
+        <category>javascript</category>
+        
+        <category>emberjs</category>
+        
+        
+        <category>Javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>Javascript Array Tricks</title>
+        <description>&lt;p&gt;JavaScript, at its base, is a very simple language. Due to burst of Js framework usage, in which many new developers jumps right into, there are very useful basic JavaScript techniques and tricks which many people are unaware of.&lt;/p&gt;
 
 &lt;p&gt;Today I want share some tricks with Javascript Arrays, which many developers are not using.&lt;/p&gt;
 
@@ -770,15 +798,21 @@ We need a way to redirect this resource to rails app.&lt;/p&gt;
 &lt;p&gt;More about splice &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2&gt;#&lt;/h2&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Single Table Inheritance in Mongoid</title>
-   <link href="http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid/"/>
-   <updated>2013-08-30T14:04:00+05:45</updated>
-   <id>http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid</id>
-   <content type="html">&lt;p&gt;Single table inheritance is a software pattern described by Martin Fowler. STI is basically an idea of using a single table(colection in case of mongo) to reflect multiple models that inherit from a base model.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 05 Sep 2013 12:07:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2013/09/05/javascript-array-tricks/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2013/09/05/javascript-array-tricks/</guid>
+        
+        <category>javascript</category>
+        
+        
+        <category>Javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>Single Table Inheritance in Mongoid</title>
+        <description>&lt;p&gt;Single table inheritance is a software pattern described by Martin Fowler. STI is basically an idea of using a single table(colection in case of mongo) to reflect multiple models that inherit from a base model.&lt;/p&gt;
 
 &lt;p&gt;We use STI pattern when we are dealing with classes that have same attributes and behaviour. Rather than duplicate the same code over and over, STI helps us to use a common base model and write specific behaviours in its inherited class while keeeping data on a same table.&lt;/p&gt;
 
@@ -890,15 +924,25 @@ scenarios where documents are inherited from their fields, relations, validation
   &lt;span class=&quot;c1&quot;&gt;# Returns no entries (see above)&lt;/span&gt;
   &lt;span class=&quot;no&quot;&gt;Canvas&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;where&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;shapes._type'=&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Shape&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;)
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Up and running Ruby on Rails on Ubuntu</title>
-   <link href="http://rohitrox.github.io/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/"/>
-   <updated>2013-08-26T22:27:00+05:45</updated>
-   <id>http://rohitrox.github.io/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu</id>
-   <content type="html">&lt;h3 id=&quot;6-steps-for-setting-ruby-on-rails-development-environment-in-ubuntu&quot;&gt;6 steps for setting ruby on rails development environment in Ubuntu.&lt;/h3&gt;
+</description>
+        <pubDate>Fri, 30 Aug 2013 14:04:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid/</guid>
+        
+        <category>rails</category>
+        
+        <category>mongoid</category>
+        
+        
+        <category>Rails</category>
+        
+        <category>MongoDB</category>
+        
+      </item>
+    
+      <item>
+        <title>Up and running Ruby on Rails on Ubuntu</title>
+        <description>&lt;h3 id=&quot;6-steps-for-setting-ruby-on-rails-development-environment-in-ubuntu&quot;&gt;6 steps for setting ruby on rails development environment in Ubuntu.&lt;/h3&gt;
 
 &lt;h3 id=&quot;step-1-setting-up-rvm&quot;&gt;Step 1: Setting up RVM&lt;/h3&gt;
 
@@ -974,15 +1018,25 @@ scenarios where documents are inherited from their fields, relations, validation
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-Lo-&lt;/span&gt; https://bit.ly/janus-bootstrap | bash
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Get Selected text from Web Page</title>
-   <link href="http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage/"/>
-   <updated>2013-08-23T14:03:00+05:45</updated>
-   <id>http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage</id>
-   <content type="html">&lt;p&gt;This is a quick tip you can use for getting the selected text from your webpage.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 26 Aug 2013 22:27:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/</guid>
+        
+        <category>rails</category>
+        
+        <category>ubuntu</category>
+        
+        
+        <category>Rails</category>
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Get Selected text from Web Page</title>
+        <description>&lt;p&gt;This is a quick tip you can use for getting the selected text from your webpage.&lt;/p&gt;
 
 &lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;I am not selectable. You can test.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;here&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
@@ -1010,15 +1064,23 @@ scenarios where documents are inherited from their fields, relations, validation
 
     &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Lets learn to knockout</title>
-   <link href="http://rohitrox.github.io/2013/08/18/lets-learn-to-knockout/"/>
-   <updated>2013-08-18T23:55:00+05:45</updated>
-   <id>http://rohitrox.github.io/2013/08/18/lets-learn-to-knockout</id>
-   <content type="html">&lt;p&gt;Knockout.js is known for rapid and responsive UI development. Lets try it to build something today.
+</description>
+        <pubDate>Fri, 23 Aug 2013 14:03:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage/</guid>
+        
+        <category>javascript</category>
+        
+        <category>jquery</category>
+        
+        
+        <category>Javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>Lets learn to knockout</title>
+        <description>&lt;p&gt;Knockout.js is known for rapid and responsive UI development. Lets try it to build something today.
 Lets see quick &lt;a href=&quot;http://rohitrox.github.io/knockoutjs_projects&quot;&gt;demo&lt;/a&gt; of what we are going to build.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://github.com/RohitRox/knockoutjs_projects/archive/master.zip&quot;&gt;Download Source&lt;/a&gt;&lt;/p&gt;
@@ -1279,15 +1341,23 @@ As the methods are in ItemViewModel, the add and save button would work, but rem
 &lt;p&gt;That’s all for this post.&lt;/p&gt;
 
 &lt;p&gt;In next part, We’ll add bootstrap’s typeahead or autocomplete feature and implement technique for updating the information of item selected via autocomplete.&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Canvas Images and Rails</title>
-   <link href="http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/"/>
-   <updated>2013-07-19T15:15:00+05:45</updated>
-   <id>http://rohitrox.github.io/2013/07/19/canvas-images-and-rails</id>
-   <content type="html">&lt;p&gt;With the introduction of Canvas, HTML5 has empower us to draw shapes, graphs, render texts, make gradients and patterns, manipulate images pixels, set an animations, even creating a stunning games!
+</description>
+        <pubDate>Sun, 18 Aug 2013 23:55:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2013/08/18/lets-learn-to-knockout/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2013/08/18/lets-learn-to-knockout/</guid>
+        
+        <category>javascript</category>
+        
+        <category>knockoutjs</category>
+        
+        
+        <category>Javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>Canvas Images and Rails</title>
+        <description>&lt;p&gt;With the introduction of Canvas, HTML5 has empower us to draw shapes, graphs, render texts, make gradients and patterns, manipulate images pixels, set an animations, even creating a stunning games!
 All this stuffs occur on the client side in the browsers.
 So let say you make an app that render some effects in a Canvas element and you want to allow user to take screenshot of the resut or save the result in your server for yourself.&lt;/p&gt;
 
@@ -1406,15 +1476,27 @@ For this we use the Blob object. Simply it’s an object that represent a file-l
 &lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/14900038/rails-carrierwave-iphone-base64-image-upload&quot;&gt;Rails carrierwave base-64 encoded image upload&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://gist.github.com/WizardOfOgz/1012107&quot;&gt;Base64-encoded images with Paperclip&lt;/a&gt;&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Ruby Dynamic Methods</title>
-   <link href="http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/"/>
-   <updated>2013-07-02T11:27:00+05:45</updated>
-   <id>http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods</id>
-   <content type="html">&lt;p&gt;We define methods using &lt;strong&gt;&lt;em&gt;def&lt;/em&gt;&lt;/strong&gt; keywords which is fine for most of the cases.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 19 Jul 2013 15:15:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/</guid>
+        
+        <category>javascript</category>
+        
+        <category>rails</category>
+        
+        <category>canvas</category>
+        
+        
+        <category>Rails</category>
+        
+        <category>Javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>Ruby Dynamic Methods</title>
+        <description>&lt;p&gt;We define methods using &lt;strong&gt;&lt;em&gt;def&lt;/em&gt;&lt;/strong&gt; keywords which is fine for most of the cases.&lt;/p&gt;
 
 &lt;p&gt;But consider a situation where you have to create a series of methods all of which have the same basic structure and logic then it seems repititive and not dry.&lt;/p&gt;
 
@@ -1659,15 +1741,21 @@ For this we use the Blob object. Simply it’s an object that represent a file-l
 &lt;p&gt;Dynamically defined methods can help guard against method definition mistakes, avoid repetitive codes and be concise and smart.&lt;/p&gt;
 
 &lt;p&gt;Happy Metaprogramming.&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Jquery performance Tuning</title>
-   <link href="http://rohitrox.github.io/2013/05/23/jquery-performance-tuning/"/>
-   <updated>2013-05-23T15:35:00+05:45</updated>
-   <id>http://rohitrox.github.io/2013/05/23/jquery-performance-tuning</id>
-   <content type="html">&lt;p&gt;After searching and digging a lot of artciles about improving jquery performance in web apps, I decided to make a list of best common performance tips and bect practices. We’ll also reveal some of JQuery’s hidden feature and how we can use them for performance tuning.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 02 Jul 2013 11:27:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/</guid>
+        
+        <category>ruby</category>
+        
+        
+        <category>Ruby</category>
+        
+      </item>
+    
+      <item>
+        <title>Jquery performance Tuning</title>
+        <description>&lt;p&gt;After searching and digging a lot of artciles about improving jquery performance in web apps, I decided to make a list of best common performance tips and bect practices. We’ll also reveal some of JQuery’s hidden feature and how we can use them for performance tuning.&lt;/p&gt;
 
 &lt;p&gt;Lets divide this post into 4 main categoris.&lt;/p&gt;
 
@@ -1913,15 +2001,23 @@ This little snippet, found in HTML5 Boilerplate, will do just that:&lt;/p&gt;
 &lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'&amp;lt;script src=&quot;js/libs/jquery-1.9.0.min.js&quot;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/script&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Feature flippers with rollout</title>
-   <link href="http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/"/>
-   <updated>2013-03-18T12:09:00+05:45</updated>
-   <id>http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout</id>
-   <content type="html">&lt;p&gt;Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try it out before it goes massive.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 23 May 2013 15:35:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2013/05/23/jquery-performance-tuning/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2013/05/23/jquery-performance-tuning/</guid>
+        
+        <category>jquery</category>
+        
+        <category>javascript</category>
+        
+        
+        <category>Javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>Feature flippers with rollout</title>
+        <description>&lt;p&gt;Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try it out before it goes massive.&lt;/p&gt;
 
 &lt;p&gt;So lets rollout.&lt;/p&gt;
 
@@ -1979,15 +2075,25 @@ That’s not all, if you restart your server now and look at the app, you may fi
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Each of these methods have deactivate version for deactivating the feature. You can also just call &lt;code class=&quot;highlighter-rouge&quot;&gt;$rollout.deactivate_all(:chat)&lt;/code&gt; to deactivate the feature to all at once.&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>VIM Quick Tips</title>
-   <link href="http://rohitrox.github.io/2012/12/19/vim-quick-tips/"/>
-   <updated>2012-12-19T11:50:00+05:45</updated>
-   <id>http://rohitrox.github.io/2012/12/19/vim-quick-tips</id>
-   <content type="html">&lt;p&gt;Vim quick tips and tricks, listing some useful, essential and most often used Vim commands.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 18 Mar 2013 12:09:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/</guid>
+        
+        <category>ruby</category>
+        
+        <category>rails</category>
+        
+        
+        <category>Ruby</category>
+        
+        <category>Rails</category>
+        
+      </item>
+    
+      <item>
+        <title>VIM Quick Tips</title>
+        <description>&lt;p&gt;Vim quick tips and tricks, listing some useful, essential and most often used Vim commands.&lt;/p&gt;
 
 &lt;h2 id=&quot;moving-around&quot;&gt;Moving Around&lt;/h2&gt;
 
@@ -2187,15 +2293,19 @@ This turns on C style indentation. Each new line will be automatically indented 
 
 &lt;p&gt;Word Completion
 When your typing and you enter a partial word, you can cause Vim to search for a completion by using the ^P (search for previous marching word) and ^N (search for next match).&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>MySql commands</title>
-   <link href="http://rohitrox.github.io/2012/11/03/mysql-commands/"/>
-   <updated>2012-11-03T14:26:00+05:45</updated>
-   <id>http://rohitrox.github.io/2012/11/03/mysql-commands</id>
-   <content type="html">&lt;p&gt;This is a short-list of handy MySQL commands that I have to use time and time again, in my development machine as well as in servers and for importing and exporting databases.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 19 Dec 2012 11:50:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2012/12/19/vim-quick-tips/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2012/12/19/vim-quick-tips/</guid>
+        
+        
+        <category>DevTips</category>
+        
+      </item>
+    
+      <item>
+        <title>MySql commands</title>
+        <description>&lt;p&gt;This is a short-list of handy MySQL commands that I have to use time and time again, in my development machine as well as in servers and for importing and exporting databases.&lt;/p&gt;
 
 &lt;p&gt;Login to mysql console (from unix bash)&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mysql &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; user &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt;
@@ -2273,15 +2383,19 @@ Stop the MySQL server process. Start again with no grant tables. Login to MySQL 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mysqldump &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; root &lt;span class=&quot;nt&quot;&gt;-password&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--opt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; alldatabases.sql
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-</content>
- </entry>
- 
- <entry>
-   <title>OOP with Javascript</title>
-   <link href="http://rohitrox.github.io/2012/11/01/oop-with-javascript/"/>
-   <updated>2012-11-01T00:18:00+05:45</updated>
-   <id>http://rohitrox.github.io/2012/11/01/oop-with-javascript</id>
-   <content type="html">&lt;p&gt;JavaScript has strong object-oriented programming capabilities, even though some debates have taken place due to the differences in object-oriented JavaScript compared to other languages.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 03 Nov 2012 14:26:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2012/11/03/mysql-commands/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2012/11/03/mysql-commands/</guid>
+        
+        
+        <category>MySQL</category>
+        
+      </item>
+    
+      <item>
+        <title>OOP with Javascript</title>
+        <description>&lt;p&gt;JavaScript has strong object-oriented programming capabilities, even though some debates have taken place due to the differences in object-oriented JavaScript compared to other languages.&lt;/p&gt;
 &lt;h2 id=&quot;objects-and-classes&quot;&gt;Objects and Classes&lt;/h2&gt;
 
 &lt;p&gt;JavaScript is a prototype-based language which contains no class statement, such as is found in C++ or Ruby. This is sometimes confusing for programmers accustomed to languages with a class statement. Instead, JavaScript uses functions as classes. Defining a class is as easy as defining a function. In the example below we define a new class called Person.&lt;/p&gt;
@@ -2363,15 +2477,21 @@ is created or require multiple instances of the object where each instance
 can be changed during the lifetime of the script.&lt;/p&gt;
 
 &lt;p&gt;For a literally notated object, you simply use it by referencing its variable name,whereas with constructor functions you need to instantiate (create a new instance of) the object first.&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Javascript Static and Instance methods</title>
-   <link href="http://rohitrox.github.io/2012/10/31/javascript-static-and-instance-methods/"/>
-   <updated>2012-10-31T23:05:00+05:45</updated>
-   <id>http://rohitrox.github.io/2012/10/31/javascript-static-and-instance-methods</id>
-   <content type="html">&lt;p&gt;Custom JavaScript objects can have instance methods (function that are associated with a particular JavaScript object), but like other Object-Oriented languages, they can also have &lt;em&gt;static&lt;/em&gt; methods, that is functions that are associated with the JavaScript class that created an object, as opposed to the object itself. This is useful in cases where a function (a.k.a. a method) will not be different in different object instances.
+</description>
+        <pubDate>Thu, 01 Nov 2012 00:18:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2012/11/01/oop-with-javascript/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2012/11/01/oop-with-javascript/</guid>
+        
+        <category>javascript</category>
+        
+        
+        <category>Javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>Javascript Static and Instance methods</title>
+        <description>&lt;p&gt;Custom JavaScript objects can have instance methods (function that are associated with a particular JavaScript object), but like other Object-Oriented languages, they can also have &lt;em&gt;static&lt;/em&gt; methods, that is functions that are associated with the JavaScript class that created an object, as opposed to the object itself. This is useful in cases where a function (a.k.a. a method) will not be different in different object instances.
 &lt;!-- more --&gt;
 An instance method could be added to this class in one of two ways, either inside the constructor or through the class prototype.&lt;/p&gt;
 &lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Calculator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
@@ -2408,15 +2528,21 @@ An instance method could be added to this class in one of two ways, either insid
 &lt;p&gt;Now the multiply method can be called through the class itself, instead of an instance of the class, like so:&lt;/p&gt;
 &lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	&lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Calculator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;multiply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>ActiveRecord with Ruby alone</title>
-   <link href="http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone/"/>
-   <updated>2012-10-30T23:06:00+05:45</updated>
-   <id>http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone</id>
-   <content type="html">&lt;p&gt;Active Record is the main tool that Rails developers use to communicate with and underlying database. Active Record does some wonderful things for a web developer looking for abstractions in  database setup, SQL connections and queries.  We can get a cool command line Ruby application or utility script for our daily tasks using Active Record going in about 5 minutes!&lt;/p&gt;
+</description>
+        <pubDate>Wed, 31 Oct 2012 23:05:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2012/10/31/javascript-static-and-instance-methods/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2012/10/31/javascript-static-and-instance-methods/</guid>
+        
+        <category>javascript</category>
+        
+        
+        <category>Javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>ActiveRecord with Ruby alone</title>
+        <description>&lt;p&gt;Active Record is the main tool that Rails developers use to communicate with and underlying database. Active Record does some wonderful things for a web developer looking for abstractions in  database setup, SQL connections and queries.  We can get a cool command line Ruby application or utility script for our daily tasks using Active Record going in about 5 minutes!&lt;/p&gt;
 
 &lt;p&gt;First of all, get the activerecord gem using&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install activerecord
@@ -2474,15 +2600,23 @@ If you want table names to be singular instead of plural, you can set the config
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ActiveRecord::Base.pluralize_table_names = false ```
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Interacting to MySQL using Ruby</title>
-   <link href="http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby/"/>
-   <updated>2012-10-30T00:58:00+05:45</updated>
-   <id>http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby</id>
-   <content type="html">&lt;p&gt;This tutorials guides you to go straight into interacting with MySQL database using Ruby alone. No Rails.
+</description>
+        <pubDate>Tue, 30 Oct 2012 23:06:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone/</guid>
+        
+        <category>activerecord</category>
+        
+        <category>ruby</category>
+        
+        
+        <category>Ruby</category>
+        
+      </item>
+    
+      <item>
+        <title>Interacting to MySQL using Ruby</title>
+        <description>&lt;p&gt;This tutorials guides you to go straight into interacting with MySQL database using Ruby alone. No Rails.
 It is assumed that MySQL has been installed in your computer.&lt;/p&gt;
 
 &lt;p&gt;Now let’s get started:&lt;/p&gt;
@@ -2559,8 +2693,17 @@ With successfull connection we can query to database.&lt;/p&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-</content>
- </entry>
- 
-
-</feed>
+</description>
+        <pubDate>Tue, 30 Oct 2012 00:58:00 +0545</pubDate>
+        <link>http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby/</link>
+        <guid isPermaLink="true">http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby/</guid>
+        
+        
+        <category>Ruby</category>
+        
+        <category>MySQL</category>
+        
+      </item>
+    
+  </channel>
+</rss>

@@ -1,671 +1,649 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>Ember Cli and Rails And Beyond - Blog @ RohitRox</title>
-  <meta name="author" content="Rohit Rox">
+<html lang="en-us">
 
+  <head>
+  <!-- google adsense -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-4893116840196955",
+      enable_page_level_ads: true
+    });
+  </script>
+  <!-- google adsense -->
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Ember Cli and Rails And Beyond &middot; Blog @ RohitRox
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/public/favicon.ico" type="image/x-icon">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <!-- init static value -->
+  <script type="text/javascript">
+
+
+	
+	var _page = {
+		category : 'rails'
+	};
+
+	var _site = {
+		baseurl : '',
+		logo :  ''
+	};
+
+	var _nav = {};
+
+	
+		_nav['Home'] = '/';
+	
+		_nav['Categories'] = '/categories/';
+	
+		_nav['Tags'] = '/tags/';
+	
+		_nav['About'] = '/about/';
+	
+
+
+  </script>
   
-  <meta name="description" content="Ember Cli and Rails Setup Rails setup is pretty staright forward with rails new .. and new ember cli app with ember new .. but with following folder &hellip;">
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
   
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Blog @ RohitRox" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Blog @ RohitRox</a></h1>
-  
-    <h2>tips tricks tuts and everything learned</h2>
-  
-</hgroup>
 
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:rohitrox.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
+  <body>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">Ember Cli and Rails and Beyond</h1>
-    
-    
-      <p class="meta">
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      
+      <div class="sidebar-personal-info-section">
+        <h1 class="sidebar-personal-info-name">Rohit Joshi</h1>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Full Stack Software Developer</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+          
+            
+            
+            <a href="https://www.linkedin.com/in/rohitrox">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+            
+            |
+          
+            
+            
+            <a href="https://github.com/rohitrox">
+              <i class="fa fa-github" aria-hidden="true"></i>
+            </a>
+            
+            |
+          
+            
+            
+            <a href="https://twitter.com/roxxypoxxy">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+            
+            |
+          
+            
+            
+            <a href="">
+              <i class="fa fa-envelope" aria-hidden="true"></i>
+            </a>
+            
+            
+          
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+	
+      
+      
+      
+
+      
+
+      <span class="">
         
+			<a class="sidebar-nav-item" href="/">
+			  Home
+			</a>
+		
+      </span>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-06T16:44:00-05:00" pubdate data-updated="true">Dec 6<span>th</span>, 2014</time>
-        
-         | <a href="#disqus_thread">Comments</a>
-        
-      </p>
     
-  </header>
+      
+      
+      
+
+      
+
+      <span class="">
+        
+			<a class="sidebar-nav-item fold-by-click" href="javascript:;">
+			  Categories
+			</a>
+			<a class="sidebar-nav-item sidebar-nav-item-sub" href="/categories/#">
+				- All
+			</a>
+			
+			
+			<a class="sidebar-nav-item sidebar-nav-item-sub" href="/categories/#ruby">
+				- Ruby
+			</a>
+			
+			
+			<a class="sidebar-nav-item sidebar-nav-item-sub" href="/categories/#mysql">
+				- MySQL
+			</a>
+			
+			
+			<a class="sidebar-nav-item sidebar-nav-item-sub" href="/categories/#javascript">
+				- Javascript
+			</a>
+			
+			
+			<a class="sidebar-nav-item sidebar-nav-item-sub" href="/categories/#devtips">
+				- DevTips
+			</a>
+			
+			
+			<a class="sidebar-nav-item sidebar-nav-item-sub" href="/categories/#rails">
+				- Rails
+			</a>
+			
+			
+			<a class="sidebar-nav-item sidebar-nav-item-sub" href="/categories/#linux">
+				- Linux
+			</a>
+			
+			
+			<a class="sidebar-nav-item sidebar-nav-item-sub" href="/categories/#mongodb">
+				- MongoDB
+			</a>
+			
+		
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        
+			<a class="sidebar-nav-item" href="/tags/">
+			  Tags
+			</a>
+		
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        
+			<a class="sidebar-nav-item" href="/about/">
+			  About
+			</a>
+		
+      </span>
+
+    
+
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    Made with <a href="http://jekyllrb.com">jekyll</a> and <a href="http://codinfox.github.io">codinfox-lanyon</a>
+    </p>
+  </div>
+</div>
 
 
-<div class="entry-content"><h3>Ember Cli and Rails Setup</h3>
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            
+              <a href="/" title="Home" title="Blog @ RohitRox" class="masthead-tagline-link">
+                Blog @ RohitRox
+              </a>
+            
+          </h3>
+        </div>
+      </div>
 
-<p>Rails setup is pretty staright forward with <code>rails new ..</code> and new ember cli app with <code>ember new ..</code>  but with following folder configuration</p>
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Ember Cli and Rails And Beyond</h1>
+  <span class="post-date">06 Dec 2014</span>
+   | 
+  
+    <a href="/tags/#emberjs" class="post-tag">emberjs</a>
+  
+    <a href="/tags/#rails" class="post-tag">rails</a>
+  
+  
+  <article>
+    <h3 id="ember-cli-and-rails-setup">Ember Cli and Rails Setup</h3>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  | embercli-rails-app
-</span><span class='line'>  |-- rails  
-</span><span class='line'>  |-- ember</span></code></pre></td></tr></table></div></figure>
+<p>Rails setup is pretty staright forward with <code class="highlighter-rouge">rails new ..</code> and new ember cli app with <code class="highlighter-rouge">ember new ..</code>  but with following folder configuration</p>
 
-
-<p>Inside of main project folder we&rsquo;ll have a folder which will contain the rails code and another folder which will contain ember code only.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  | embercli-rails-app
+  |-- rails
+  |-- ember
+</code></pre></div></div>
+<p>Inside of main project folder we’ll have a folder which will contain the rails code and another folder which will contain ember code only.</p>
 
 <p>We would like to have coffeescript.</p>
 
 <p>For coffeescript</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  $ npm install --save-dev ember-cli-coffeescript</span></code></pre></td></tr></table></div></figure>
-
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $ npm install --save-dev ember-cli-coffeescript
+</code></pre></div></div>
 
 <p>and renaming .js files to .coffee and correcting the js syntax to coffee will do the trick.</p>
 
-<p>Make sure that ember app is all well by using <code>ember server</code> and visiting <a href="http://localhost:4200.">http://localhost:4200.</a></p>
+<p>Make sure that ember app is all well by using <code class="highlighter-rouge">ember server</code> and visiting http://localhost:4200.</p>
 
 <p>Before proceeding, it would be nice to have some tests.</p>
 
-<p>Lets create a new test at &lsquo;ember/tests/integration/home-page-test.coffee&rsquo;.</p>
+<p>Lets create a new test at ‘ember/tests/integration/home-page-test.coffee’.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="o">`</span><span class="nx">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">&#39;ember&#39;</span><span class="o">`</span>
-</span><span class='line'>  <span class="o">`</span><span class="nx">import</span> <span class="nx">startApp</span> <span class="nx">from</span> <span class="s">&#39;cli-app/tests/helpers/start-app&#39;</span><span class="o">`</span>
-</span><span class='line'>  <span class="o">`</span><span class="nx">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">&#39;ember&#39;</span><span class="o">`</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nv">App = </span><span class="kc">null</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">module</span> <span class="s">&#39;Integration - Home Page&#39;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nv">setup: </span><span class="nf">-&gt;</span>
-</span><span class='line'>      <span class="nv">App = </span><span class="nx">startApp</span><span class="p">()</span>
-</span><span class='line'>    <span class="p">,</span>
-</span><span class='line'>    <span class="nv">teardown: </span><span class="nf">-&gt;</span>
-</span><span class='line'>      <span class="nx">Ember</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">App</span><span class="p">,</span> <span class="s">&#39;destroy&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">test</span> <span class="s">&#39;Should have Welcome test&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-</span><span class='line'>    <span class="nx">visit</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">).</span><span class="nx">then</span> <span class="nf">-&gt;</span>
-</span><span class='line'>      <span class="nx">equal</span><span class="p">(</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;h2#title&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(),</span> <span class="s">&#39;Welcome to Ember.js&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="language-coffeescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="o">`</span><span class="nx">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">'ember'</span><span class="o">`</span>
+  <span class="o">`</span><span class="nx">import</span> <span class="nx">startApp</span> <span class="nx">from</span> <span class="s">'cli-app/tests/helpers/start-app'</span><span class="o">`</span>
+  <span class="o">`</span><span class="nx">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">'ember'</span><span class="o">`</span>
 
+  <span class="nx">App</span> <span class="o">=</span> <span class="no">null</span>
 
-<p>Visit <a href="http://localhost:4200/tests">http://localhost:4200/tests</a> to run the tests.</p>
+  <span class="nx">module</span> <span class="s">'Integration - Home Page'</span><span class="p">,</span>
+    <span class="na">setup</span><span class="o">:</span> <span class="o">-&gt;</span>
+      <span class="nx">App</span> <span class="o">=</span> <span class="nx">startApp</span><span class="p">()</span>
+    <span class="p">,</span>
+    <span class="na">teardown</span><span class="o">:</span> <span class="o">-&gt;</span>
+      <span class="nx">Ember</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="nx">App</span><span class="p">,</span> <span class="s">'destroy'</span><span class="p">)</span>
+
+  <span class="nx">test</span> <span class="s">'Should have Welcome test'</span><span class="p">,</span> <span class="o">-&gt;</span>
+    <span class="nx">visit</span><span class="p">(</span><span class="s">'/'</span><span class="p">).</span><span class="na">then</span> <span class="o">-&gt;</span>
+      <span class="nx">equal</span><span class="p">(</span><span class="nx">find</span><span class="p">(</span><span class="s">'h2#title'</span><span class="p">).</span><span class="na">text</span><span class="p">(),</span> <span class="s">'Welcome to Ember.js'</span><span class="p">);</span>
+
+</code></pre></div></div>
+<p>Visit http://localhost:4200/tests to run the tests.</p>
 
 <!-- more -->
 
+<h3 id="rails-api">Rails Api</h3>
 
-<h3>Rails Api</h3>
+<p>Let’s quickly build an api that can be consumed by our ember app. We are skipping out the tests.</p>
 
-<p>Let&rsquo;s quickly build an api that can be consumed by our ember app. We are skipping out the tests.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="nx">rails</span> <span class="nx">g</span> <span class="nx">model</span> <span class="nx">post</span> <span class="nx">title</span><span class="o">:</span><span class="nx">string</span> <span class="nx">body</span><span class="o">:</span><span class="nx">text</span>
-</span><span class='line'>  <span class="nx">rake</span> <span class="nx">db</span><span class="o">:</span><span class="nx">create</span> <span class="nx">db</span><span class="o">:</span><span class="nx">migrate</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span>
-</span><span class='line'>  <span class="nx">rails</span> <span class="nx">g</span> <span class="nx">serializer</span> <span class="nx">post</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  rails g model post title:string body:text
+  rake db:create db:migrate db:seed
+  rails g serializer post
+</code></pre></div></div>
 <p>We are going to make our api under api namespace so routes and controllers are as follows:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="sr">//</span> <span class="n">config</span><span class="o">/</span><span class="n">routes</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'>  <span class="n">namespace</span> <span class="ss">:api</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">resources</span> <span class="ss">:posts</span>
-</span><span class='line'>  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="sr">//</span> <span class="n">config</span><span class="o">/</span><span class="n">routes</span><span class="p">.</span><span class="nf">rb</span>
+  <span class="n">namespace</span> <span class="ss">:api</span> <span class="k">do</span>
+    <span class="n">resources</span> <span class="ss">:posts</span>
+  <span class="k">end</span>
+</code></pre></div></div>
 
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="sr">//</span> <span class="n">app</span><span class="o">/</span><span class="n">controllers</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">posts_controller</span><span class="p">.</span><span class="nf">rb</span>
+  <span class="k">class</span> <span class="nc">Api</span><span class="o">::</span><span class="no">PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+    <span class="k">def</span> <span class="nf">index</span>
+      <span class="n">render</span> <span class="ss">json: </span><span class="no">Post</span><span class="p">.</span><span class="nf">all</span>
+    <span class="k">end</span>
 
+    <span class="k">def</span> <span class="nf">show</span>
+      <span class="n">render</span> <span class="ss">json: </span><span class="no">Post</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+</code></pre></div></div>
+<p>Boot rails server and make sure api is working using curl command <code class="highlighter-rouge">curl http://0.0.0.0:3000/api/posts</code> and see if it outputs json data.</p>
 
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="sr">//</span> <span class="n">app</span><span class="o">/</span><span class="n">controllers</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">posts_controller</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'>  <span class="k">class</span> <span class="nc">Api</span><span class="o">::</span><span class="no">PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">index</span>
-</span><span class='line'>      <span class="n">render</span> <span class="ss">json</span><span class="p">:</span> <span class="no">Post</span><span class="o">.</span><span class="n">all</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">show</span>
-</span><span class='line'>      <span class="n">render</span> <span class="ss">json</span><span class="p">:</span> <span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Boot rails server and make sure api is working using curl command <code>curl http://0.0.0.0:3000/api/posts</code> and see if it outputs json data.</p>
-
-<h3>Ember Data and stuffs</h3>
+<h3 id="ember-data-and-stuffs">Ember Data and stuffs</h3>
 
 <p>First, create ember model for Post model.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="err">$</span> <span class="n">ember</span> <span class="n">generate</span> <span class="n">model</span> <span class="n">post</span> <span class="ss">title</span><span class="p">:</span><span class="n">string</span> <span class="ss">body</span><span class="p">:</span><span class="n">string</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $ ember generate model post title:string body:string
+</code></pre></div></div>
 
 <p>Then setup routes and templates.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="c1"># app/router.coffee</span>
-</span><span class='line'>  <span class="nx">Router</span><span class="p">.</span><span class="nx">map</span> <span class="nf">-&gt;</span>
-</span><span class='line'>    <span class="nx">@resource</span> <span class="s">&#39;posts&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="language-coffeescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># app/router.coffee</span>
+  <span class="nx">Router</span><span class="p">.</span><span class="na">map</span> <span class="o">-&gt;</span>
+    <span class="vi">@</span><span class="na">resource</span> <span class="s">'posts'</span>
 
+</code></pre></div></div>
 
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  # app/templates/posts.hbs
+  <span class="nt">&lt;h3&gt;</span>Listing All Posts:<span class="nt">&lt;/h3&gt;</span>
+  <span class="nt">&lt;ul&gt;</span>
+  {{ #each }}
+    <span class="nt">&lt;li&gt;</span>{{ title }}<span class="nt">&lt;/li&gt;</span>
+  {{ /each }}
+  <span class="nt">&lt;/ul&gt;</span>
+</code></pre></div></div>
 
+<p>Finally, let’s setup the adapter.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>  # app/templates/posts.hbs
-</span><span class='line'>  <span class="nt">&lt;h3&gt;</span>Listing All Posts:<span class="nt">&lt;/h3&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>  {{ #each }}
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>{{ title }}<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>  {{ /each }}
-</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="language-coffeescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># ember/app/adapters/application.coffee</span>
+  <span class="o">`</span><span class="nx">import</span> <span class="nx">DS</span> <span class="nx">from</span> <span class="s">'ember-data'</span><span class="o">`</span>
 
+  <span class="nx">ApplicationAdapter</span> <span class="o">=</span> <span class="nx">DS</span><span class="p">.</span><span class="na">ActiveModelAdapter</span><span class="p">.</span><span class="na">extend</span>
+    <span class="na">namespace</span><span class="o">:</span> <span class="s">"api"</span>
 
-<p>Finally, let&rsquo;s setup the adapter.</p>
+  <span class="o">`</span><span class="nx">export</span> <span class="nx">default</span> <span class="nx">ApplicationAdapter</span><span class="o">`</span>
+</code></pre></div></div>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="c1"># ember/app/adapters/application.coffee</span>
-</span><span class='line'>  <span class="o">`</span><span class="nx">import</span> <span class="nx">DS</span> <span class="nx">from</span> <span class="s">&#39;ember-data&#39;</span><span class="o">`</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nv">ApplicationAdapter = </span><span class="nx">DS</span><span class="p">.</span><span class="nx">ActiveModelAdapter</span><span class="p">.</span><span class="nx">extend</span>
-</span><span class='line'>    <span class="nv">namespace: </span><span class="s">&quot;api&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">`</span><span class="nx">export</span> <span class="nx">default</span> <span class="nx">ApplicationAdapter</span><span class="o">`</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now let&rsquo;s fire the ember server and visit <a href="http://localhost:4200/posts.">http://localhost:4200/posts.</a>
-Nothing happens! In console we can see that there was request was made on url <a href="http://localhost:4200/api/posts.">http://localhost:4200/api/posts.</a>
+<p>Now let’s fire the ember server and visit http://localhost:4200/posts.
+Nothing happens! In console we can see that there was request was made on url http://localhost:4200/api/posts.
 We need a way to redirect this resource to rails app.</p>
 
 <p>This can be fixed by one line using ember server with proxy enabled.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $ ember server --proxy http://localhost:3000
+</code></pre></div></div>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="nx">$</span> <span class="nx">ember</span> <span class="nx">server</span> <span class="o">--</span><span class="nx">proxy</span> <span class="nx">http</span><span class="o">://</span><span class="nx">localhost</span><span class="o">:</span><span class="mi">3000</span>
-</span></code></pre></td></tr></table></div></figure>
+<h3 id="more-tests">More Tests</h3>
 
+<p>Let’s try to test this new posts page feature. In test we cannot hit rails server to get posts so we will use a tool called <a href="https://github.com/trek/pretender">Pretender</a> to mock the request-response.</p>
 
-<h3>More Tests</h3>
-
-<p>Let&rsquo;s try to test this new posts page feature. In test we cannot hit rails server to get posts so we will use a tool called <a href="https://github.com/trek/pretender">Pretender</a> to mock the request-response.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="nx">$</span> <span class="nx">npm</span> <span class="nx">install</span> <span class="o">--</span><span class="nx">save</span><span class="o">-</span><span class="nx">dev</span> <span class="nx">ember</span><span class="o">-</span><span class="nx">cli</span><span class="o">-</span><span class="nx">pretender</span>
-</span><span class='line'>  <span class="nx">$</span> <span class="nx">ember</span> <span class="nx">generate</span> <span class="nx">ember</span><span class="o">-</span><span class="nx">cli</span><span class="o">-</span><span class="nx">pretender</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $ npm install --save-dev ember-cli-pretender
+  $ ember generate ember-cli-pretender
+</code></pre></div></div>
 
 <p>Our test setup and test would be something like below:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'>  <span class="c1"># tests/integration/posts-page-test.coffee</span>
-</span><span class='line'>  <span class="o">`</span><span class="nx">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">&#39;ember&#39;</span><span class="o">`</span>
-</span><span class='line'>  <span class="o">`</span><span class="nx">import</span> <span class="nx">startApp</span> <span class="nx">from</span> <span class="s">&#39;cli-app/tests/helpers/start-app&#39;</span><span class="o">`</span>
-</span><span class='line'>  <span class="o">`</span><span class="nx">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">&#39;ember&#39;</span><span class="o">`</span>
-</span><span class='line'>  <span class="o">`</span><span class="nx">import</span> <span class="nx">Pretender</span> <span class="nx">from</span> <span class="s">&#39;pretender&#39;</span><span class="o">`</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nv">App = </span><span class="kc">null</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">module</span> <span class="s">&#39;Integration - Posts Page&#39;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nv">setup: </span><span class="nf">-&gt;</span>
-</span><span class='line'>      <span class="nv">App = </span><span class="nx">startApp</span><span class="p">()</span>
-</span><span class='line'>      <span class="nv">posts = </span><span class="p">[</span>
-</span><span class='line'>        <span class="p">{</span>
-</span><span class='line'>          <span class="nv">id: </span><span class="mi">1</span><span class="p">,</span>
-</span><span class='line'>          <span class="nv">title: </span><span class="s">&#39;Posts 1&#39;</span>
-</span><span class='line'>        <span class="p">},</span>
-</span><span class='line'>        <span class="p">{</span>
-</span><span class='line'>          <span class="nv">id: </span><span class="mi">2</span><span class="p">,</span>
-</span><span class='line'>          <span class="nv">title: </span><span class="s">&#39;Posts 2&#39;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>      <span class="p">]</span>
-</span><span class='line'>      <span class="c1"># pretender for faking ajax request</span>
-</span><span class='line'>      <span class="nv">server = </span><span class="k">new</span> <span class="nx">Pretender</span> <span class="nf">-&gt;</span>
-</span><span class='line'>        <span class="nx">@get</span> <span class="s">&#39;/api/posts&#39;</span><span class="p">,</span> <span class="nf">(request) -&gt;</span>
-</span><span class='line'>          <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;Content-Type&quot;</span><span class="o">:</span> <span class="s">&quot;application/json&quot;</span><span class="p">},</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nv">posts: </span><span class="nx">posts</span><span class="p">})]</span>
-</span><span class='line'>    <span class="p">,</span>
-</span><span class='line'>    <span class="nv">teardown: </span><span class="nf">-&gt;</span>
-</span><span class='line'>      <span class="nx">Ember</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">App</span><span class="p">,</span> <span class="s">&#39;destroy&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">test</span> <span class="s">&#39;Should display posts&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-</span><span class='line'>    <span class="nx">visit</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">).</span><span class="nx">then</span> <span class="nf">-&gt;</span>
-</span><span class='line'>      <span class="nx">click</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">).</span><span class="nx">then</span> <span class="nf">-&gt;</span>
-</span><span class='line'>        <span class="nx">equal</span><span class="p">(</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;h3&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(),</span> <span class="s">&#39;Listing All Posts:&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="nx">equal</span><span class="p">(</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;li:contains(&quot;Posts 1&quot;)&#39;</span><span class="p">).</span><span class="nx">length</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class='line'>        <span class="nx">equal</span><span class="p">(</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;li:contains(&quot;Posts 2&quot;)&#39;</span><span class="p">).</span><span class="nx">length</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="language-coffeescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># tests/integration/posts-page-test.coffee</span>
+  <span class="o">`</span><span class="nx">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">'ember'</span><span class="o">`</span>
+  <span class="o">`</span><span class="nx">import</span> <span class="nx">startApp</span> <span class="nx">from</span> <span class="s">'cli-app/tests/helpers/start-app'</span><span class="o">`</span>
+  <span class="o">`</span><span class="nx">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">'ember'</span><span class="o">`</span>
+  <span class="o">`</span><span class="nx">import</span> <span class="nx">Pretender</span> <span class="nx">from</span> <span class="s">'pretender'</span><span class="o">`</span>
 
+  <span class="nx">App</span> <span class="o">=</span> <span class="no">null</span>
 
-<p>Visit <a href="http://localhost:4200/tests">http://localhost:4200/tests</a> to run the tests.</p>
+  <span class="nx">module</span> <span class="s">'Integration - Posts Page'</span><span class="p">,</span>
+    <span class="na">setup</span><span class="o">:</span> <span class="o">-&gt;</span>
+      <span class="nx">App</span> <span class="o">=</span> <span class="nx">startApp</span><span class="p">()</span>
+      <span class="nx">posts</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="na">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+          <span class="na">title</span><span class="o">:</span> <span class="s">'Posts 1'</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">id</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+          <span class="na">title</span><span class="o">:</span> <span class="s">'Posts 2'</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+      <span class="c1"># pretender for faking ajax request</span>
+      <span class="nx">server</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Pretender</span> <span class="o">-&gt;</span>
+        <span class="vi">@</span><span class="na">get</span> <span class="s">'/api/posts'</span><span class="p">,</span> <span class="p">(</span><span class="nx">request</span><span class="p">)</span> <span class="o">-&gt;</span>
+          <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="o">:</span> <span class="s">"application/json"</span><span class="p">},</span> <span class="nx">JSON</span><span class="p">.</span><span class="na">stringify</span><span class="p">({</span><span class="na">posts</span><span class="o">:</span> <span class="nx">posts</span><span class="p">})]</span>
+    <span class="p">,</span>
+    <span class="na">teardown</span><span class="o">:</span> <span class="o">-&gt;</span>
+      <span class="nx">Ember</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="nx">App</span><span class="p">,</span> <span class="s">'destroy'</span><span class="p">)</span>
 
-<h3>Integration and Deployment</h3>
+  <span class="nx">test</span> <span class="s">'Should display posts'</span><span class="p">,</span> <span class="o">-&gt;</span>
+    <span class="nx">visit</span><span class="p">(</span><span class="s">'/'</span><span class="p">).</span><span class="na">then</span> <span class="o">-&gt;</span>
+      <span class="nx">click</span><span class="p">(</span><span class="s">'a'</span><span class="p">).</span><span class="na">then</span> <span class="o">-&gt;</span>
+        <span class="nx">equal</span><span class="p">(</span><span class="nx">find</span><span class="p">(</span><span class="s">'h3'</span><span class="p">).</span><span class="na">text</span><span class="p">(),</span> <span class="s">'Listing All Posts:'</span><span class="p">);</span>
+        <span class="nx">equal</span><span class="p">(</span><span class="nx">find</span><span class="p">(</span><span class="s">'li:contains("Posts 1")'</span><span class="p">).</span><span class="na">length</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="nx">equal</span><span class="p">(</span><span class="nx">find</span><span class="p">(</span><span class="s">'li:contains("Posts 2")'</span><span class="p">).</span><span class="na">length</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+</code></pre></div></div>
+<p>Visit http://localhost:4200/tests to run the tests.</p>
+
+<h3 id="integration-and-deployment">Integration and Deployment</h3>
 
 <p>We would like to compile and move the ember-cli produced css and js files to rails in production environment. This little script helps us to automate this task:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>  <span class="c">#!/bin/bash</span>
-</span><span class='line'>  <span class="c"># Based on https://github.com/knomedia/ember-cli-rails/blob/master/build.sh</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">function </span>printMessage <span class="o">{</span>
-</span><span class='line'>    <span class="nv">color</span><span class="o">=</span><span class="k">$(</span>tput setaf <span class="nv">$1</span><span class="k">)</span>
-</span><span class='line'>    <span class="nv">message</span><span class="o">=</span><span class="nv">$2</span>
-</span><span class='line'>    <span class="nv">reset</span><span class="o">=</span><span class="k">$(</span>tput sgr0<span class="k">)</span>
-</span><span class='line'>    <span class="nb">echo</span> -e <span class="s2">&quot;${color}${message}${reset}&quot;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">function </span>boldMessage <span class="o">{</span>
-</span><span class='line'>    <span class="nv">color</span><span class="o">=</span><span class="k">$(</span>tput setaf <span class="nv">$1</span><span class="k">)</span>
-</span><span class='line'>    <span class="nv">message</span><span class="o">=</span><span class="nv">$2</span>
-</span><span class='line'>    <span class="nv">reset</span><span class="o">=</span><span class="k">$(</span>tput sgr0<span class="k">)</span>
-</span><span class='line'>    <span class="nb">echo</span> -e <span class="s2">&quot;${color}*************************************${reset}&quot;</span>
-</span><span class='line'>    <span class="nb">echo</span> -e <span class="s2">&quot;${color}${message}${reset}&quot;</span>
-</span><span class='line'>    <span class="nb">echo</span> -e <span class="s2">&quot;${color}*************************************${reset}&quot;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nb">cd </span>cli-app
-</span><span class='line'>  boldMessage 4 <span class="s2">&quot;Building Ember app&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  ember build --environment production
-</span><span class='line'>  <span class="nb">cd</span> ../rails/
-</span><span class='line'>
-</span><span class='line'>  rm -rf public/ember-assets
-</span><span class='line'>
-</span><span class='line'>  printMessage 4 <span class="s2">&quot;Copying ember build files to rails&quot;</span>
-</span><span class='line'>  cp -r ../cli-app/dist/ public/
-</span><span class='line'>
-</span><span class='line'>  printMessage 4 <span class="s2">&quot;Swaping assets dir for ember-assets&quot;</span>
-</span><span class='line'>  mv public/assets public/ember-assets
-</span><span class='line'>
-</span><span class='line'>  printMessage 4 <span class="s2">&quot;Replacing references s/assets/ember-assets/ in public/index.html&quot;</span>
-</span><span class='line'>  sed -i .bck s/assets/ember-assets/ public/index.html
-</span><span class='line'>
-</span><span class='line'>  printMessage 4 <span class="s2">&quot;inserting csrf_meta_tags in head&quot;</span>
-</span><span class='line'>  sed -i .bck <span class="s1">&#39;s/&lt;\/head&gt;/&lt;%= csrf_meta_tags %&gt;&amp;/&#39;</span> public/index.html
-</span><span class='line'>
-</span><span class='line'>  printMessage 4 <span class="s2">&quot;inserting yield in body&quot;</span>
-</span><span class='line'>  sed -i .bck <span class="s1">&#39;s/&lt;body&gt;/&amp;&lt;%= yield %&gt;/&#39;</span> public/index.html
-</span><span class='line'>
-</span><span class='line'>  printMessage 4 <span class="s2">&quot;Replacing application.html.erb with index.html&quot;</span>
-</span><span class='line'>  mv public/index.html app/views/layouts/application.html.erb
-</span><span class='line'>
-</span><span class='line'>  printMessage 4 <span class="s2">&quot;Cleaning Up&quot;</span>
-</span><span class='line'>  rm -rf public_bk/
-</span><span class='line'>  rm public/index.html.bck
-</span><span class='line'>
-</span><span class='line'>  boldMessage 4 <span class="s2">&quot;Done&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="c">#!/bin/bash</span>
+  <span class="c"># Based on https://github.com/knomedia/ember-cli-rails/blob/master/build.sh</span>
 
+  <span class="k">function </span>printMessage <span class="o">{</span>
+    <span class="nv">color</span><span class="o">=</span><span class="k">$(</span>tput setaf <span class="nv">$1</span><span class="k">)</span>
+    <span class="nv">message</span><span class="o">=</span><span class="nv">$2</span>
+    <span class="nv">reset</span><span class="o">=</span><span class="k">$(</span>tput sgr0<span class="k">)</span>
+    <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="k">${</span><span class="nv">color</span><span class="k">}${</span><span class="nv">message</span><span class="k">}${</span><span class="nv">reset</span><span class="k">}</span><span class="s2">"</span>
+  <span class="o">}</span>
+
+  <span class="k">function </span>boldMessage <span class="o">{</span>
+    <span class="nv">color</span><span class="o">=</span><span class="k">$(</span>tput setaf <span class="nv">$1</span><span class="k">)</span>
+    <span class="nv">message</span><span class="o">=</span><span class="nv">$2</span>
+    <span class="nv">reset</span><span class="o">=</span><span class="k">$(</span>tput sgr0<span class="k">)</span>
+    <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="k">${</span><span class="nv">color</span><span class="k">}</span><span class="s2">*************************************</span><span class="k">${</span><span class="nv">reset</span><span class="k">}</span><span class="s2">"</span>
+    <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="k">${</span><span class="nv">color</span><span class="k">}${</span><span class="nv">message</span><span class="k">}${</span><span class="nv">reset</span><span class="k">}</span><span class="s2">"</span>
+    <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="k">${</span><span class="nv">color</span><span class="k">}</span><span class="s2">*************************************</span><span class="k">${</span><span class="nv">reset</span><span class="k">}</span><span class="s2">"</span>
+  <span class="o">}</span>
+
+  <span class="nb">cd </span>cli-app
+  boldMessage 4 <span class="s2">"Building Ember app"</span>
+
+  ember build <span class="nt">--environment</span> production
+  <span class="nb">cd</span> ../rails/
+
+  <span class="nb">rm</span> <span class="nt">-rf</span> public/ember-assets
+
+  printMessage 4 <span class="s2">"Copying ember build files to rails"</span>
+  <span class="nb">cp</span> <span class="nt">-r</span> ../cli-app/dist/ public/
+
+  printMessage 4 <span class="s2">"Swaping assets dir for ember-assets"</span>
+  <span class="nb">mv </span>public/assets public/ember-assets
+
+  printMessage 4 <span class="s2">"Replacing references s/assets/ember-assets/ in public/index.html"</span>
+  <span class="nb">sed</span> <span class="nt">-i</span> .bck s/assets/ember-assets/ public/index.html
+
+  printMessage 4 <span class="s2">"inserting csrf_meta_tags in head"</span>
+  <span class="nb">sed</span> <span class="nt">-i</span> .bck <span class="s1">'s/&lt;\/head&gt;/&lt;%= csrf_meta_tags %&gt;&amp;/'</span> public/index.html
+
+  printMessage 4 <span class="s2">"inserting yield in body"</span>
+  <span class="nb">sed</span> <span class="nt">-i</span> .bck <span class="s1">'s/&lt;body&gt;/&amp;&lt;%= yield %&gt;/'</span> public/index.html
+
+  printMessage 4 <span class="s2">"Replacing application.html.erb with index.html"</span>
+  <span class="nb">mv </span>public/index.html app/views/layouts/application.html.erb
+
+  printMessage 4 <span class="s2">"Cleaning Up"</span>
+  <span class="nb">rm</span> <span class="nt">-rf</span> public_bk/
+  <span class="nb">rm </span>public/index.html.bck
+
+  boldMessage 4 <span class="s2">"Done"</span>
+</code></pre></div></div>
 
 <p>Now, we can shutdown ember server and visit localhost:3000, we can still see our ember app there.</p>
 
-<p>To deploy our app we need to deploy our rails app only. We can put out both frontend and backend in single repo or in different repo. I have put both in a single <a href="https://github.com/RohitRox/embercli-rails">repo</a>. Do <code>config.serve_static_assets = true</code> in production.rb We can deploy like any other rails app. I have deployed this app to <a href="https://embercli-rails.herokuapp.com/posts">heroku</a>. One gotcha is that heroku expects the app directory structure at the root of the repository. So to deploy we will have to push differently:</p>
+<p>To deploy our app we need to deploy our rails app only. We can put out both frontend and backend in single repo or in different repo. I have put both in a single <a href="https://github.com/RohitRox/embercli-rails">repo</a>. Do <code class="highlighter-rouge">config.serve_static_assets = true</code> in production.rb We can deploy like any other rails app. I have deployed this app to <a href="https://embercli-rails.herokuapp.com/posts">heroku</a>. One gotcha is that heroku expects the app directory structure at the root of the repository. So to deploy we will have to push differently:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $ git subtree push --prefix rails heroku master
+</code></pre></div></div>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>  <span class="nv">$ </span>git subtree push --prefix rails heroku master
-</span></code></pre></td></tr></table></div></figure>
-
+  </article>
 </div>
 
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Rohit Rox</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-06T16:44:00-05:00" pubdate data-updated="true">Dec 6<span>th</span>, 2014</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/embercli/'>EmberCli</a>, <a class='category' href='/blog/categories/emberjs/'>EmberJs</a>, <a class='category' href='/blog/categories/rails/'>Rails</a>
-  
-</span>
-
-
-    </p>
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
     
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond/" data-via="roxxypoxxy" data-counturl="http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/2014/03/16/emberjs-and-highcharts/" title="Previous Post: Emberjs and Highcharts">&laquo; Emberjs and Highcharts</a>
-      
-      
-        <a class="basic-alignment right" href="/2015/06/23/rails-api-backed-with-jwt/" title="Next Post: Rails api backed with jwt">Rails api backed with jwt &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>About Me</h1>
-  <p class="my_json">
-	<span class="curly">{</span><br />
-	&nbsp;<span class="key">me:</span> <span class="val">Rohit Joshi from Kathmandu, Nepal</span>,<br />
-	&nbsp;<span class="key">profession: {<br />
-		&nbsp;&nbsp;<span class="key">web_developer:</span> <span class="val">["Ruby on Rails", "Javascript"]</span><br />
-	&nbsp;},<br />
-	&nbsp;<span class="key">email:</span> <a href="mailto:link2j.roy@gmail.com" target="_blank">link2j.roy@gmail.com</a>,<br />
-	&nbsp;<span class="key">twitter:</span> <a href="http://twitter.com/roxxypoxxy" target="_blank">@roxxypoxxy</a>,<br />
-	&nbsp;<span class="key">github:</span> <a href="http://github.com/rohitrox" target="_blank">rohitrox</a>,<br />
-	&nbsp;<span class="key">web:</span> <a href="http://rohitjoshi.com.np" target="_blank">http://rohitjoshi.com.np</a><br />
-	<span class="curly">}</span>
-  </p>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/2015/06/23/rails-api-backed-with-jwt/">Rails Api Backed With Jwt</a>
+      <li>
+        <h3>
+          <a href="/2015/06/23/rails-api-backed-with-jwt/">
+            Rails api backed with jwt
+            <small>23 Jun 2015</small>
+          </a>
+        </h3>
       </li>
     
-      <li class="post">
-        <a href="/2014/12/06/embercli-and-rails-and-beyond/">Ember Cli and Rails and Beyond</a>
+      <li>
+        <h3>
+          <a href="/2014/03/16/emberjs-and-highcharts/">
+            Emberjs and Highcharts
+            <small>16 Mar 2014</small>
+          </a>
+        </h3>
       </li>
     
-      <li class="post">
-        <a href="/2014/03/16/emberjs-and-highcharts/">Emberjs and Highcharts</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/02/20/hangman-game-with-emberjs/">Hangman Game With Emberjs</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/09/05/javascript-array-tricks/">Javascript Array Tricks</a>
+      <li>
+        <h3>
+          <a href="/2014/02/20/hangman-game-with-emberjs/">
+            Hangman game with EmberJs
+            <small>20 Feb 2014</small>
+          </a>
+        </h3>
       </li>
     
   </ul>
-</section>
-<section>
-  <h1>Categories</h1>
-    <ul id="category-list"><li class='category'><a href='/blog/categories/api/'>Api (1)</a></li>
-<li class='category'><a href='/blog/categories/canvas/'>Canvas (1)</a></li>
-<li class='category'><a href='/blog/categories/embercli/'>EmberCli (1)</a></li>
-<li class='category'><a href='/blog/categories/emberjs/'>EmberJs (2)</a></li>
-<li class='category'><a href='/blog/categories/html5/'>HTML5 (1)</a></li>
-<li class='category'><a href='/blog/categories/jquery/'>JQuery (2)</a></li>
-<li class='category'><a href='/blog/categories/jwt/'>JWT (1)</a></li>
-<li class='category'><a href='/blog/categories/javascript/'>Javascript (6)</a></li>
-<li class='category'><a href='/blog/categories/knockoutjs/'>KnockoutJs (1)</a></li>
-<li class='category'><a href='/blog/categories/metaprogramming/'>Metaprogramming (1)</a></li>
-<li class='category'><a href='/blog/categories/mongoid/'>Mongoid (1)</a></li>
-<li class='category'><a href='/blog/categories/mysql/'>MySQL (2)</a></li>
-<li class='category'><a href='/blog/categories/rails/'>Rails (6)</a></li>
-<li class='category'><a href='/blog/categories/ruby/'>Ruby (4)</a></li>
-<li class='category'><a href='/blog/categories/ubuntu/'>Ubuntu (1)</a></li>
-<li class='category'><a href='/blog/categories/vim/'>Vim (1)</a></li>
-<li class='category'><a href='/blog/categories/emberjs/'>emberjs (1)</a></li>
-<li class='category'><a href='/blog/categories/highcharts/'>highcharts (1)</a></li>
-</ul>
-</section><a class="twitter-timeline" href="https://twitter.com/roxxypoxxy" data-widget-id="365563816915902464" data-tweet-limit="5">Tweets</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-  
-</aside>
+</div>
 
 
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+var disqus_config = function () {
+  this.page.url = 'http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/2014/12/06/embercli-and-rails-and-beyond'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+(function() {
+  var d = document, s = d.createElement('script');
+  s.src = '//webdevelopmentlog.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+})();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
     </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Rohit Rox -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
 
-</footer>
-  
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
-<script type="text/javascript">
-      var disqus_shortname = 'webdevelopmentlog';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond/';
-        var disqus_url = 'http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
+    <script type="text/javascript">
+var foldableEvent = {
+	'click' : function(target){
+		if (target.className.indexOf('fold-by-click') == -1)
+		{
+			return;
+		}
+
+		var subMenu = target.parentElement.querySelectorAll('a.sidebar-nav-item-sub');
+		if (subMenu.length < 1)
+		{
+			return;
+		}
+
+		var display = subMenu[0].style.display;
+		subMenu.forEach(function(elem, index){
+			elem.style.display = (display != 'none')? 'none' : '';
+		});
+	}
+};
+
+var activeEvent = {
+	'click' : function(target){
+		if (!target.classList.contains('sidebar-nav-item'))
+		{
+			return;
+		}
+
+		document.querySelectorAll('a.sidebar-nav-item').forEach(function(elem,index){
+			elem.classList.remove('active');
+		});
+
+		target.classList.add('active');
+	}
+};
+
+var context = decodeURIComponent(document.URL.replace(/^((http|https):\/\/[A-Za-z0-9.:]*\/)/g, '/')).replace(/\s/g, '-');
+
+document.querySelectorAll('a.sidebar-nav-item').forEach(function(elem,index){
+	var href = elem.getAttribute('href');
+	var href1 = href.replace('/[a-zA-Z]/g','A');
+	var categoryUrl = '/' + _page.category.toLowerCase();
+	var menuUrl = _site.baseurl + _nav.Categories + '#' + _page.category.toLowerCase();
+	if (context == href || (context != '/' && context.startsWith(categoryUrl) && menuUrl == href))
+	{
+		elem.classList.add('active');
+	}
+});
+
+(function(document) {
+	var toggle = document.querySelector('.sidebar-toggle');
+	var sidebar = document.querySelector('#sidebar');
+	var checkbox = document.querySelector('#sidebar-checkbox');
+
+	document.addEventListener('click', function(e) {
+	  var target = e.target;
+
+	  if (target === toggle) {
+		checkbox.checked = !checkbox.checked;
+		e.preventDefault();
+	  } else if (checkbox.checked && !sidebar.contains(target)) {
+		checkbox.checked = false;
+	  }
+
+	  foldableEvent.click(target);
+	  activeEvent.click(target);
+	}, false);
+})(document);
+
 </script>
 
 
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//webdevelopmentlog.disqus.com/count.js" async></script>
+  
+  
 </html>

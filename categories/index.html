@@ -20,7 +20,7 @@
 
   <title>
     
-      Javascript Static and Instance methods &middot; Blog @ RohitRox
+      Categories &middot; Blog @ RohitRox
     
   </title>
 
@@ -42,7 +42,7 @@
 
 	
 	var _page = {
-		category : 'javascript'
+		category : 'null'
 	};
 
 	var _site = {
@@ -263,109 +263,243 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
       </div>
 
       <div class="container content">
-        <div class="post">
-  <h1 class="post-title">Javascript Static and Instance methods</h1>
-  <span class="post-date">31 Oct 2012</span>
-   | 
-  
-    <a href="/tags/#javascript" class="post-tag">javascript</a>
-  
-  
-  <article>
-    <p>Custom JavaScript objects can have instance methods (function that are associated with a particular JavaScript object), but like other Object-Oriented languages, they can also have <em>static</em> methods, that is functions that are associated with the JavaScript class that created an object, as opposed to the object itself. This is useful in cases where a function (a.k.a. a method) will not be different in different object instances.
-<!-- more -->
-An instance method could be added to this class in one of two ways, either inside the constructor or through the class prototype.</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="kd">function</span> <span class="nx">Calculator</span><span class="p">()</span>
-		<span class="p">{</span>
-		        <span class="c1">// instance method in constructor</span>
-			<span class="k">this</span><span class="p">.</span><span class="nx">multiply</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">val1</span> <span class="p">,</span> <span class="nx">val2</span><span class="p">)</span>
-			<span class="p">{</span>
-				<span class="k">return</span> <span class="p">(</span><span class="nx">val1</span><span class="o">*</span><span class="nx">val2</span><span class="p">);</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-
-	<span class="c1">// instance method via prototype</span>
-	<span class="nx">Calculator</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">val1</span> <span class="p">,</span> <span class="nx">val2</span><span class="p">)</span>
-		<span class="p">{</span>
-			<span class="k">return</span> <span class="p">(</span><span class="nx">val1</span><span class="o">+</span><span class="nx">val2</span><span class="p">);</span>
-		<span class="p">}</span>
-
-	<span class="c1">// calling</span>
-	<span class="kd">var</span> <span class="nx">calc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Calculator</span><span class="p">();</span>
-	<span class="nx">alert</span><span class="p">(</span> <span class="nx">calc</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">);</span>
-	<span class="nx">alert</span><span class="p">(</span> <span class="nx">calc</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">);</span>
-</code></pre></div></div>
-<p>However, it shouldn’t really be necessary to create an object to use the multiply or add method, since the method isn’t dependent on the state of the object for its execution. The method can be moved to the class to clean up this code a bit. First the class definition is created, which looks almost identical to the instance method declaration above, with the exception of the prototype keyword being removed:</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="kd">function</span> <span class="nx">Calculator</span><span class="p">()</span>
-	<span class="p">{</span>
-		<span class="p">...</span>
-	<span class="p">}</span>
-
-	<span class="nx">Calculator</span><span class="p">.</span><span class="nx">multiply</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">val1</span> <span class="p">,</span> <span class="nx">val2</span><span class="p">)</span>
-	<span class="p">{</span>
-		<span class="k">return</span> <span class="p">(</span><span class="nx">val1</span><span class="o">*</span><span class="nx">val2</span><span class="p">);</span>
-	<span class="p">}</span>
-</code></pre></div></div>
-<p>Now the multiply method can be called through the class itself, instead of an instance of the class, like so:</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nx">alert</span><span class="p">(</span> <span class="nx">Calculator</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">);</span>
-</code></pre></div></div>
-
-  </article>
+        <div class="page">
+  <h1 class="page-title">Categories</h1>
+  <div class="tags-expo">
+  <div class="tags-expo-list">
+    
+    <a href="#ruby" class="post-tag">Ruby</a>
+    
+    <a href="#mysql" class="post-tag">MySQL</a>
+    
+    <a href="#javascript" class="post-tag">Javascript</a>
+    
+    <a href="#devtips" class="post-tag">DevTips</a>
+    
+    <a href="#rails" class="post-tag">Rails</a>
+    
+    <a href="#linux" class="post-tag">Linux</a>
+    
+    <a href="#mongodb" class="post-tag">MongoDB</a>
+    
+  </div>
+  <hr/>
+  <div class="tags-expo-section">
+    
+    <h2 id="ruby" class="point-category">Ruby</h2>
+    <ul class="tags-expo-posts">
+      
+        <a class="post-title" href="/2013/07/02/ruby-dynamic-methods/">
+      <li>
+        Ruby Dynamic Methods
+      <small class="post-date">02 Jul 2013</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2013/03/18/feature-flippers-with-rollout/">
+      <li>
+        Feature flippers with rollout
+      <small class="post-date">18 Mar 2013</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2012/10/30/activerecord-with-ruby-alone/">
+      <li>
+        ActiveRecord with Ruby alone
+      <small class="post-date">30 Oct 2012</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2012/10/30/interacting-to-mysql-with-ruby/">
+      <li>
+        Interacting to MySQL using Ruby
+      <small class="post-date">30 Oct 2012</small>
+      </li>
+      </a>
+      
+    </ul>
+    
+    <h2 id="mysql" class="point-category">MySQL</h2>
+    <ul class="tags-expo-posts">
+      
+        <a class="post-title" href="/2012/11/03/mysql-commands/">
+      <li>
+        MySql commands
+      <small class="post-date">03 Nov 2012</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2012/10/30/interacting-to-mysql-with-ruby/">
+      <li>
+        Interacting to MySQL using Ruby
+      <small class="post-date">30 Oct 2012</small>
+      </li>
+      </a>
+      
+    </ul>
+    
+    <h2 id="javascript" class="point-category">Javascript</h2>
+    <ul class="tags-expo-posts">
+      
+        <a class="post-title" href="/2014/12/06/embercli-and-rails-and-beyond/">
+      <li>
+        Ember Cli and Rails And Beyond
+      <small class="post-date">06 Dec 2014</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2014/03/16/emberjs-and-highcharts/">
+      <li>
+        Emberjs and Highcharts
+      <small class="post-date">16 Mar 2014</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2014/02/20/hangman-game-with-emberjs/">
+      <li>
+        Hangman game with EmberJs
+      <small class="post-date">20 Feb 2014</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2013/09/05/javascript-array-tricks/">
+      <li>
+        Javascript Array Tricks
+      <small class="post-date">05 Sep 2013</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2013/08/23/get-selected-text-from-webpage/">
+      <li>
+        Get Selected text from Web Page
+      <small class="post-date">23 Aug 2013</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2013/08/18/lets-learn-to-knockout/">
+      <li>
+        Lets learn to knockout
+      <small class="post-date">18 Aug 2013</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2013/07/19/canvas-images-and-rails/">
+      <li>
+        Canvas Images and Rails
+      <small class="post-date">19 Jul 2013</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2013/05/23/jquery-performance-tuning/">
+      <li>
+        Jquery performance Tuning
+      <small class="post-date">23 May 2013</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2012/11/01/oop-with-javascript/">
+      <li>
+        OOP with Javascript
+      <small class="post-date">01 Nov 2012</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2012/10/31/javascript-static-and-instance-methods/">
+      <li>
+        Javascript Static and Instance methods
+      <small class="post-date">31 Oct 2012</small>
+      </li>
+      </a>
+      
+    </ul>
+    
+    <h2 id="devtips" class="point-category">DevTips</h2>
+    <ul class="tags-expo-posts">
+      
+        <a class="post-title" href="/2012/12/19/vim-quick-tips/">
+      <li>
+        VIM Quick Tips
+      <small class="post-date">19 Dec 2012</small>
+      </li>
+      </a>
+      
+    </ul>
+    
+    <h2 id="rails" class="point-category">Rails</h2>
+    <ul class="tags-expo-posts">
+      
+        <a class="post-title" href="/2015/06/23/rails-api-backed-with-jwt/">
+      <li>
+        Rails api backed with jwt
+      <small class="post-date">23 Jun 2015</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2014/12/06/embercli-and-rails-and-beyond/">
+      <li>
+        Ember Cli and Rails And Beyond
+      <small class="post-date">06 Dec 2014</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2013/08/30/single-table-inheritance-in-mongoid/">
+      <li>
+        Single Table Inheritance in Mongoid
+      <small class="post-date">30 Aug 2013</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/">
+      <li>
+        Up and running Ruby on Rails on Ubuntu
+      <small class="post-date">26 Aug 2013</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2013/07/19/canvas-images-and-rails/">
+      <li>
+        Canvas Images and Rails
+      <small class="post-date">19 Jul 2013</small>
+      </li>
+      </a>
+      
+        <a class="post-title" href="/2013/03/18/feature-flippers-with-rollout/">
+      <li>
+        Feature flippers with rollout
+      <small class="post-date">18 Mar 2013</small>
+      </li>
+      </a>
+      
+    </ul>
+    
+    <h2 id="linux" class="point-category">Linux</h2>
+    <ul class="tags-expo-posts">
+      
+        <a class="post-title" href="/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/">
+      <li>
+        Up and running Ruby on Rails on Ubuntu
+      <small class="post-date">26 Aug 2013</small>
+      </li>
+      </a>
+      
+    </ul>
+    
+    <h2 id="mongodb" class="point-category">MongoDB</h2>
+    <ul class="tags-expo-posts">
+      
+        <a class="post-title" href="/2013/08/30/single-table-inheritance-in-mongoid/">
+      <li>
+        Single Table Inheritance in Mongoid
+      <small class="post-date">30 Aug 2013</small>
+      </li>
+      </a>
+      
+    </ul>
+    
+  </div>
 </div>
 
-<div class="related">
-  <h2>Related Posts</h2>
-  <ul class="related-posts">
-    
-      <li>
-        <h3>
-          <a href="/2015/06/23/rails-api-backed-with-jwt/">
-            Rails api backed with jwt
-            <small>23 Jun 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/2014/12/06/embercli-and-rails-and-beyond/">
-            Ember Cli and Rails And Beyond
-            <small>06 Dec 2014</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/2014/03/16/emberjs-and-highcharts/">
-            Emberjs and Highcharts
-            <small>16 Mar 2014</small>
-          </a>
-        </h3>
-      </li>
-    
-  </ul>
 </div>
-
-
-<div class="comments">
-  <h2>Comments</h2>
-  <div id="disqus_thread"></div>
-  <script>
-var disqus_config = function () {
-  this.page.url = 'http://rohitrox.github.io/2012/10/31/javascript-static-and-instance-methods/'; // Replace PAGE_URL with your page's canonical URL variable
-  this.page.identifier = '/2012/10/31/javascript-static-and-instance-methods'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-(function() {
-  var d = document, s = d.createElement('script');
-  s.src = '//webdevelopmentlog.disqus.com/embed.js';
-  s.setAttribute('data-timestamp', +new Date());
-  (d.head || d.body).appendChild(s);
-})();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-</div>
-
 
       </div>
     </div>
