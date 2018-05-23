@@ -192,6 +192,11 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 				- MongoDB
 			</a>
 			
+			
+			<a class="sidebar-nav-item sidebar-nav-item-sub" href="/categories/#docker">
+				- Docker
+			</a>
+			
 		
       </span>
 
@@ -255,6 +260,40 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
       <div class="container content">
         <div class="posts">
+  
+    <div class="post">
+      <h1 class="post-title">
+        <a href="/2018/05/23/rails-parallel-tests-with-docker/">
+          Rails Parallel Tests With Docker
+        </a>
+      </h1>
+
+      <span class="post-date">23 May 2018</span>
+       |
+      
+      <a href="/tags/#rails" class="post-tag">rails</a>
+      
+      <a href="/tags/#docker" class="post-tag">docker</a>
+      
+      
+
+      <article>
+        <p>On May 13, 2018, I gave a talk about using docker to parallelize Rails Tests at <a href="https://rubynepal.org/">Ruby Meetup</a> in Kathmandu.</p>
+
+<p>Here are the slides.</p>
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vROmMYl2AgYgd2YOZ59r6bzXA8aNSoqtWq84ftEsOTYBS5AY4FYKlFosvg9T3CFmTNHVymWNyYOIEte/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+<p><a href="https://github.com/RohitRox/docker-rails-parallel-tests">Link to sample app</a></p>
+
+      <article>
+      <div class="post-more">
+        
+        <a href="/2018/05/23/rails-parallel-tests-with-docker/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
+        
+        <a href="/2018/05/23/rails-parallel-tests-with-docker/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
+      </div>
+    </div>
   
     <div class="post">
       <h1 class="post-title">
@@ -526,55 +565,6 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
         <a href="/2014/02/20/hangman-game-with-emberjs/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
         
         <a href="/2014/02/20/hangman-game-with-emberjs/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
-      </div>
-    </div>
-  
-    <div class="post">
-      <h1 class="post-title">
-        <a href="/2013/09/05/javascript-array-tricks/">
-          Javascript Array Tricks
-        </a>
-      </h1>
-
-      <span class="post-date">05 Sep 2013</span>
-       |
-      
-      <a href="/tags/#javascript" class="post-tag">javascript</a>
-      
-      
-
-      <article>
-        <p>JavaScript, at its base, is a very simple language. Due to burst of Js framework usage, in which many new developers jumps right into, there are very useful basic JavaScript techniques and tricks which many people are unaware of.</p>
-
-<p>Today I want share some tricks with Javascript Arrays, which many developers are not using.</p>
-
-<h3 id="cloning-array">Cloning Array</h3>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
-    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
-    <span class="c1">// bad</span>
-    <span class="c1">// why</span>
-
-    <span class="nx">a</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
-    <span class="c1">//=&gt; [1,2]</span>
-
-    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="nx">a</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
-    <span class="c1">//=&gt; [1,2,4]</span>
-    <span class="c1">// Good :-)</span>
-
-</code></pre></div></div>
-
-
-      <article>
-      <div class="post-more">
-        
-        <a href="/2013/09/05/javascript-array-tricks/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
-        
-        <a href="/2013/09/05/javascript-array-tricks/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
       </div>
     </div>
   

@@ -192,6 +192,11 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 				- MongoDB
 			</a>
 			
+			
+			<a class="sidebar-nav-item sidebar-nav-item-sub" href="/categories/#docker">
+				- Docker
+			</a>
+			
 		
       </span>
 
@@ -255,6 +260,107 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
       <div class="container content">
         <div class="posts">
+  
+    <div class="post">
+      <h1 class="post-title">
+        <a href="/2012/11/03/mysql-commands/">
+          MySql commands
+        </a>
+      </h1>
+
+      <span class="post-date">03 Nov 2012</span>
+       |
+      
+      
+
+      <article>
+        <p>This is a short-list of handy MySQL commands that I have to use time and time again, in my development machine as well as in servers and for importing and exporting databases.</p>
+
+<p>Login to mysql console (from unix bash)</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nv">$ </span>mysql <span class="nt">-u</span> user <span class="nt">-p</span>
+	<span class="c"># if host name is required</span>
+	<span class="nv">$ </span>mysql <span class="nt">-h</span> <span class="nb">hostname</span> <span class="nt">-u</span> user <span class="nt">-p</span>
+
+</code></pre></div></div>
+
+<p>Create a new database</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	mysql&gt; create database databasename<span class="p">;</span>
+</code></pre></div></div>
+
+<p>List all databases</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	mysql&gt; show databases<span class="p">;</span>
+</code></pre></div></div>
+
+<!--more-->
+
+<p>Switch to a database</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	mysql&gt; use database_name<span class="p">;</span>
+</code></pre></div></div>
+
+<p>List tables</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	mysql&gt; show tables<span class="p">;</span>
+</code></pre></div></div>
+
+<p>See database’s field formats.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	 mysql&gt; describe table_name<span class="p">;</span>
+</code></pre></div></div>
+
+<p>Drop a db.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	mysql&gt; drop database database_name<span class="p">;</span>
+</code></pre></div></div>
+
+<p>Delete a table.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	mysql&gt; drop table table_name<span class="p">;</span>
+</code></pre></div></div>
+
+<p>Show all data in a table.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	mysql&gt; SELECT <span class="k">*</span> FROM table_name<span class="p">;</span>
+</code></pre></div></div>
+
+<p>Returns the columns and column information pertaining to the designated table.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	mysql&gt; show columns from table_name<span class="p">;</span>
+</code></pre></div></div>
+
+<p>Set a root password if there is on root password.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nv">$ </span>mysqladmin <span class="nt">-u</span> root password newpassword
+</code></pre></div></div>
+
+<p>Update a root password.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nv">$ </span>mysqladmin <span class="nt">-u</span> root <span class="nt">-p</span> oldpassword newpassword
+</code></pre></div></div>
+
+<p>Recover a MySQL root password. 
+Stop the MySQL server process. Start again with no grant tables. Login to MySQL as root. Set new password. Exit MySQL and restart MySQL server.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nv">$ </span>/etc/init.d/mysql stop
+	<span class="nv">$ </span>mysqld_safe <span class="nt">--skip-grant-tables</span> &amp;
+	<span class="nv">$ </span>mysql <span class="nt">-u</span> root
+	mysql&gt; use mysql<span class="p">;</span>
+	mysql&gt; update user <span class="nb">set </span><span class="nv">password</span><span class="o">=</span>PASSWORD<span class="o">(</span><span class="s2">"newrootpassword"</span><span class="o">)</span> where <span class="nv">User</span><span class="o">=</span><span class="s1">'root'</span><span class="p">;</span>
+	mysql&gt; flush privileges<span class="p">;</span>
+	mysql&gt; quit
+	<span class="nv">$ </span>/etc/init.d/mysql stop
+	<span class="nv">$ </span>/etc/init.d/mysql start
+</code></pre></div></div>
+<p>Export a database for backup.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nv">$ </span>mysqldump <span class="nt">-u</span> user <span class="nt">-p</span> database_name <span class="o">&gt;</span> file.sql
+</code></pre></div></div>
+
+<p>Import a database</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nv">$ </span>mysql <span class="nt">-p</span> <span class="nt">-u</span> username database_name &lt; file.sql 
+</code></pre></div></div>
+<p>Dump all databases</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nv">$ </span>mysqldump <span class="nt">-u</span> root <span class="nt">-password</span> <span class="nt">--opt</span> <span class="o">&gt;</span> alldatabases.sql
+</code></pre></div></div>
+
+
+      <article>
+      <div class="post-more">
+        
+        <a href="/2012/11/03/mysql-commands/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
+        
+        <a href="/2012/11/03/mysql-commands/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
+      </div>
+    </div>
   
     <div class="post">
       <h1 class="post-title">

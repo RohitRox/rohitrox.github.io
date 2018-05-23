@@ -3,11 +3,36 @@
   <channel>
     <title>Rohit Joshi's Homepage</title>
     <description>All about Rohit Joshi and his tech stuff</description>
-    <link>http://rohitrox.github.io/</link>
-    <atom:link href="http://rohitrox.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 19 May 2018 01:02:14 +0545</pubDate>
-    <lastBuildDate>Sat, 19 May 2018 01:02:14 +0545</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 23 May 2018 15:26:45 +0545</pubDate>
+    <lastBuildDate>Wed, 23 May 2018 15:26:45 +0545</lastBuildDate>
     <generator>Jekyll v3.8.1</generator>
+    
+      <item>
+        <title>Rails Parallel Tests With Docker</title>
+        <description>&lt;p&gt;On May 13, 2018, I gave a talk about using docker to parallelize Rails Tests at &lt;a href=&quot;https://rubynepal.org/&quot;&gt;Ruby Meetup&lt;/a&gt; in Kathmandu.&lt;/p&gt;
+
+&lt;p&gt;Here are the slides.&lt;/p&gt;
+
+&lt;iframe src=&quot;https://docs.google.com/presentation/d/e/2PACX-1vROmMYl2AgYgd2YOZ59r6bzXA8aNSoqtWq84ftEsOTYBS5AY4FYKlFosvg9T3CFmTNHVymWNyYOIEte/embed?start=false&amp;amp;loop=false&amp;amp;delayms=3000&quot; frameborder=&quot;0&quot; width=&quot;960&quot; height=&quot;569&quot; allowfullscreen=&quot;true&quot; mozallowfullscreen=&quot;true&quot; webkitallowfullscreen=&quot;true&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/RohitRox/docker-rails-parallel-tests&quot;&gt;Link to sample app&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 23 May 2018 14:23:00 +0545</pubDate>
+        <link>http://localhost:4000/2018/05/23/rails-parallel-tests-with-docker/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/05/23/rails-parallel-tests-with-docker/</guid>
+        
+        <category>rails</category>
+        
+        <category>docker</category>
+        
+        
+        <category>Rails</category>
+        
+        <category>Docker</category>
+        
+      </item>
     
       <item>
         <title>Rails api backed with jwt</title>
@@ -159,8 +184,8 @@ This &lt;a href=&quot;http://nebulab.it/blog/authentication-with-rails-jwt-and-r
 &lt;p&gt;Note that there is no error handling when decoding the token in the sample app. These as well as other algorithm information are well described in the &lt;a href=&quot;https://github.com/progrium/ruby-jwt&quot;&gt;‘ruby-jwt’ gem github page&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Tue, 23 Jun 2015 21:23:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2015/06/23/rails-api-backed-with-jwt/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2015/06/23/rails-api-backed-with-jwt/</guid>
+        <link>http://localhost:4000/2015/06/23/rails-api-backed-with-jwt/</link>
+        <guid isPermaLink="true">http://localhost:4000/2015/06/23/rails-api-backed-with-jwt/</guid>
         
         <category>rails</category>
         
@@ -406,8 +431,8 @@ We need a way to redirect this resource to rails app.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Sat, 06 Dec 2014 16:44:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2014/12/06/embercli-and-rails-and-beyond/</guid>
+        <link>http://localhost:4000/2014/12/06/embercli-and-rails-and-beyond/</link>
+        <guid isPermaLink="true">http://localhost:4000/2014/12/06/embercli-and-rails-and-beyond/</guid>
         
         <category>emberjs</category>
         
@@ -517,8 +542,8 @@ We need a way to redirect this resource to rails app.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 16 Mar 2014 15:13:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2014/03/16/emberjs-and-highcharts/</guid>
+        <link>http://localhost:4000/2014/03/16/emberjs-and-highcharts/</link>
+        <guid isPermaLink="true">http://localhost:4000/2014/03/16/emberjs-and-highcharts/</guid>
         
         <category>emberjs</category>
         
@@ -624,8 +649,8 @@ We need a way to redirect this resource to rails app.&lt;/p&gt;
 
 </description>
         <pubDate>Thu, 20 Feb 2014 18:00:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2014/02/20/hangman-game-with-emberjs/</guid>
+        <link>http://localhost:4000/2014/02/20/hangman-game-with-emberjs/</link>
+        <guid isPermaLink="true">http://localhost:4000/2014/02/20/hangman-game-with-emberjs/</guid>
         
         <category>javascript</category>
         
@@ -800,8 +825,8 @@ We need a way to redirect this resource to rails app.&lt;/p&gt;
 &lt;h2&gt;#&lt;/h2&gt;
 </description>
         <pubDate>Thu, 05 Sep 2013 12:07:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2013/09/05/javascript-array-tricks/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2013/09/05/javascript-array-tricks/</guid>
+        <link>http://localhost:4000/2013/09/05/javascript-array-tricks/</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/09/05/javascript-array-tricks/</guid>
         
         <category>javascript</category>
         
@@ -926,8 +951,8 @@ scenarios where documents are inherited from their fields, relations, validation
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Fri, 30 Aug 2013 14:04:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2013/08/30/single-table-inheritance-in-mongoid/</guid>
+        <link>http://localhost:4000/2013/08/30/single-table-inheritance-in-mongoid/</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/08/30/single-table-inheritance-in-mongoid/</guid>
         
         <category>rails</category>
         
@@ -1020,8 +1045,8 @@ scenarios where documents are inherited from their fields, relations, validation
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Mon, 26 Aug 2013 22:27:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/</guid>
+        <link>http://localhost:4000/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/08/26/up-and-running-ruby-on-rails-on-ubuntu/</guid>
         
         <category>rails</category>
         
@@ -1066,8 +1091,8 @@ scenarios where documents are inherited from their fields, relations, validation
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Fri, 23 Aug 2013 14:03:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2013/08/23/get-selected-text-from-webpage/</guid>
+        <link>http://localhost:4000/2013/08/23/get-selected-text-from-webpage/</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/08/23/get-selected-text-from-webpage/</guid>
         
         <category>javascript</category>
         
@@ -1343,8 +1368,8 @@ As the methods are in ItemViewModel, the add and save button would work, but rem
 &lt;p&gt;In next part, We’ll add bootstrap’s typeahead or autocomplete feature and implement technique for updating the information of item selected via autocomplete.&lt;/p&gt;
 </description>
         <pubDate>Sun, 18 Aug 2013 23:55:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2013/08/18/lets-learn-to-knockout/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2013/08/18/lets-learn-to-knockout/</guid>
+        <link>http://localhost:4000/2013/08/18/lets-learn-to-knockout/</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/08/18/lets-learn-to-knockout/</guid>
         
         <category>javascript</category>
         
@@ -1478,8 +1503,8 @@ For this we use the Blob object. Simply it’s an object that represent a file-l
 &lt;p&gt;&lt;a href=&quot;https://gist.github.com/WizardOfOgz/1012107&quot;&gt;Base64-encoded images with Paperclip&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 19 Jul 2013 15:15:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2013/07/19/canvas-images-and-rails/</guid>
+        <link>http://localhost:4000/2013/07/19/canvas-images-and-rails/</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/07/19/canvas-images-and-rails/</guid>
         
         <category>javascript</category>
         
@@ -1743,8 +1768,8 @@ For this we use the Blob object. Simply it’s an object that represent a file-l
 &lt;p&gt;Happy Metaprogramming.&lt;/p&gt;
 </description>
         <pubDate>Tue, 02 Jul 2013 11:27:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2013/07/02/ruby-dynamic-methods/</guid>
+        <link>http://localhost:4000/2013/07/02/ruby-dynamic-methods/</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/07/02/ruby-dynamic-methods/</guid>
         
         <category>ruby</category>
         
@@ -2003,8 +2028,8 @@ This little snippet, found in HTML5 Boilerplate, will do just that:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Thu, 23 May 2013 15:35:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2013/05/23/jquery-performance-tuning/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2013/05/23/jquery-performance-tuning/</guid>
+        <link>http://localhost:4000/2013/05/23/jquery-performance-tuning/</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/05/23/jquery-performance-tuning/</guid>
         
         <category>jquery</category>
         
@@ -2077,8 +2102,8 @@ That’s not all, if you restart your server now and look at the app, you may fi
 &lt;p&gt;Each of these methods have deactivate version for deactivating the feature. You can also just call &lt;code class=&quot;highlighter-rouge&quot;&gt;$rollout.deactivate_all(:chat)&lt;/code&gt; to deactivate the feature to all at once.&lt;/p&gt;
 </description>
         <pubDate>Mon, 18 Mar 2013 12:09:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout/</guid>
+        <link>http://localhost:4000/2013/03/18/feature-flippers-with-rollout/</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/03/18/feature-flippers-with-rollout/</guid>
         
         <category>ruby</category>
         
@@ -2295,8 +2320,8 @@ This turns on C style indentation. Each new line will be automatically indented 
 When your typing and you enter a partial word, you can cause Vim to search for a completion by using the ^P (search for previous marching word) and ^N (search for next match).&lt;/p&gt;
 </description>
         <pubDate>Wed, 19 Dec 2012 11:50:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2012/12/19/vim-quick-tips/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2012/12/19/vim-quick-tips/</guid>
+        <link>http://localhost:4000/2012/12/19/vim-quick-tips/</link>
+        <guid isPermaLink="true">http://localhost:4000/2012/12/19/vim-quick-tips/</guid>
         
         
         <category>DevTips</category>
@@ -2385,8 +2410,8 @@ Stop the MySQL server process. Start again with no grant tables. Login to MySQL 
 
 </description>
         <pubDate>Sat, 03 Nov 2012 14:26:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2012/11/03/mysql-commands/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2012/11/03/mysql-commands/</guid>
+        <link>http://localhost:4000/2012/11/03/mysql-commands/</link>
+        <guid isPermaLink="true">http://localhost:4000/2012/11/03/mysql-commands/</guid>
         
         
         <category>MySQL</category>
@@ -2479,8 +2504,8 @@ can be changed during the lifetime of the script.&lt;/p&gt;
 &lt;p&gt;For a literally notated object, you simply use it by referencing its variable name,whereas with constructor functions you need to instantiate (create a new instance of) the object first.&lt;/p&gt;
 </description>
         <pubDate>Thu, 01 Nov 2012 00:18:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2012/11/01/oop-with-javascript/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2012/11/01/oop-with-javascript/</guid>
+        <link>http://localhost:4000/2012/11/01/oop-with-javascript/</link>
+        <guid isPermaLink="true">http://localhost:4000/2012/11/01/oop-with-javascript/</guid>
         
         <category>javascript</category>
         
@@ -2530,8 +2555,8 @@ An instance method could be added to this class in one of two ways, either insid
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Wed, 31 Oct 2012 23:05:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2012/10/31/javascript-static-and-instance-methods/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2012/10/31/javascript-static-and-instance-methods/</guid>
+        <link>http://localhost:4000/2012/10/31/javascript-static-and-instance-methods/</link>
+        <guid isPermaLink="true">http://localhost:4000/2012/10/31/javascript-static-and-instance-methods/</guid>
         
         <category>javascript</category>
         
@@ -2602,8 +2627,8 @@ If you want table names to be singular instead of plural, you can set the config
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Tue, 30 Oct 2012 23:06:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone/</guid>
+        <link>http://localhost:4000/2012/10/30/activerecord-with-ruby-alone/</link>
+        <guid isPermaLink="true">http://localhost:4000/2012/10/30/activerecord-with-ruby-alone/</guid>
         
         <category>activerecord</category>
         
@@ -2695,8 +2720,8 @@ With successfull connection we can query to database.&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 30 Oct 2012 00:58:00 +0545</pubDate>
-        <link>http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby/</link>
-        <guid isPermaLink="true">http://rohitrox.github.io/2012/10/30/interacting-to-mysql-with-ruby/</guid>
+        <link>http://localhost:4000/2012/10/30/interacting-to-mysql-with-ruby/</link>
+        <guid isPermaLink="true">http://localhost:4000/2012/10/30/interacting-to-mysql-with-ruby/</guid>
         
         
         <category>Ruby</category>
