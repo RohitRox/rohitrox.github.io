@@ -197,6 +197,11 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 				- Docker
 			</a>
 			
+			
+			<a class="sidebar-nav-item sidebar-nav-item-sub" href="/categories/#software-development">
+				- Software Development
+			</a>
+			
 		
       </span>
 
@@ -260,6 +265,39 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
       <div class="container content">
         <div class="posts">
+  
+    <div class="post">
+      <h1 class="post-title">
+        <a href="/2014/02/20/hangman-game-with-emberjs/">
+          Hangman game with EmberJs
+        </a>
+      </h1>
+
+      <span class="post-date">20 Feb 2014</span>
+       |
+      
+      <a href="/tags/#javascript" class="post-tag">javascript</a>
+      
+      <a href="/tags/#emberjs" class="post-tag">emberjs</a>
+      
+      
+
+      <article>
+        <p>I built hangman game with emberjs, <a href="http://rohitrox.github.io/hangman-with-ember">quick prevew</a>. The game deals with more of view stuffs than other parts, I would like to share some thoughts and tricks I learned during the process.</p>
+
+<p><img src="/assets/images/hangman-ember.png" alt="hangman game with emberjs" /></p>
+
+<p>I am not an ember expert so the way I have done may not be the optimal way of doing things in ember. Instead of walking through each steps, the code is well commented you can easily walk through, here I will describe striking stuffs.</p>
+
+
+      <article>
+      <div class="post-more">
+        
+        <a href="/2014/02/20/hangman-game-with-emberjs/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
+        
+        <a href="/2014/02/20/hangman-game-with-emberjs/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
+      </div>
+    </div>
   
     <div class="post">
       <h1 class="post-title">
@@ -522,110 +560,13 @@ scenarios where documents are inherited from their fields, relations, validation
       </div>
     </div>
   
-    <div class="post">
-      <h1 class="post-title">
-        <a href="/2013/08/18/lets-learn-to-knockout/">
-          Lets learn to knockout
-        </a>
-      </h1>
-
-      <span class="post-date">18 Aug 2013</span>
-       |
-      
-      <a href="/tags/#javascript" class="post-tag">javascript</a>
-      
-      <a href="/tags/#knockoutjs" class="post-tag">knockoutjs</a>
-      
-      
-
-      <article>
-        <p>Knockout.js is known for rapid and responsive UI development. Lets try it to build something today.
-Lets see quick <a href="http://rohitrox.github.io/knockoutjs_projects">demo</a> of what we are going to build.</p>
-
-<p><a href="https://github.com/RohitRox/knockoutjs_projects/archive/master.zip">Download Source</a></p>
-
-<p>This is a basic table that is used in bills or receipts. We will try to add some magic to table like autocomplete, automatic information fill up of selected item and calculation of amounts with the help of knockout.</p>
-
-<p>I will not describe what knockout.js is and why use it.
-<a href="http://learn.knockoutjs.com">Learn.knockout.js</a> has an excellent
-tutorial for knockout js beginners. I strongly suggest to go through
-learn.knockoutjs.com before proceeding.</p>
-
-<p>I assume basic understanding of knockout js from here.</p>
-
-<p>Let’s setup the files first. Nothing fancy, I have just used jquery source file and knockout source js from their official websites and I have used twitter bootstrap prettifying stuffs.</p>
-
-<p>I have initial table markup, which looks like as shown below:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-	  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
-	    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
-	      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"span12"</span><span class="nt">&gt;</span>
-	        <span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"table table-bordered"</span><span class="nt">&gt;</span>
-	          <span class="nt">&lt;thead&gt;</span>
-	            <span class="nt">&lt;tr&gt;</span>
-	              <span class="nt">&lt;th&gt;</span>Item<span class="nt">&lt;/th&gt;</span>
-	              <span class="nt">&lt;th&gt;</span>Description<span class="nt">&lt;/th&gt;</span>
-	              <span class="nt">&lt;th&gt;</span>Unit Price<span class="nt">&lt;/th&gt;</span>
-	              <span class="nt">&lt;th&gt;</span>Quantity<span class="nt">&lt;/th&gt;</span>
-	              <span class="nt">&lt;th&gt;</span>Amount<span class="nt">&lt;/th&gt;</span>
-	              <span class="nt">&lt;th&gt;</span>Actions<span class="nt">&lt;/th&gt;</span>
-	            <span class="nt">&lt;/tr&gt;</span>
-	          <span class="nt">&lt;/thead&gt;</span>
-	          <span class="nt">&lt;tbody&gt;</span>
-	            <span class="nt">&lt;tr&gt;</span>
-	              <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">class=</span><span class="s">"span3"</span>  <span class="nt">/&gt;&lt;/td&gt;</span>
-	              <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">class=</span><span class="s">"span4"</span> <span class="nt">/&gt;&lt;/td&gt;</span>
-	              <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">class=</span><span class="s">"span1"</span> <span class="nt">/&gt;&lt;/td&gt;</span>
-	              <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">class=</span><span class="s">"span1"</span> <span class="nt">/&gt;&lt;/td&gt;</span>
-	              <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">class=</span><span class="s">"span1"</span> <span class="nt">/&gt;&lt;/td&gt;</span>
-	              <span class="nt">&lt;td&gt;&lt;button</span> <span class="na">class=</span><span class="s">"btn"</span><span class="nt">&gt;</span>Remove<span class="nt">&lt;/button&gt;&lt;/td&gt;</span>
-	            <span class="nt">&lt;/tr&gt;</span>
-	          <span class="nt">&lt;/tbody&gt;</span>
-	        <span class="nt">&lt;/table&gt;</span>
-	        <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"pull-left"</span><span class="nt">&gt;</span>
-	          <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn"</span><span class="nt">&gt;</span>Add New Row<span class="nt">&lt;/button&gt;</span>
-	          <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn"</span><span class="nt">&gt;</span>Save<span class="nt">&lt;/button&gt;</span>
-	        <span class="nt">&lt;/p&gt;</span>
-	        <span class="nt">&lt;h4</span> <span class="na">class=</span><span class="s">"pull-right"</span><span class="nt">&gt;</span>
-	          <span class="nt">&lt;strong&gt;</span>Grand Total: <span class="nt">&lt;span&gt;&lt;/span&gt;</span> <span class="nt">&lt;/strong&gt;</span>
-	        <span class="nt">&lt;/h4&gt;</span>
-	      <span class="nt">&lt;/div&gt;</span>
-	    <span class="nt">&lt;/div&gt;</span>
-	  <span class="nt">&lt;/div&gt;</span>
-
-</code></pre></div></div>
-<p>Lets see what we have upto here and talk something about what we are trying to do to this table.</p>
-
-<p><img src="/assets/images/knockout-table-1.png" alt="knockout table 1" /></p>
-
-<p>Lets summarize the behaviours we would like to have:</p>
-
-<ul>
-  <li>Add a new row</li>
-  <li>Suggest items in item field</li>
-  <li>Fill up the item information (description and price) automatically</li>
-  <li>Calculate the grand total as items are added</li>
-  <li>A remove button to remove item and re-compute grand total automatically on removal</li>
-</ul>
-
-
-      <article>
-      <div class="post-more">
-        
-        <a href="/2013/08/18/lets-learn-to-knockout/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
-        
-        <a href="/2013/08/18/lets-learn-to-knockout/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
-      </div>
-    </div>
-  
 </div>
 <hr />
 <div class="pagination">
   
     <a href="/" class="previous">Previous</a>
   
-  <span class="page_number ">Page: 2 of 4</span>
+  <span class="page_number ">Page: 2 of 5</span>
   
     <a href="/page3" class="next">Next</a>
   

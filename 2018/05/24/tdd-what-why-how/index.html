@@ -11,7 +11,7 @@
 
   <title>
     
-      ActiveRecord with Ruby alone &middot; Rohit Joshi's Homepage
+      TDD - What, Why, How &middot; Rohit Joshi's Homepage
     
   </title>
 
@@ -33,7 +33,7 @@
 
 	
 	var _page = {
-		category : 'ruby'
+		category : 'software-development'
 	};
 
 	var _site = {
@@ -265,74 +265,18 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
       <div class="container content">
         <div class="post">
-  <h1 class="post-title">ActiveRecord with Ruby alone</h1>
-  <span class="post-date">30 Oct 2012</span>
+  <h1 class="post-title">TDD - What, Why, How</h1>
+  <span class="post-date">24 May 2018</span>
    |
-  
-    <a href="/tags/#activerecord" class="post-tag">activerecord</a>
-  
-    <a href="/tags/#ruby" class="post-tag">ruby</a>
   
   
   <article>
-    <p>Active Record is the main tool that Rails developers use to communicate with and underlying database. Active Record does some wonderful things for a web developer looking for abstractions in  database setup, SQL connections and queries.  We can get a cool command line Ruby application or utility script for our daily tasks using Active Record going in about 5 minutes!</p>
+    <p>This is a talk about Test Driven Development I gave at CloudFactory on a Lunch and Learn Sessoin, a very long time ago. I just happend to find those slides today and decided to include it in my blog here.</p>
 
-<p>First of all, get the activerecord gem using</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install activerecord
+<iframe src="//slides.com/roxxypoxxy/rails-tdd-better-code-in-less-time/embed" width="864" height="630" scrolling="no" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
 
-</code></pre></div></div>
+<p>The goal of this talk was to introduce TDD as a process rather then a paradigm. It explains how TDD can provide lower defect rates, higher productivity, modular design and a much more logical and fun technique for us to solve problems. It describes the cycle of writing a test first, and application code afterwards – followed by refactoring. It tries to describe how to approach TDD: Where do I begin to develop? What exactly should I test? How should tests be structured?.</p>
 
-<p>At the top of Ruby program we need to require the Active Record gem previously installed.  Interacting with your database will be a pleasure now!</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">require</span> <span class="s1">'activerecord'</span>
-</code></pre></div></div>
-
-<h3 id="establishing-a-connection-to-database">Establishing a connection to database</h3>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">establish_connection</span> <span class="p">{</span>
-  <span class="ss">:adapter</span> <span class="o">=&gt;</span> <span class="s2">"mysql"</span><span class="p">,</span>
-  <span class="ss">:host</span> <span class="o">=&gt;</span> <span class="s2">"localhost"</span><span class="p">,</span>
-  <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="s2">"root"</span><span class="p">,</span>
-  <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="s2">"password"</span><span class="p">,</span>
-  <span class="ss">:database</span> <span class="o">=&gt;</span> <span class="s2">"dbname"</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-<!-- more -->
-<p>After successfull database connection we can create a class that inherits from ActiveRecord::Base whose objects map to database a table. Suppose we have users table with name field:</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-	<span class="c1"># this maps database table users to this Ruby class User</span>
-<span class="k">end</span>
-
-<span class="no">User</span><span class="p">.</span><span class="nf">all</span> <span class="c1"># select all from users table</span>
-<span class="n">usr</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">first</span> <span class="c1"># returns the first object fetched by SELECT * FROM users</span>
-<span class="n">usr</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'zappy'</span>
-<span class="n">usr</span><span class="p">.</span><span class="nf">save</span> <span class="c1"># name zappy is set for usr and saved in db</span>
-
-</code></pre></div></div>
-<p>Active Record objects don’t specify their attributes directly, but rather infer them from the table definition with which they’re linked. Adding, removing, and changing attributes and their type is done directly in the database. Any change is instantly reflected in the Active Record objects. The mapping that binds a given Active Record class to a certain database table will happen automatically in most common cases, but can be overwritten for the uncommon ones.</p>
-
-<p>All the goodness available from ActiveRecord is documented <a href="http://api.rubyonrails.org/classes/ActiveRecord/Base.html">here</a>.</p>
-
-<p>It should be noted that there are some conventions it assumes:</p>
-
-<ul>
-  <li>an Active Record class maps to a database table.</li>
-  <li>database table names, like variable names, have lowercase letters and underscores between the words.</li>
-  <li>table names are always plural.
-ie.
-```
-class User &lt; ActiveRecord::Base
-end</li>
-</ul>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>looks for database table named users.
-
-If you want table names to be singular instead of plural, you can set the configuration parameter pluralize_table_names:
-</code></pre></div></div>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ActiveRecord::Base.pluralize_table_names = false ```
-</code></pre></div></div>
 
   </article>
 </div>
@@ -340,15 +284,6 @@ If you want table names to be singular instead of plural, you can set the config
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
-    
-      <li>
-        <h3>
-          <a href="/2018/05/24/tdd-what-why-how/">
-            TDD - What, Why, How
-            <small>24 May 2018</small>
-          </a>
-        </h3>
-      </li>
     
       <li>
         <h3>
@@ -368,6 +303,15 @@ If you want table names to be singular instead of plural, you can set the config
         </h3>
       </li>
     
+      <li>
+        <h3>
+          <a href="/2014/12/06/embercli-and-rails-and-beyond/">
+            Ember Cli and Rails And Beyond
+            <small>06 Dec 2014</small>
+          </a>
+        </h3>
+      </li>
+    
   </ul>
 </div>
 
@@ -377,8 +321,8 @@ If you want table names to be singular instead of plural, you can set the config
   <div id="disqus_thread"></div>
   <script>
 var disqus_config = function () {
-  this.page.url = 'http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone/'; // Replace PAGE_URL with your page's canonical URL variable
-  this.page.identifier = 'http://rohitrox.github.io/2012/10/30/activerecord-with-ruby-alone/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  this.page.url = 'http://rohitrox.github.io/2018/05/24/tdd-what-why-how/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = 'http://rohitrox.github.io/2018/05/24/tdd-what-why-how/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };
 (function() {
   var d = document, s = d.createElement('script');
