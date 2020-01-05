@@ -11,7 +11,7 @@
 
   <title>
     
-      RohitRox @ Tech &middot; 
+      Jquery Performance Tuning &middot; RohitRox @ Tech
     
   </title>
 
@@ -115,18 +115,21 @@
       </div>
 
       <div class="container content">
-        <div class="posts">
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/05/23/jquery-performance-tuning">
-        Jquery Performance Tuning
-      </a>
-    </h1>
+        <div>
+  <h1 class="post-title">Jquery Performance Tuning</h1>
 
-    <span class="post-date">23 May 2013</span>
+  <span class="post-date">
+    <time datetime="2013-05-23T15:35:00+01:00" pubdate><span class='month'>May</span> <span class='day'>23</span>, <span class='year'>2013</span></time>
+  </span>
 
-    <p>After searching and digging a lot of artciles about improving jquery performance in web apps, I decided to make a list of best common performance tips and bect practices. We’ll also reveal some of JQuery’s hidden feature and how we can use them for performance tuning.</p>
+  <div class="post-tags">
+    <span>In:</span>
+    
+      <a href="/categories/#jquery" class="post-tag">JQuery</a>
+    
+  </div>
+
+  <p>After searching and digging a lot of artciles about improving jquery performance in web apps, I decided to make a list of best common performance tips and bect practices. We’ll also reveal some of JQuery’s hidden feature and how we can use them for performance tuning.</p>
 
 <p>Lets divide this post into 4 main categoris.</p>
 
@@ -368,225 +371,62 @@ This little snippet, found in HTML5 Boilerplate, will do just that:</p>
   <span class="nt">&lt;script&gt;</span><span class="nb">window</span><span class="p">.</span><span class="nx">jQuery</span> <span class="o">||</span> <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;script src="js/libs/jquery-1.9.0.min.js"&gt;&lt;</span><span class="se">\</span><span class="s1">/script&gt;</span><span class="dl">'</span><span class="p">)</span><span class="nt">&lt;/script&gt;</span>
 </code></pre></div></div>
 
-
-    <a href="/2013/05/23/jquery-performance-tuning">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/03/18/feature-flippers-with-rollout">
-        Feature flippers with rollout
-      </a>
-    </h1>
-
-    <span class="post-date">18 Mar 2013</span>
-
-    <p>Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try it out before it goes massive.</p>
-
-<p>So lets rollout.</p>
-
-<p>We’ll be using redis as rollout’s backend.</p>
-
-<p>To setup, jusst add <code class="highlighter-rouge">gem 'rollout'</code> to Gemfile and run <code class="highlighter-rouge">bundle install</code>.</p>
-
-<p>Now, we need to create a rollout setup file inside initializer.</p>
-
-<p>Let’s name it rollout_init.rb which looks like this:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-  <span class="vg">$redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="p">.</span><span class="nf">new</span>
-  <span class="vg">$rollout</span> <span class="o">=</span> <span class="no">Rollout</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vg">$redis</span><span class="p">)</span>
-  <span class="vg">$rollout</span><span class="p">.</span><span class="nf">define_group</span><span class="p">(</span><span class="ss">:admin</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
-    <span class="n">user</span><span class="p">.</span><span class="nf">admin?</span>
-  <span class="k">end</span>
-
-</code></pre></div></div>
-<p>Documentation suggests to use a global variables. So we create one with a new redis instance.
-Then, we create rollout instance passsing that redis instance. We can configure rollout in many ways, here we are defining an admin group by passing a block and checking whether the user belongs to that group or not.
-Complete documentation can be found <a href="https://github.com/jamesgolick/rollout">here</a>.</p>
-
-<p>Next, we can now use handy rollout method like for example let’s say we need to activate chat feature for admin group only.</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-  <span class="k">if</span> <span class="vg">$rollout</span><span class="p">.</span><span class="nf">active?</span> <span class="ss">:chat</span><span class="p">,</span> <span class="n">current_user</span>
-
-    <span class="o">...</span><span class="p">.</span>
-
-  <span class="nf">end</span>
-
-</code></pre></div></div>
-
-<!--more-->
-
-<p>The <code class="highlighter-rouge">$rollout.active?</code> method accepts the name of the feature and the user and returns true or false.</p>
-
-<p>This method is accessible in views as well as in controllers.
-That’s not all, if you restart your server now and look at the app, you may find out that the feature is unavailable to admin groups also, it is because by default the feature is deactivated to all groups or users. We can make a rake task or an interface for activating the feature to subset of users. Activating code looks like this:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-  <span class="vg">$rollout</span><span class="p">.</span><span class="nf">activate_group</span><span class="p">(</span><span class="ss">:chat</span><span class="p">,</span> <span class="ss">:admin</span><span class="p">)</span>
-
-</code></pre></div></div>
-<p>This will activate the feature ( chat in our case ) for admin group.</p>
-
-<p>Also we can activate the feature to all users or specific user or to some percentage.</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-  <span class="vg">$rollout</span><span class="p">.</span><span class="nf">activate_group</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="ss">:all</span> <span class="p">)</span> <span class="c1">#activate to all, there is all group already by default</span>
-
-  <span class="vg">$rollout</span><span class="p">.</span><span class="nf">activate_user</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by_email</span><span class="p">(</span><span class="s2">"admin@myapp.com"</span><span class="p">)</span> <span class="p">)</span> <span class="c1">#activate to specific user</span>
-
-  <span class="vg">$rollout</span><span class="p">.</span><span class="nf">activate_percantage</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="mi">50</span> <span class="p">)</span> <span class="c1">#activate to 50% of users</span>
-
-</code></pre></div></div>
-
-<p>Each of these methods have deactivate version for deactivating the feature. You can also just call <code class="highlighter-rouge">$rollout.deactivate_all(:chat)</code> to deactivate the feature to all at once.</p>
-
-
-    <a href="/2013/03/18/feature-flippers-with-rollout">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2012/11/03/mysql-commands">
-        MySql commands
-      </a>
-    </h1>
-
-    <span class="post-date">03 Nov 2012</span>
-
-    <p>This is a short-list of handy MySQL commands that I have to use time and time again, in my development machine as well as in servers and for importing and exporting databases.</p>
-
-<p>Login to mysql console (from unix shell)</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysql <span class="nt">-u</span> user <span class="nt">-p</span>
-  <span class="c"># if host name is required</span>
-  <span class="nv">$ </span>mysql <span class="nt">-h</span> <span class="nb">hostname</span> <span class="nt">-u</span> user <span class="nt">-p</span>
-
-</code></pre></div></div>
-
-<p>Create a new database</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; create database databasename<span class="p">;</span>
-</code></pre></div></div>
-
-<p>List all databases</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; show databases<span class="p">;</span>
-</code></pre></div></div>
-
-<!--more-->
-
-<p>Switch to a database</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; use database_name<span class="p">;</span>
-</code></pre></div></div>
-
-<p>List tables</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; show tables<span class="p">;</span>
-</code></pre></div></div>
-
-<p>See database’s field formats.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   mysql&gt; describe table_name<span class="p">;</span>
-</code></pre></div></div>
-
-<p>Drop a db.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; drop database database_name<span class="p">;</span>
-</code></pre></div></div>
-
-<p>Delete a table.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; drop table table_name<span class="p">;</span>
-</code></pre></div></div>
-
-<p>Show all data in a table.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; SELECT <span class="k">*</span> FROM table_name<span class="p">;</span>
-</code></pre></div></div>
-
-<p>Returns the columns and column information pertaining to the designated table.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; show columns from table_name<span class="p">;</span>
-</code></pre></div></div>
-
-<p>Set a root password if there is on root password.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysqladmin <span class="nt">-u</span> root password newpassword
-</code></pre></div></div>
-
-<p>Update a root password.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysqladmin <span class="nt">-u</span> root <span class="nt">-p</span> oldpassword newpassword
-</code></pre></div></div>
-
-<p>Recover a MySQL root password.
-Stop the MySQL server process. Start again with no grant tables. Login to MySQL as root. Set new password. Exit MySQL and restart MySQL server.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>/etc/init.d/mysql stop
-  <span class="nv">$ </span>mysqld_safe <span class="nt">--skip-grant-tables</span> &amp;
-  <span class="nv">$ </span>mysql <span class="nt">-u</span> root
-  mysql&gt; use mysql<span class="p">;</span>
-  mysql&gt; update user <span class="nb">set </span><span class="nv">password</span><span class="o">=</span>PASSWORD<span class="o">(</span><span class="s2">"newrootpassword"</span><span class="o">)</span> where <span class="nv">User</span><span class="o">=</span><span class="s1">'root'</span><span class="p">;</span>
-  mysql&gt; flush privileges<span class="p">;</span>
-  mysql&gt; quit
-  <span class="nv">$ </span>/etc/init.d/mysql stop
-  <span class="nv">$ </span>/etc/init.d/mysql start
-</code></pre></div></div>
-<p>Export a database for backup.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysqldump <span class="nt">-u</span> user <span class="nt">-p</span> database_name <span class="o">&gt;</span> file.sql
-</code></pre></div></div>
-
-<p>Import a database</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysql <span class="nt">-p</span> <span class="nt">-u</span> username database_name &lt; file.sql
-</code></pre></div></div>
-<p>Dump all databases</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysqldump <span class="nt">-u</span> root <span class="nt">-password</span> <span class="nt">--opt</span> <span class="o">&gt;</span> alldatabases.sql
-</code></pre></div></div>
-
-
-
-    <a href="/2012/11/03/mysql-commands">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2012/11/01/javascript-private-and-public-methods">
-        Javascript Private and Public methods
-      </a>
-    </h1>
-
-    <span class="post-date">01 Nov 2012</span>
-
-    <h2 id="objects-and-classes">Objects and Classes</h2>
-
-<p>JavaScript is a prototype-based language which contains no class statement, such as is found in other object oriented languages. This is sometimes confusing for programmers accustomed to languages with a class statement. Instead, JavaScript uses functions as classes. Defining a class is as easy as defining a function. In the example below we define a new class called Person.</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
-</code></pre></div></div>
-<p>To create a new instance of an object new operator.</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">my_person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
-</code></pre></div></div>
-
-
-    <a href="/2012/11/01/javascript-private-and-public-methods">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2012/10/31/javascript-static-and-instance-methods">
-        Javascript Static and Instance methods
-      </a>
-    </h1>
-
-    <span class="post-date">31 Oct 2012</span>
-
-    <p>Custom JavaScript objects can have instance methods (function that are associated with a particular JavaScript object), but like other Object-Oriented languages, they can also have <em>static</em> methods, that is functions that are associated with the JavaScript class that created an object, as opposed to the object itself. This is useful in cases where a function (a.k.a. a method) will not be different in different object instances.</p>
-
-
-    <a href="/2012/10/31/javascript-static-and-instance-methods">Read More...</a>
-  </div>
-  
 </div>
 
-<div class="pagination">
-  
-    <a class="pagination-item older" href="/page4">Older</a>
-  
-  
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
     
-      <a class="pagination-item newer" href="/page2">Newer</a>
+      <li>
+        <h3>
+          <a href="/2020/01/05/making-test-driven-development-work">
+            Making Test Driven Development work
+            <small>05 Jan 2020</small>
+          </a>
+        </h3>
+      </li>
     
-  
+      <li>
+        <h3>
+          <a href="/2014/12/06/embercli-and-rails-and-beyond">
+            Ember Cli and Rails And Beyond
+            <small>06 Dec 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/16/emberjs-and-highcharts">
+            Emberjs and Highcharts
+            <small>16 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
 </div>
+
+
+  <div class="comments">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://rohitrox.github.io/2013/05/23/jquery-performance-tuning';
+        var disqus_url = 'https://rohitrox.github.io/2013/05/23/jquery-performance-tuning';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+    </script>
+  </div>
 
 
       </div>

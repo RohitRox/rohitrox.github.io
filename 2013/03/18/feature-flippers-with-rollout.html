@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Feature flippers with rollout &middot; RohitRox @ Tech
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="layout-reverse">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Rohit Joshi's tech blog, tutorials and presentation slides</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about_me">About Me</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archives">Blog Archives</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/categories">Categories</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      This page is built using <a href="https://github.com/jekyll/jekyll" target="_blank">Jekyll</a>, <a href="https://github.com/poole/poole" target="_blank">Poole</a> and <a href="https://github.com/poole/lanyon" target="_blank">Lanyon</a>.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" style="border: 2px solid #373737; padding: 2px 8px; color: #373737;">RohitRox @ Tech</a>
+            <small></small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div>
+  <h1 class="post-title">Feature flippers with rollout</h1>
+
+  <span class="post-date">
+    <time datetime="2013-03-18T12:09:00+00:00" pubdate><span class='month'>Mar</span> <span class='day'>18</span>, <span class='year'>2013</span></time>
+  </span>
+
+  <div class="post-tags">
+    <span>In:</span>
+    
+      <a href="/categories/#ruby" class="post-tag">Ruby</a>
+    
+      <a href="/categories/#rails" class="post-tag">Rails</a>
+    
+  </div>
+
+  <p>Rollout gem comes handy when we need deploy a beta feature, may be to a selected group of users or some percentage of uses so that few users can try it out before it goes massive.</p>
+
+<p>So lets rollout.</p>
+
+<p>We’ll be using redis as rollout’s backend.</p>
+
+<p>To setup, jusst add <code class="highlighter-rouge">gem 'rollout'</code> to Gemfile and run <code class="highlighter-rouge">bundle install</code>.</p>
+
+<p>Now, we need to create a rollout setup file inside initializer.</p>
+
+<p>Let’s name it rollout_init.rb which looks like this:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="vg">$redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="p">.</span><span class="nf">new</span>
+  <span class="vg">$rollout</span> <span class="o">=</span> <span class="no">Rollout</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vg">$redis</span><span class="p">)</span>
+  <span class="vg">$rollout</span><span class="p">.</span><span class="nf">define_group</span><span class="p">(</span><span class="ss">:admin</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
+    <span class="n">user</span><span class="p">.</span><span class="nf">admin?</span>
+  <span class="k">end</span>
+
+</code></pre></div></div>
+<p>Documentation suggests to use a global variables. So we create one with a new redis instance.
+Then, we create rollout instance passsing that redis instance. We can configure rollout in many ways, here we are defining an admin group by passing a block and checking whether the user belongs to that group or not.
+Complete documentation can be found <a href="https://github.com/jamesgolick/rollout">here</a>.</p>
+
+<p>Next, we can now use handy rollout method like for example let’s say we need to activate chat feature for admin group only.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="k">if</span> <span class="vg">$rollout</span><span class="p">.</span><span class="nf">active?</span> <span class="ss">:chat</span><span class="p">,</span> <span class="n">current_user</span>
+
+    <span class="o">...</span><span class="p">.</span>
+
+  <span class="nf">end</span>
+
+</code></pre></div></div>
+
+<!--more-->
+
+<p>The <code class="highlighter-rouge">$rollout.active?</code> method accepts the name of the feature and the user and returns true or false.</p>
+
+<p>This method is accessible in views as well as in controllers.
+That’s not all, if you restart your server now and look at the app, you may find out that the feature is unavailable to admin groups also, it is because by default the feature is deactivated to all groups or users. We can make a rake task or an interface for activating the feature to subset of users. Activating code looks like this:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="vg">$rollout</span><span class="p">.</span><span class="nf">activate_group</span><span class="p">(</span><span class="ss">:chat</span><span class="p">,</span> <span class="ss">:admin</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p>This will activate the feature ( chat in our case ) for admin group.</p>
+
+<p>Also we can activate the feature to all users or specific user or to some percentage.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="vg">$rollout</span><span class="p">.</span><span class="nf">activate_group</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="ss">:all</span> <span class="p">)</span> <span class="c1">#activate to all, there is all group already by default</span>
+
+  <span class="vg">$rollout</span><span class="p">.</span><span class="nf">activate_user</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by_email</span><span class="p">(</span><span class="s2">"admin@myapp.com"</span><span class="p">)</span> <span class="p">)</span> <span class="c1">#activate to specific user</span>
+
+  <span class="vg">$rollout</span><span class="p">.</span><span class="nf">activate_percantage</span><span class="p">(</span> <span class="ss">:chat</span><span class="p">,</span> <span class="mi">50</span> <span class="p">)</span> <span class="c1">#activate to 50% of users</span>
+
+</code></pre></div></div>
+
+<p>Each of these methods have deactivate version for deactivating the feature. You can also just call <code class="highlighter-rouge">$rollout.deactivate_all(:chat)</code> to deactivate the feature to all at once.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2020/01/05/making-test-driven-development-work">
+            Making Test Driven Development work
+            <small>05 Jan 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/12/06/embercli-and-rails-and-beyond">
+            Ember Cli and Rails And Beyond
+            <small>06 Dec 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/16/emberjs-and-highcharts">
+            Emberjs and Highcharts
+            <small>16 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+  <div class="comments">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout';
+        var disqus_url = 'https://rohitrox.github.io/2013/03/18/feature-flippers-with-rollout';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+    </script>
+  </div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>

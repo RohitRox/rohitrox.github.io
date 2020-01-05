@@ -11,7 +11,7 @@
 
   <title>
     
-      RohitRox @ Tech &middot; 
+      Emberjs and Highcharts &middot; RohitRox @ Tech
     
   </title>
 
@@ -115,95 +115,23 @@
       </div>
 
       <div class="container content">
-        <div class="posts">
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2020/01/05/making-test-driven-development-work">
-        Making Test Driven Development work
-      </a>
-    </h1>
+        <div>
+  <h1 class="post-title">Emberjs and Highcharts</h1>
 
-    <span class="post-date">05 Jan 2020</span>
+  <span class="post-date">
+    <time datetime="2014-03-16T15:13:00+00:00" pubdate><span class='month'>Mar</span> <span class='day'>16</span>, <span class='year'>2014</span></time>
+  </span>
 
-    <p>Here are the slides for the presentation on Test Driven Development I gave at CloudFactory on a Lunch and Learn Session.</p>
-
-<p>The goal of this talk was to introduce TDD as a process rather then a paradigm. It explains how TDD can provide lower defect rates, higher productivity, modular design and a much more logical and fun technique for us to solve problems. It describes the cycle of writing a test first, and application code afterwards – followed by refactoring. It tries to describe how to approach TDD: Where do I begin to develop? What exactly should I test? How should tests be structured?.</p>
-
-
-
-    <a href="/2020/01/05/making-test-driven-development-work">Read More...</a>
+  <div class="post-tags">
+    <span>In:</span>
+    
+      <a href="/categories/#emberjs" class="post-tag">EmberJs</a>
+    
+      <a href="/categories/#highcharts" class="post-tag">Highcharts</a>
+    
   </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/12/06/embercli-and-rails-and-beyond">
-        Ember Cli and Rails And Beyond
-      </a>
-    </h1>
 
-    <span class="post-date">06 Dec 2014</span>
-
-    <h3 id="ember-cli-and-rails-setup">Ember Cli and Rails Setup</h3>
-
-<p>Rails setup is pretty staright forward with <code class="highlighter-rouge">rails new ..</code> and new ember cli app with <code class="highlighter-rouge">ember new ..</code>  but with following folder configuration</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  | embercli-rails-app
-  |-- rails
-  |-- ember
-</code></pre></div></div>
-<p>Inside of main project folder we’ll have a folder which will contain the rails code and another folder which will contain ember code only.</p>
-
-<p>We would like to have coffeescript.</p>
-
-<p>For coffeescript</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  npm install --save-dev ember-cli-coffeescript
-</code></pre></div></div>
-
-<p>and renaming .js files to .coffee and correcting the js syntax to coffee will do the trick.</p>
-
-<p>Make sure that ember app is all well by using <code class="highlighter-rouge">ember server</code> and visiting http://localhost:4200.</p>
-
-<p>Before proceeding, it would be nice to have some tests.</p>
-
-<p>Lets create a new test at ‘ember/tests/integration/home-page-test.coffee’.</p>
-
-<div class="language-coffeescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">`</span><span class="k">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">'ember'</span><span class="o">`</span>
-  <span class="o">`</span><span class="k">import</span> <span class="nx">startApp</span> <span class="nx">from</span> <span class="s">'cli-app/tests/helpers/start-app'</span><span class="o">`</span>
-  <span class="o">`</span><span class="k">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">'ember'</span><span class="o">`</span>
-
-  <span class="nx">App</span> <span class="o">=</span> <span class="no">null</span>
-
-  <span class="nx">module</span> <span class="s">'Integration - Home Page'</span><span class="p">,</span>
-    <span class="na">setup</span><span class="o">:</span> <span class="o">-&gt;</span>
-      <span class="nx">App</span> <span class="o">=</span> <span class="nx">startApp</span><span class="p">()</span>
-    <span class="p">,</span>
-    <span class="na">teardown</span><span class="o">:</span> <span class="o">-&gt;</span>
-      <span class="nx">Ember</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="nx">App</span><span class="p">,</span> <span class="s">'destroy'</span><span class="p">)</span>
-
-  <span class="nx">test</span> <span class="s">'Should have Welcome test'</span><span class="p">,</span> <span class="o">-&gt;</span>
-    <span class="nx">visit</span><span class="p">(</span><span class="s">'/'</span><span class="p">).</span><span class="na">then</span> <span class="o">-&gt;</span>
-      <span class="nx">equal</span><span class="p">(</span><span class="nx">find</span><span class="p">(</span><span class="s">'h2#title'</span><span class="p">).</span><span class="na">text</span><span class="p">(),</span> <span class="s">'Welcome to Ember.js'</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>Visit http://localhost:4200/tests to run the tests.</p>
-
-
-
-    <a href="/2014/12/06/embercli-and-rails-and-beyond">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/03/16/emberjs-and-highcharts">
-        Emberjs and Highcharts
-      </a>
-    </h1>
-
-    <span class="post-date">16 Mar 2014</span>
-
-    <p>Let’s write a reusable ember view for rendering graphs and charts powered by <a href="http://highcharts.com">highcharts</a>.</p>
+  <p>Let’s write a reusable ember view for rendering graphs and charts powered by <a href="http://highcharts.com">highcharts</a>.</p>
 
 <div class="language-coffeescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">App</span><span class="p">.</span><span class="na">HighChartsView</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">.</span><span class="na">View</span><span class="p">.</span><span class="na">extend</span>
     <span class="na">tagName</span><span class="o">:</span> <span class="s">'div'</span>
@@ -295,76 +223,62 @@
       <span class="p">}</span>
 </code></pre></div></div>
 
-
-    <a href="/2014/03/16/emberjs-and-highcharts">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/02/20/hangman-game-with-emberjs">
-        Hangman Game with EmberJs
-      </a>
-    </h1>
-
-    <span class="post-date">20 Feb 2014</span>
-
-    <p>I built hangman game with emberjs, <a href="http://rohitrox.github.io/hangman-with-ember">quick prevew</a>. The game deals with more of view stuffs than other parts, I would like to share some thoughts and tricks I learned during the process.</p>
-
-<p><img src="/images/hangman-ember.png" alt="hangman game with emberjs" /></p>
-
-<p>I am not an ember expert so the way I have done may not be the optimal way of doing things in ember. Instead of walking through each steps, the code is well commented you can easily walk through, here I will describe striking stuffs.</p>
-
-
-
-    <a href="/2014/02/20/hangman-game-with-emberjs">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/09/05/javascript-array-tricks">
-        Javascript Array Tricks
-      </a>
-    </h1>
-
-    <span class="post-date">05 Sep 2013</span>
-
-    <p>JavaScript, at its base, is a very simple language. Due to burst of Js framework usage, in which many new developers jumps right into, there are very useful basic JavaScript techniques and tricks which many people are unaware of.</p>
-
-<p>Today I want share some tricks with Javascript Arrays, which many developers are not using.</p>
-
-<h3 id="cloning-array">Cloning Array</h3>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
-  <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
-  <span class="c1">// bad</span>
-  <span class="c1">// why</span>
-
-  <span class="nx">a</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
-  <span class="c1">//=&gt; [1,2]</span>
-
-  <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-  <span class="nx">a</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
-  <span class="c1">//=&gt; [1,2,4]</span>
-  <span class="c1">// Good :-)</span>
-</code></pre></div></div>
-
-
-
-    <a href="/2013/09/05/javascript-array-tricks">Read More...</a>
-  </div>
-  
 </div>
 
-<div class="pagination">
-  
-    <a class="pagination-item older" href="/page2">Older</a>
-  
-  
-    <span class="pagination-item newer">Newer</span>
-  
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2020/01/05/making-test-driven-development-work">
+            Making Test Driven Development work
+            <small>05 Jan 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/12/06/embercli-and-rails-and-beyond">
+            Ember Cli and Rails And Beyond
+            <small>06 Dec 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/02/20/hangman-game-with-emberjs">
+            Hangman Game with EmberJs
+            <small>20 Feb 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
 </div>
+
+
+  <div class="comments">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://rohitrox.github.io/2014/03/16/emberjs-and-highcharts';
+        var disqus_url = 'https://rohitrox.github.io/2014/03/16/emberjs-and-highcharts';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+    </script>
+  </div>
 
 
       </div>

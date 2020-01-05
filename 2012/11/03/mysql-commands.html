@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      MySql commands &middot; RohitRox @ Tech
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="layout-reverse">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Rohit Joshi's tech blog, tutorials and presentation slides</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about_me">About Me</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archives">Blog Archives</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/categories">Categories</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      This page is built using <a href="https://github.com/jekyll/jekyll" target="_blank">Jekyll</a>, <a href="https://github.com/poole/poole" target="_blank">Poole</a> and <a href="https://github.com/poole/lanyon" target="_blank">Lanyon</a>.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" style="border: 2px solid #373737; padding: 2px 8px; color: #373737;">RohitRox @ Tech</a>
+            <small></small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div>
+  <h1 class="post-title">MySql commands</h1>
+
+  <span class="post-date">
+    <time datetime="2012-11-03T14:26:00+00:00" pubdate><span class='month'>Nov</span> <span class='day'>03</span>, <span class='year'>2012</span></time>
+  </span>
+
+  <div class="post-tags">
+    <span>In:</span>
+    
+      <a href="/categories/#mysql" class="post-tag">MySQL</a>
+    
+  </div>
+
+  <p>This is a short-list of handy MySQL commands that I have to use time and time again, in my development machine as well as in servers and for importing and exporting databases.</p>
+
+<p>Login to mysql console (from unix shell)</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysql <span class="nt">-u</span> user <span class="nt">-p</span>
+  <span class="c"># if host name is required</span>
+  <span class="nv">$ </span>mysql <span class="nt">-h</span> <span class="nb">hostname</span> <span class="nt">-u</span> user <span class="nt">-p</span>
+
+</code></pre></div></div>
+
+<p>Create a new database</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; create database databasename<span class="p">;</span>
+</code></pre></div></div>
+
+<p>List all databases</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; show databases<span class="p">;</span>
+</code></pre></div></div>
+
+<!--more-->
+
+<p>Switch to a database</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; use database_name<span class="p">;</span>
+</code></pre></div></div>
+
+<p>List tables</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; show tables<span class="p">;</span>
+</code></pre></div></div>
+
+<p>See database’s field formats.</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   mysql&gt; describe table_name<span class="p">;</span>
+</code></pre></div></div>
+
+<p>Drop a db.</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; drop database database_name<span class="p">;</span>
+</code></pre></div></div>
+
+<p>Delete a table.</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; drop table table_name<span class="p">;</span>
+</code></pre></div></div>
+
+<p>Show all data in a table.</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; SELECT <span class="k">*</span> FROM table_name<span class="p">;</span>
+</code></pre></div></div>
+
+<p>Returns the columns and column information pertaining to the designated table.</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; show columns from table_name<span class="p">;</span>
+</code></pre></div></div>
+
+<p>Set a root password if there is on root password.</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysqladmin <span class="nt">-u</span> root password newpassword
+</code></pre></div></div>
+
+<p>Update a root password.</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysqladmin <span class="nt">-u</span> root <span class="nt">-p</span> oldpassword newpassword
+</code></pre></div></div>
+
+<p>Recover a MySQL root password.
+Stop the MySQL server process. Start again with no grant tables. Login to MySQL as root. Set new password. Exit MySQL and restart MySQL server.</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>/etc/init.d/mysql stop
+  <span class="nv">$ </span>mysqld_safe <span class="nt">--skip-grant-tables</span> &amp;
+  <span class="nv">$ </span>mysql <span class="nt">-u</span> root
+  mysql&gt; use mysql<span class="p">;</span>
+  mysql&gt; update user <span class="nb">set </span><span class="nv">password</span><span class="o">=</span>PASSWORD<span class="o">(</span><span class="s2">"newrootpassword"</span><span class="o">)</span> where <span class="nv">User</span><span class="o">=</span><span class="s1">'root'</span><span class="p">;</span>
+  mysql&gt; flush privileges<span class="p">;</span>
+  mysql&gt; quit
+  <span class="nv">$ </span>/etc/init.d/mysql stop
+  <span class="nv">$ </span>/etc/init.d/mysql start
+</code></pre></div></div>
+<p>Export a database for backup.</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysqldump <span class="nt">-u</span> user <span class="nt">-p</span> database_name <span class="o">&gt;</span> file.sql
+</code></pre></div></div>
+
+<p>Import a database</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysql <span class="nt">-p</span> <span class="nt">-u</span> username database_name &lt; file.sql
+</code></pre></div></div>
+<p>Dump all databases</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysqldump <span class="nt">-u</span> root <span class="nt">-password</span> <span class="nt">--opt</span> <span class="o">&gt;</span> alldatabases.sql
+</code></pre></div></div>
+
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2020/01/05/making-test-driven-development-work">
+            Making Test Driven Development work
+            <small>05 Jan 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/12/06/embercli-and-rails-and-beyond">
+            Ember Cli and Rails And Beyond
+            <small>06 Dec 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/16/emberjs-and-highcharts">
+            Emberjs and Highcharts
+            <small>16 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+  <div class="comments">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://rohitrox.github.io/2012/11/03/mysql-commands';
+        var disqus_url = 'https://rohitrox.github.io/2012/11/03/mysql-commands';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+    </script>
+  </div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Ruby Dynamic Methods &middot; RohitRox @ Tech
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="layout-reverse">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Rohit Joshi's tech blog, tutorials and presentation slides</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about_me">About Me</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archives">Blog Archives</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/categories">Categories</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      This page is built using <a href="https://github.com/jekyll/jekyll" target="_blank">Jekyll</a>, <a href="https://github.com/poole/poole" target="_blank">Poole</a> and <a href="https://github.com/poole/lanyon" target="_blank">Lanyon</a>.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" style="border: 2px solid #373737; padding: 2px 8px; color: #373737;">RohitRox @ Tech</a>
+            <small></small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div>
+  <h1 class="post-title">Ruby Dynamic Methods</h1>
+
+  <span class="post-date">
+    <time datetime="2013-07-02T11:27:00+01:00" pubdate><span class='month'>Jul</span> <span class='day'>02</span>, <span class='year'>2013</span></time>
+  </span>
+
+  <div class="post-tags">
+    <span>In:</span>
+    
+      <a href="/categories/#ruby" class="post-tag">Ruby</a>
+    
+      <a href="/categories/#metaprogramming" class="post-tag">Metaprogramming</a>
+    
+  </div>
+
+  <p>We define methods using <strong><em>def</em></strong> keywords which is fine for most of the cases.</p>
+
+<p>But consider a situation where you have to create a series of methods all of which have the same basic structure and logic then it seems repititive and not dry.</p>
+
+<p>Ruby, being a dynamic language, you can create methods on the fly.</p>
+
+<p>So, what does that mean?</p>
+
+<p>lets see this simplest example:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="k">class</span> <span class="nc">A</span>
+    <span class="n">define_method</span> <span class="ss">:a</span> <span class="k">do</span>
+      <span class="nb">puts</span> <span class="s2">"hello"</span>
+    <span class="k">end</span>
+
+    <span class="n">define_method</span> <span class="ss">:greeting</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+      <span class="nb">puts</span> <span class="n">message</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="no">A</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">a</span> <span class="c1">#=&gt; hello</span>
+  <span class="no">A</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">greeting</span> <span class="s1">'Ram ram'</span> <span class="c1">#=&gt; Ram ram</span>
+
+</code></pre></div></div>
+
+<!--more-->
+
+<p>The <strong><em>define_method</em></strong> defines an instance method in the receiver. The syntax and usage are self-explained in the example above.</p>
+
+<p>lets see following example that may be useful in practical scenarios.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="k">class</span> <span class="nc">User</span>
+
+    <span class="no">ACTIVE</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="no">INACTIVE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="no">PENDING</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:status</span>
+
+    <span class="k">def</span> <span class="nf">active?</span>
+      <span class="n">status</span> <span class="o">==</span> <span class="no">ACTIVE</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">inactive?</span>
+      <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">::</span><span class="no">INACTIVE</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">pending?</span>
+      <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="o">::</span><span class="no">PENDING</span>
+    <span class="k">end</span>
+
+  <span class="k">end</span>
+
+  <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span>
+  <span class="n">user</span><span class="p">.</span><span class="nf">status</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="n">user</span><span class="p">.</span><span class="nf">inactive?</span>
+  <span class="c1">#=&gt; true</span>
+  <span class="n">user</span><span class="p">.</span><span class="nf">active?</span>
+  <span class="c1">#=&gt; false</span>
+
+</code></pre></div></div>
+
+<p>Refactored code using dynamic method definition:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="k">class</span> <span class="nc">User</span>
+
+    <span class="no">ACTIVE</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="no">INACTIVE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="no">PENDING</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:status</span>
+
+    <span class="p">[</span><span class="ss">:active</span><span class="p">,</span> <span class="ss">:inactive</span><span class="p">,</span> <span class="ss">:pending</span><span class="p">].</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="nb">method</span><span class="o">|</span>
+      <span class="n">define_method</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="s2">?"</span> <span class="k">do</span>
+        <span class="n">status</span> <span class="o">==</span> <span class="no">User</span><span class="p">.</span><span class="nf">const_get</span><span class="p">(</span><span class="nb">method</span><span class="p">.</span><span class="nf">upcase</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+  <span class="k">end</span>
+
+  <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span>
+  <span class="n">user</span><span class="p">.</span><span class="nf">status</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="n">user</span><span class="p">.</span><span class="nf">inactive?</span>
+  <span class="c1">#=&gt; true</span>
+  <span class="n">user</span><span class="p">.</span><span class="nf">active?</span>
+  <span class="c1">#=&gt; false</span>
+
+</code></pre></div></div>
+<p>We use define_method to define method dynamically.</p>
+
+<p>We can also define instance methods with a class method, using this technique we can expose a class method that will generate the  instance methods. COOL !</p>
+
+<p>Example:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">User</span>
+
+    <span class="no">ACTIVE</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="no">INACTIVE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="no">PENDING</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="nb">attr_accessor</span> <span class="ss">:status</span>
+
+    <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">states</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+      <span class="n">args</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">arg</span><span class="o">|</span>
+        <span class="n">define_method</span> <span class="s2">"</span><span class="si">#{</span><span class="n">arg</span><span class="si">}</span><span class="s2">?"</span> <span class="k">do</span>
+          <span class="nb">self</span><span class="p">.</span><span class="nf">status</span> <span class="o">==</span> <span class="no">User</span><span class="p">.</span><span class="nf">const_get</span><span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="nf">upcase</span><span class="p">)</span>
+        <span class="k">end</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="n">states</span> <span class="ss">:active</span><span class="p">,</span> <span class="ss">:inactive</span><span class="p">,</span> <span class="ss">:pending</span>
+  <span class="k">end</span>
+
+
+</code></pre></div></div>
+
+<p>Now, what about class methods. The simplest way is</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">class</span> <span class="nc">A</span>
+      <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+        <span class="n">define_method</span> <span class="n">method_name</span> <span class="k">do</span>
+          <span class="c1">#...</span>
+        <span class="k">end</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+</code></pre></div></div>
+<p>There are <strong><em>instance_eval</em></strong> and <strong><em>class_eval</em></strong> also, which are used for dynamic method definition. These methods allow you to evaluate arbitrary code in the context of a particular class or object. These methods can be very confusing sometimes. You can read <a href="http://stackoverflow.com/questions/900419/how-to-understand-the-difference-between-class-eval-and-instance-eval">this</a> discussion and <a href="http://www.ploughthroughruby.co.uk/2009/09/30/define_method-instance_eval-and-class_eval.html/">this</a> blog post and understand how they can be used.</p>
+
+<p>From that discussion, we summerize</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="no">Foo</span> <span class="o">=</span> <span class="no">Class</span><span class="p">.</span><span class="nf">new</span>
+  <span class="no">Foo</span><span class="p">.</span><span class="nf">class_eval</span> <span class="k">do</span>
+    <span class="k">def</span> <span class="nf">class_bar</span>
+      <span class="s2">"class_bar"</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="no">Foo</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="k">do</span>
+    <span class="k">def</span> <span class="nf">instance_bar</span>
+      <span class="s2">"instance_bar"</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="no">Foo</span><span class="p">.</span><span class="nf">class_bar</span>       <span class="c1">#=&gt; undefined method ‘class_bar’ for Foo:Class</span>
+  <span class="no">Foo</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">class_bar</span>   <span class="c1">#=&gt; "class_bar"</span>
+  <span class="no">Foo</span><span class="p">.</span><span class="nf">instance_bar</span>       <span class="c1">#=&gt; "instance_bar"</span>
+  <span class="no">Foo</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">instance_bar</span>   <span class="c1">#=&gt; undefined method ‘instance_bar’ for #&lt;Foo:0x7dce8&gt;</span>
+</code></pre></div></div>
+
+<p>Note that, we don’t use <strong><em>define_method</em></strong> inside *_eval, becasue it does not matter if you use define_method inside class_eval or instance_eval it would always create an instance method.</p>
+
+<p>And, we get this:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="no">Foo</span> <span class="o">=</span> <span class="no">Class</span><span class="p">.</span><span class="nf">new</span>
+
+  <span class="no">Foo</span><span class="p">.</span><span class="nf">class_eval</span> <span class="k">do</span>
+    <span class="n">define_method</span> <span class="s2">"class_bar"</span> <span class="k">do</span>
+      <span class="s2">"class_bar"</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="no">Foo</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="k">do</span>
+    <span class="n">define_method</span> <span class="s2">"instance_bar"</span> <span class="k">do</span>
+      <span class="s2">"instance_bar"</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="no">Foo</span><span class="p">.</span><span class="nf">class_bar</span> <span class="c1">#=&gt; undefined</span>
+  <span class="no">Foo</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">class_bar</span> <span class="c1">#=&gt; "class_bar"</span>
+  <span class="no">Foo</span><span class="p">.</span><span class="nf">instance_bar</span> <span class="c1">#=&gt; undefined</span>
+  <span class="no">Foo</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">instance_bar</span> <span class="c1">#=&gt; "instance_bar"</span>
+
+</code></pre></div></div>
+
+<p>Next, we can invoke methods dynamically. One way to invoke a method dynamically in ruby is to send a message to the object. We can send a message to a class either within the class definition itself, or by simply sending it to the class object like you’d send any other message. This can be accomplished by usin <strong><em>send</em></strong>.</p>
+
+<p>The simplest example could be:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="n">s</span><span class="o">=</span> <span class="s2">"hi man"</span>
+
+  <span class="nb">p</span> <span class="n">s</span><span class="p">.</span><span class="nf">length</span> <span class="c1">#=&gt; 6</span>
+  <span class="nb">p</span> <span class="n">s</span><span class="p">.</span><span class="nf">include?</span> <span class="s2">"hi"</span> <span class="c1">#=&gt; true</span>
+
+  <span class="nb">p</span> <span class="n">s</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="ss">:length</span><span class="p">)</span> <span class="c1">#=&gt; 6</span>
+  <span class="nb">p</span> <span class="n">s</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="ss">:include?</span><span class="p">,</span><span class="s2">"hi"</span><span class="p">)</span> <span class="c1">#=&gt; true</span>
+
+</code></pre></div></div>
+
+<p>How can this be ever useful?</p>
+
+<p>Lets see the following code( example taken from <a href="http://www.funonrails.com/2011/12/dynamic-methods-inside-ruby-classes.html">here</a>)</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+    <span class="n">protect_from_forgery</span>
+    <span class="n">helper_method</span> <span class="ss">:current_staff</span><span class="p">,</span> <span class="ss">:current_employee</span><span class="p">,</span> <span class="n">current_admin</span>
+
+    <span class="k">def</span> <span class="nf">authenticate_staff!</span><span class="p">(</span><span class="n">opts</span><span class="o">=</span><span class="p">{})</span>
+      <span class="n">current_staff</span> <span class="o">||</span> <span class="n">not_authorized</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">current_staff</span>
+      <span class="n">current_user</span> <span class="k">if</span> <span class="n">current_user</span><span class="p">.</span><span class="nf">is_a?</span> <span class="no">Staff</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">authenticate_employee!</span><span class="p">(</span><span class="n">opts</span><span class="o">=</span><span class="p">{})</span>
+      <span class="n">current_employee</span> <span class="o">||</span> <span class="n">not_authorized</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">current_employee</span>
+      <span class="n">current_user</span> <span class="k">if</span> <span class="n">current_user</span><span class="p">.</span><span class="nf">is_a?</span> <span class="no">Employee</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">authenticate_admin!</span><span class="p">(</span><span class="n">opts</span><span class="o">=</span><span class="p">{})</span>
+      <span class="n">current_admin</span> <span class="o">||</span> <span class="n">not_authorized</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">current_admin</span>
+      <span class="n">current_user</span> <span class="k">if</span> <span class="n">current_user</span><span class="p">.</span><span class="nf">is_a?</span> <span class="no">Admin</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+</code></pre></div></div>
+
+<p>And refactored one:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="sx">%w(Staff Employee Admin)</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">k</span><span class="o">|</span>
+    <span class="n">define_method</span> <span class="s2">"current_</span><span class="si">#{</span><span class="n">k</span><span class="p">.</span><span class="nf">underscore</span><span class="si">}</span><span class="s2">"</span> <span class="k">do</span>
+      <span class="n">current_user</span> <span class="k">if</span> <span class="n">current_user</span><span class="p">.</span><span class="nf">is_a?</span><span class="p">(</span><span class="n">k</span><span class="p">.</span><span class="nf">constantize</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">define_method</span> <span class="s2">"authenticate_</span><span class="si">#{</span><span class="n">k</span><span class="p">.</span><span class="nf">underscore</span><span class="si">}</span><span class="s2">!"</span> <span class="k">do</span> <span class="o">|</span><span class="n">opts</span><span class="o">=</span><span class="p">{}</span><span class="o">|</span>
+      <span class="nb">send</span><span class="p">(</span><span class="s2">"current_</span><span class="si">#{</span><span class="n">k</span><span class="p">.</span><span class="nf">underscore</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="o">||</span> <span class="n">not_authorized</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+</code></pre></div></div>
+
+<p>Dynamically defined methods can help guard against method definition mistakes, avoid repetitive codes and be concise and smart.</p>
+
+<p>Happy Metaprogramming.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2020/01/05/making-test-driven-development-work">
+            Making Test Driven Development work
+            <small>05 Jan 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/12/06/embercli-and-rails-and-beyond">
+            Ember Cli and Rails And Beyond
+            <small>06 Dec 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/16/emberjs-and-highcharts">
+            Emberjs and Highcharts
+            <small>16 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+  <div class="comments">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://rohitrox.github.io/2013/07/02/ruby-dynamic-methods';
+        var disqus_url = 'https://rohitrox.github.io/2013/07/02/ruby-dynamic-methods';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+    </script>
+  </div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>
