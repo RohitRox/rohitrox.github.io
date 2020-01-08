@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Simplier Microfrontends Implementation with React and ESNext &middot; RohitRox @ Tech
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="layout-reverse">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Rohit Joshi's tech blog, tutorials and presentation slides</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about_me">About Me</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archives">Blog Archives</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/categories">Categories</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      This page is built using <a href="https://github.com/jekyll/jekyll" target="_blank">Jekyll</a>, <a href="https://github.com/poole/poole" target="_blank">Poole</a> and <a href="https://github.com/poole/lanyon" target="_blank">Lanyon</a>.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" style="border: 2px solid #373737; padding: 2px 8px; color: #373737;">RohitRox @ Tech</a>
+            <small></small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div>
+  <h1 class="post-title">Simplier Microfrontends Implementation with React and ESNext</h1>
+
+  <span class="post-date">
+    <time datetime="2020-01-05T19:50:00+00:00" pubdate><span class='month'>Jan</span> <span class='day'>05</span>, <span class='year'>2020</span></time>
+  </span>
+
+  <div class="post-tags">
+    <span>In:</span>
+    
+      <a href="/categories/#microfrontends" class="post-tag">Microfrontends</a>
+    
+  </div>
+
+  <p>There has been a lot of talks and buzz around Microfrontends.</p>
+
+<p>From <a href="https://micro-frontends.org/">https://micro-frontends.org/</a>, Microfrontend systems are</p>
+
+<blockquote>
+  <p>Techniques, strategies and recipes for building a modern web app with multiple teams that can ship features independently.</p>
+</blockquote>
+
+<p>The basic idea is to extend the idea of microservices to the frontend development through which a system can be divided into teams that own end to end system and independently deliver frontend applications to compose into a greater whole.</p>
+
+<p>A simple illustration to explain the idea is shown as below:</p>
+
+<h3 id="microservices-with-monolith-frontend">Microservices with Monolith Frontend</h3>
+<p><img src="/images/microfrontends-1.png" alt="microservices" /></p>
+
+<h3 id="microservices-with-micro-frontend">Microservices with Micro Frontend</h3>
+<p><img src="/images/microfrontends-2.png" alt="microfrontends" /></p>
+
+<p>Microfrontends brings the same benefits like performance, incremental upgrades, decoupled codebases, independent deployments, autonomous teams to the frontend engineering like microservices bring to backend services.</p>
+
+<p>Now the teams and the UI can be broken down smaller groups as shown in the pictures but the challenge is in integration and serving a unified experience to the users and there will always be cases where interfaces or interface components will collide as UI components can easily expand cross pages/domains.</p>
+
+<p>There are already a few architectures being that are being used and proposed to achieve Microfrontend architecture. Cam Jackson’s post on <a href="https://martinfowler.com/articles/micro-frontends.html#TheExample">Martin Fowler</a> includes some nice approaches.</p>
+
+<p>Let’s see how our take on microfrontends at Cloudfactory affects page organization.</p>
+
+<!-- more -->
+
+<h3 id="microfrontends-in-action">Microfrontends in action</h3>
+<p><img src="/images/microfrontends-3.png" alt="microfrontends in action" /></p>
+
+<p>There could be many permutations and combinations but the one illustrated in the picture where there could be specific page/SPA owned by a team, and shared styles and components/widgets belonging to a multi-domain need to reside in multiples page that may belong to different teams.</p>
+
+<p>We’ve seen similar kind of organization on AWS Console’s interface and some of the Facebook’s interface.</p>
+
+<p>An alternative implementation, to create a big single SPA via Run-time integration via JavaScript is documented and implemented wonderfully on <a href="https://microfrontends.com/">https://microfrontends.com/</a> and <a href="https://martinfowler.com/articles/micro-frontends.html#Run-timeIntegrationViaJavascript">https://martinfowler.com/articles/micro-frontends.html#Run-timeIntegrationViaJavascript</a></p>
+
+<p>Instead of relying on a runtime integration system or complicated frameworks, We have taken an approach to tweak a few configs in the build process and use some old tricks. Our goal was to enable teams to have microfrontend architectures but not burden system with yet another system for managing microfrontend itself.</p>
+
+<p>The solution uses React with Typescript and Webpack with ESNext modules set. This combination allows us to build extremely optimized applications leveraging code splitting and lazy loading.</p>
+
+<p>There are a good number of articles on React code splitting and lazy loading already on the web, so I skipping those details in this post.</p>
+
+<p>The solution works for a scenario where we have a large application, large enough so that it cannot be contained as a Single Page App, thus are divided into multiple SPA pages or related pages. And multiple teams working together to delivers small micro-components on the page.</p>
+
+<h3 id="conceptual-idea">Conceptual Idea</h3>
+
+<p>The high-level idea is to export components as ESNext modules which can be easily reused across interfaces through a CDN and lazily loaded when applicable. This kind of integration is not new and we have seen this from the days of jQuery plugins and widgets.</p>
+
+<p><img src="/images/microfrontends-4.png" alt="microfrontends-in-play" /></p>
+
+<p>For any shared components and interfaces we create node modules and with <a href="https://www.typescriptlang.org/docs/handbook/tsconfig-json.html">typescript config</a> <code class="highlighter-rouge">module</code> set to <code class="highlighter-rouge">esnext</code> and with <a href="https://webpack.js.org/configuration">webpack config</a> <code class="highlighter-rouge">output.library</code> properly set, we get modules to work at the runtime loaded via CDN. With webpack’s <code class="highlighter-rouge">publicPath</code> set to CDN path, <strong>Code spitting</strong> and <strong>React’s lazy/suspense</strong> plays nicely. We only need to know the main entry point of the main file of the module which can be made predictable if a standard company-wide convention is followed.</p>
+
+<p>A sample <code class="highlighter-rouge">tsconfig</code></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"compilerOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"lib"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"dom"</span><span class="p">,</span><span class="w"> </span><span class="s2">"es2015"</span><span class="p">,</span><span class="w"> </span><span class="s2">"es2016"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"module"</span><span class="p">:</span><span class="w"> </span><span class="s2">"esnext"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"moduleResolution"</span><span class="p">:</span><span class="w"> </span><span class="s2">"node"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"target"</span><span class="p">:</span><span class="w"> </span><span class="s2">"es5"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"jsx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"react"</span><span class="p">,</span><span class="w">
+      </span><span class="err">...</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>A sample webpack config</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">version</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./package.json</span><span class="dl">'</span><span class="p">).</span><span class="nx">version</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+  <span class="c1">//...</span>
+  <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">entry</span><span class="p">:</span> <span class="p">[</span>
+      <span class="c1">// ...</span>
+    <span class="p">],</span>
+    <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">filename</span><span class="p">:</span> <span class="dl">'</span><span class="s1">main.js</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">dist</span><span class="dl">'</span><span class="p">,</span> <span class="nx">version</span><span class="p">),</span>
+      <span class="na">library</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">MFE</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">SHC</span><span class="dl">'</span><span class="p">],</span>
+      <span class="na">publicPath</span><span class="p">:</span> <span class="s2">`https://cdn/path/shared-components/dist/</span><span class="p">${</span><span class="nx">version</span><span class="p">}</span><span class="s2">/`</span><span class="p">,</span>
+      <span class="c1">// ...</span>
+    <span class="p">},</span>
+  <span class="c1">// ...</span>
+  <span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>We get the exported modules at global <code class="highlighter-rouge">MFE.SHC</code> object and with proper <code class="highlighter-rouge">publicPath</code> set with dynamically computed <code class="highlighter-rouge">version</code> it makes easy to generated versioned artifacts.</p>
+
+<p>We follow semantic versioning, so ignore patch versions, so <code class="highlighter-rouge">1.2.1</code>, <code class="highlighter-rouge">1.2.2</code> .. <code class="highlighter-rouge">1.2.9</code> are all consolidated into <code class="highlighter-rouge">1.2.x</code>. This also gives us a way to push interface changes to live without having to re-deploy specific pages. We could also ignore minor version and just use <code class="highlighter-rouge">1.x.x</code>, latest major all the time. This will enable, as shown in the example in the demo, Team C to publish an update to their interface with any action from Team A who manages the page, as long as they are updating at major version.</p>
+
+<p>Next we use webpacks <code class="highlighter-rouge">externals</code> to find the modules at runtime.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="na">externals</span><span class="p">:</span> <span class="p">{</span>
+      <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">MFE.GLB.React</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">react-dom</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">MFE.GLB.ReactDOM</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">shared-components</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">MFE.SHC</span><span class="dl">"</span>
+    <span class="p">},</span>
+    <span class="c1">// ...</span>
+  <span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>We have global dependencies exported into a single bundle which can be accessed at <code class="highlighter-rouge">MFE.GLB</code></p>
+
+<p>A simplified working demo is available at <a href="https://rohitrox.github.io/microfrontend-esnext-demo/team-a-page/dist/">https://rohitrox.github.io/microfrontend-esnext-demo/team-a-page/dist/</a></p>
+
+<p>Now, the implementation can be enhanced to support run-time microfrontends javascript integration. Given evolving application at cloudfactory, we felt we aren’t yet ready to allow all the microfrontends to update themselves automatically. The container application/page and the microfrontends are all changing all the time so best we did was to follow major version based auto-updates. If there is a major version release in the microfrontend, the container app needs to acknowledge, publish the new version of itself that will use the updated microfrontend.</p>
+
+<p>Next, for the communication between the microfrontend components, we are using React props and <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events">Custom Events</a>. There are also number of open-source event bus libraries available.</p>
+
+<p>For the demo, I have used GitHub for everything, including team modules and as a CDN to find dependencies.</p>
+
+<p>To make the demo work with GitHub pages, I have the set the <code class="highlighter-rouge">publicPath</code> in webpack config in a specific Github way.</p>
+
+<p>The index pages are hardcoded with the links to a specific resource in CDN. While those are hardcoded for the demo, in our real system, we have added few configs in webpack config to take care of that. The logic is to scan through <code class="highlighter-rouge">package.json</code>’s dependencies and automatically inject applicable <code class="highlighter-rouge">script</code> or <code class="highlighter-rouge">link</code> elements into the index page with a specified version.</p>
+
+<p>Source code is available at <a href="https://github.com/RohitRox/microfrontend-esnext-demo">https://github.com/RohitRox/microfrontend-esnext-demo</a></p>
+
+<p>The folder has been named to mimic separate modules.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2020/01/05/making-test-driven-development-work">
+            Making Test Driven Development work
+            <small>05 Jan 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/12/06/embercli-and-rails-and-beyond">
+            Ember Cli and Rails And Beyond
+            <small>06 Dec 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/16/emberjs-and-highcharts">
+            Emberjs and Highcharts
+            <small>16 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+  <div class="comments">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://rohitrox.github.io/2020/01/05/simplier-microfrontends-implementation-with-react-and-esnext';
+        var disqus_url = 'https://rohitrox.github.io/2020/01/05/simplier-microfrontends-implementation-with-react-and-esnext';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'https://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+    </script>
+  </div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>

@@ -119,6 +119,46 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2020/01/05/simplier-microfrontends-implementation-with-react-and-esnext">
+        Simplier Microfrontends Implementation with React and ESNext
+      </a>
+    </h1>
+
+    <span class="post-date">05 Jan 2020</span>
+
+    <p>There has been a lot of talks and buzz around Microfrontends.</p>
+
+<p>From <a href="https://micro-frontends.org/">https://micro-frontends.org/</a>, Microfrontend systems are</p>
+
+<blockquote>
+  <p>Techniques, strategies and recipes for building a modern web app with multiple teams that can ship features independently.</p>
+</blockquote>
+
+<p>The basic idea is to extend the idea of microservices to the frontend development through which a system can be divided into teams that own end to end system and independently deliver frontend applications to compose into a greater whole.</p>
+
+<p>A simple illustration to explain the idea is shown as below:</p>
+
+<h3 id="microservices-with-monolith-frontend">Microservices with Monolith Frontend</h3>
+<p><img src="/images/microfrontends-1.png" alt="microservices" /></p>
+
+<h3 id="microservices-with-micro-frontend">Microservices with Micro Frontend</h3>
+<p><img src="/images/microfrontends-2.png" alt="microfrontends" /></p>
+
+<p>Microfrontends brings the same benefits like performance, incremental upgrades, decoupled codebases, independent deployments, autonomous teams to the frontend engineering like microservices bring to backend services.</p>
+
+<p>Now the teams and the UI can be broken down smaller groups as shown in the pictures but the challenge is in integration and serving a unified experience to the users and there will always be cases where interfaces or interface components will collide as UI components can easily expand cross pages/domains.</p>
+
+<p>There are already a few architectures being that are being used and proposed to achieve Microfrontend architecture. Cam Jackson’s post on <a href="https://martinfowler.com/articles/micro-frontends.html#TheExample">Martin Fowler</a> includes some nice approaches.</p>
+
+<p>Let’s see how our take on microfrontends at Cloudfactory affects page organization.</p>
+
+
+
+    <a href="/2020/01/05/simplier-microfrontends-implementation-with-react-and-esnext">Read More...</a>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2020/01/05/making-test-driven-development-work">
         Making Test Driven Development work
       </a>
@@ -317,42 +357,6 @@
 
 
     <a href="/2014/02/20/hangman-game-with-emberjs">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/09/05/javascript-array-tricks">
-        Javascript Array Tricks
-      </a>
-    </h1>
-
-    <span class="post-date">05 Sep 2013</span>
-
-    <p>JavaScript, at its base, is a very simple language. Due to burst of Js framework usage, in which many new developers jumps right into, there are very useful basic JavaScript techniques and tricks which many people are unaware of.</p>
-
-<p>Today I want share some tricks with Javascript Arrays, which many developers are not using.</p>
-
-<h3 id="cloning-array">Cloning Array</h3>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
-  <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
-  <span class="c1">// bad</span>
-  <span class="c1">// why</span>
-
-  <span class="nx">a</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
-  <span class="c1">//=&gt; [1,2]</span>
-
-  <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-  <span class="nx">a</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
-  <span class="c1">//=&gt; [1,2,4]</span>
-  <span class="c1">// Good :-)</span>
-</code></pre></div></div>
-
-
-
-    <a href="/2013/09/05/javascript-array-tricks">Read More...</a>
   </div>
   
 </div>
