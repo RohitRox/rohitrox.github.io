@@ -11,7 +11,7 @@
 
   <title>
     
-      RohitRox @ Tech &middot; 
+      Just Golang Things &middot; RohitRox @ Tech
     
   </title>
 
@@ -115,18 +115,21 @@
       </div>
 
       <div class="container content">
-        <div class="posts">
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2021/04/10/just-golang-things">
-        Just Golang Things
-      </a>
-    </h1>
+        <div>
+  <h1 class="post-title">Just Golang Things</h1>
 
-    <span class="post-date">10 Apr 2021</span>
+  <span class="post-date">
+    <time datetime="2021-04-10T00:35:00+01:00" pubdate><span class='month'>Apr</span> <span class='day'>10</span>, <span class='year'>2021</span></time>
+  </span>
 
-    <h3 id="nil-slice-vs-empty-slice">Nil Slice Vs Empty Slice</h3>
+  <div class="post-tags">
+    <span>In:</span>
+    
+      <a href="/categories/#golang" class="post-tag">Golang</a>
+    
+  </div>
+
+  <h3 id="nil-slice-vs-empty-slice">Nil Slice Vs Empty Slice</h3>
 
 <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">// create a nil slice of integers</span>
   <span class="k">var</span> <span class="n">arr</span> <span class="p">[]</span><span class="kt">int</span>
@@ -379,242 +382,62 @@
   <span class="p">}</span>
 </code></pre></div></div>
 
-
-    <a href="/2021/04/10/just-golang-things">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2020/01/05/simpler-microfrontends-implementation-with-react-and-esnext">
-        Simpler Microfrontends Implementation with React and ESNext
-      </a>
-    </h1>
-
-    <span class="post-date">05 Jan 2020</span>
-
-    <p>There has been a lot of talks and buzz around Microfrontends.</p>
-
-<p>From <a href="https://micro-frontends.org/">https://micro-frontends.org/</a>, Microfrontend systems are</p>
-
-<blockquote>
-  <p>Techniques, strategies and recipes for building a modern web app with multiple teams that can ship features independently.</p>
-</blockquote>
-
-<p>The basic idea is to extend the idea of microservices to the frontend development through which a system can be divided into teams that own end to end system and independently deliver frontend applications to compose into a greater whole.</p>
-
-<p>A simple illustration to explain the idea is shown as below:</p>
-
-<h3 id="microservices-with-monolith-frontend">Microservices with Monolith Frontend</h3>
-<p><img src="/images/microfrontends-1.png" alt="microservices" /></p>
-
-<h3 id="microservices-with-micro-frontend">Microservices with Micro Frontend</h3>
-<p><img src="/images/microfrontends-2.png" alt="microfrontends" /></p>
-
-<p>Microfrontends brings the same benefits like performance, incremental upgrades, decoupled codebases, independent deployments, autonomous teams to the frontend engineering like microservices bring to backend services.</p>
-
-<p>Now the teams and the UI can be broken down smaller groups as shown in the pictures but the challenge is in integration and serving a unified experience to the users and there will always be cases where interfaces or interface components will collide as UI components can easily expand cross pages/domains.</p>
-
-<p>There are already a few architectures being that are being used and proposed to achieve Microfrontend architecture. Cam Jackson’s post on <a href="https://martinfowler.com/articles/micro-frontends.html#TheExample">Martin Fowler</a> includes some nice approaches.</p>
-
-<p>Let’s see how our take on microfrontends at Cloudfactory affects page organization.</p>
-
-
-
-    <a href="/2020/01/05/simpler-microfrontends-implementation-with-react-and-esnext">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2020/01/05/making-test-driven-development-work">
-        Making Test Driven Development work
-      </a>
-    </h1>
-
-    <span class="post-date">05 Jan 2020</span>
-
-    <p>Here are the slides for the presentation on Test Driven Development I gave at CloudFactory on a Lunch and Learn Session.</p>
-
-<p>The goal of this talk was to introduce TDD as a process rather then a paradigm. It explains how TDD can provide lower defect rates, higher productivity, modular design and a much more logical and fun technique for us to solve problems. It describes the cycle of writing a test first, and application code afterwards – followed by refactoring. It tries to describe how to approach TDD: Where do I begin to develop? What exactly should I test? How should tests be structured?.</p>
-
-
-
-    <a href="/2020/01/05/making-test-driven-development-work">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/12/06/embercli-and-rails-and-beyond">
-        Ember Cli and Rails And Beyond
-      </a>
-    </h1>
-
-    <span class="post-date">06 Dec 2014</span>
-
-    <h3 id="ember-cli-and-rails-setup">Ember Cli and Rails Setup</h3>
-
-<p>Rails setup is pretty staright forward with <code class="highlighter-rouge">rails new ..</code> and new ember cli app with <code class="highlighter-rouge">ember new ..</code>  but with following folder configuration</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  | embercli-rails-app
-  |-- rails
-  |-- ember
-</code></pre></div></div>
-<p>Inside of main project folder we’ll have a folder which will contain the rails code and another folder which will contain ember code only.</p>
-
-<p>We would like to have coffeescript.</p>
-
-<p>For coffeescript</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  npm install --save-dev ember-cli-coffeescript
-</code></pre></div></div>
-
-<p>and renaming .js files to .coffee and correcting the js syntax to coffee will do the trick.</p>
-
-<p>Make sure that ember app is all well by using <code class="highlighter-rouge">ember server</code> and visiting http://localhost:4200.</p>
-
-<p>Before proceeding, it would be nice to have some tests.</p>
-
-<p>Lets create a new test at ‘ember/tests/integration/home-page-test.coffee’.</p>
-
-<div class="language-coffeescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">`</span><span class="k">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">'ember'</span><span class="o">`</span>
-  <span class="o">`</span><span class="k">import</span> <span class="nx">startApp</span> <span class="nx">from</span> <span class="s">'cli-app/tests/helpers/start-app'</span><span class="o">`</span>
-  <span class="o">`</span><span class="k">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s">'ember'</span><span class="o">`</span>
-
-  <span class="nx">App</span> <span class="o">=</span> <span class="no">null</span>
-
-  <span class="nx">module</span> <span class="s">'Integration - Home Page'</span><span class="p">,</span>
-    <span class="na">setup</span><span class="o">:</span> <span class="o">-&gt;</span>
-      <span class="nx">App</span> <span class="o">=</span> <span class="nx">startApp</span><span class="p">()</span>
-    <span class="p">,</span>
-    <span class="na">teardown</span><span class="o">:</span> <span class="o">-&gt;</span>
-      <span class="nx">Ember</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="nx">App</span><span class="p">,</span> <span class="s">'destroy'</span><span class="p">)</span>
-
-  <span class="nx">test</span> <span class="s">'Should have Welcome test'</span><span class="p">,</span> <span class="o">-&gt;</span>
-    <span class="nx">visit</span><span class="p">(</span><span class="s">'/'</span><span class="p">).</span><span class="na">then</span> <span class="o">-&gt;</span>
-      <span class="nx">equal</span><span class="p">(</span><span class="nx">find</span><span class="p">(</span><span class="s">'h2#title'</span><span class="p">).</span><span class="na">text</span><span class="p">(),</span> <span class="s">'Welcome to Ember.js'</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>Visit http://localhost:4200/tests to run the tests.</p>
-
-
-
-    <a href="/2014/12/06/embercli-and-rails-and-beyond">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/03/16/emberjs-and-highcharts">
-        Emberjs and Highcharts
-      </a>
-    </h1>
-
-    <span class="post-date">16 Mar 2014</span>
-
-    <p>Let’s write a reusable ember view for rendering graphs and charts powered by <a href="http://highcharts.com">highcharts</a>.</p>
-
-<div class="language-coffeescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">App</span><span class="p">.</span><span class="na">HighChartsView</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">.</span><span class="na">View</span><span class="p">.</span><span class="na">extend</span>
-    <span class="na">tagName</span><span class="o">:</span> <span class="s">'div'</span>
-    <span class="na">classNames</span><span class="o">:</span> <span class="p">[</span> <span class="s">'highcharts'</span> <span class="p">]</span>
-    <span class="nx">chartConfig</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="na">setConfig</span><span class="o">:</span> <span class="p">(</span><span class="nx">type</span><span class="p">)</span><span class="o">-&gt;</span>
-      <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="na">chart</span><span class="o">:</span>
-          <span class="na">type</span><span class="o">:</span> <span class="nx">type</span>
-        <span class="na">title</span><span class="o">:</span>
-          <span class="na">text</span><span class="o">:</span> <span class="vi">@</span><span class="na">title</span> <span class="o">||</span> <span class="s">'Highcharts'</span>
-        <span class="na">xAxis</span><span class="o">:</span>
-          <span class="na">categories</span><span class="o">:</span> <span class="vi">@</span><span class="na">dataset</span><span class="p">.</span><span class="na">categories</span> <span class="o">||</span> <span class="p">[]</span>
-        <span class="na">yAxis</span><span class="o">:</span>
-            <span class="na">title</span><span class="o">:</span>
-              <span class="na">text</span><span class="o">:</span> <span class="vi">@</span><span class="na">yAxisTitle</span>
-        <span class="na">series</span><span class="o">:</span> <span class="vi">@</span><span class="na">series</span><span class="p">()</span>
-      <span class="p">}</span>
-      <span class="c1"># Merge highcharts config if it is present</span>
-      <span class="nx">Ember</span><span class="p">.</span><span class="na">merge</span><span class="p">(</span><span class="nx">config</span><span class="p">,</span> <span class="vi">@</span><span class="na">highChartConfig</span><span class="p">)</span> <span class="k">if</span> <span class="vi">@</span><span class="na">highChartConfig</span>
-      <span class="vi">@</span><span class="na">set</span><span class="p">(</span><span class="s">'chartConfig'</span><span class="p">,</span> <span class="nx">config</span><span class="p">)</span>
-
-    <span class="na">series</span><span class="o">:</span> <span class="o">-&gt;</span>
-      <span class="vi">@</span><span class="na">dataset</span><span class="p">.</span><span class="na">data</span>
-
-    <span class="na">prepareConfig</span><span class="o">:</span> <span class="o">-&gt;</span>
-      <span class="c1"># if custom config is present then directly set it to chartConfig</span>
-      <span class="k">if</span> <span class="vi">@</span><span class="na">customHighChartConfig</span>
-        <span class="vi">@</span><span class="na">set</span><span class="p">(</span><span class="s">'chartConfig'</span><span class="p">,</span> <span class="vi">@</span><span class="na">customHighChartConfig</span><span class="p">)</span>
-      <span class="k">else</span>
-        <span class="nx">type</span> <span class="o">=</span> <span class="vi">@</span><span class="na">type</span> <span class="o">||</span> <span class="s">'line'</span>
-        <span class="vi">@</span><span class="na">setConfig</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span>
-
-    <span class="na">didInsertElement</span><span class="o">:</span> <span class="o">-&gt;</span>
-      <span class="vi">@</span><span class="na">prepareConfig</span><span class="p">()</span>
-      <span class="vi">@</span><span class="na">renderHighchart</span><span class="p">()</span>
-
-    <span class="na">renderHighchart</span><span class="o">:</span> <span class="o">-&gt;</span>
-      <span class="vi">@</span><span class="na">$</span><span class="p">().</span><span class="na">highcharts</span><span class="p">(</span><span class="vi">@</span><span class="na">chartConfig</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p>Usage:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  {{ view App.HighChartsView dataset=dataset title="Sample Analytics" type="line" yAxisTitle="Temperature C" }}
-</code></pre></div></div>
-
-<p>The dataset can be set at controller or may be at route.</p>
-
-<div class="language-coffeescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">App</span><span class="p">.</span><span class="na">IndexController</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">.</span><span class="na">ArrayController</span><span class="p">.</span><span class="na">extend</span>
-    <span class="na">dataset</span><span class="o">:</span> <span class="p">{</span>
-      <span class="na">categories</span><span class="o">:</span> <span class="p">[</span><span class="s">'Jan'</span><span class="p">,</span> <span class="s">'Feb'</span><span class="p">,</span> <span class="s">'Mar'</span><span class="p">,</span> <span class="s">'Apr'</span><span class="p">,</span> <span class="s">'May'</span><span class="p">,</span> <span class="s">'Jun'</span><span class="p">,</span><span class="s">'Jul'</span><span class="p">,</span> <span class="s">'Aug'</span><span class="p">,</span> <span class="s">'Sep'</span><span class="p">,</span> <span class="s">'Oct'</span><span class="p">,</span> <span class="s">'Nov'</span><span class="p">,</span> <span class="s">'Dec'</span><span class="p">],</span>
-      <span class="na">data</span><span class="o">:</span> <span class="p">[{</span>
-                <span class="na">name</span><span class="o">:</span> <span class="s">'Tokyo'</span><span class="p">,</span>
-                <span class="na">data</span><span class="o">:</span> <span class="p">[</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">6.9</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">,</span> <span class="mf">14.5</span><span class="p">,</span> <span class="mf">18.2</span><span class="p">,</span> <span class="mf">21.5</span><span class="p">,</span> <span class="mf">25.2</span><span class="p">,</span> <span class="mf">26.5</span><span class="p">,</span> <span class="mf">23.3</span><span class="p">,</span> <span class="mf">18.3</span><span class="p">,</span> <span class="mf">13.9</span><span class="p">,</span> <span class="mf">9.6</span><span class="p">]</span>
-            <span class="p">},</span> <span class="p">{</span>
-                <span class="na">name</span><span class="o">:</span> <span class="s">'New York'</span><span class="p">,</span>
-                <span class="na">data</span><span class="o">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">5.7</span><span class="p">,</span> <span class="mf">11.3</span><span class="p">,</span> <span class="mf">17.0</span><span class="p">,</span> <span class="mf">22.0</span><span class="p">,</span> <span class="mf">24.8</span><span class="p">,</span> <span class="mf">24.1</span><span class="p">,</span> <span class="mf">20.1</span><span class="p">,</span> <span class="mf">14.1</span><span class="p">,</span> <span class="mf">8.6</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">]</span>
-            <span class="p">},</span> <span class="p">{</span>
-                <span class="na">name</span><span class="o">:</span> <span class="s">'Berlin'</span><span class="p">,</span>
-                <span class="na">data</span><span class="o">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">8.4</span><span class="p">,</span> <span class="mf">13.5</span><span class="p">,</span> <span class="mf">17.0</span><span class="p">,</span> <span class="mf">18.6</span><span class="p">,</span> <span class="mf">17.9</span><span class="p">,</span> <span class="mf">14.3</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">3.9</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
-            <span class="p">},</span> <span class="p">{</span>
-                <span class="na">name</span><span class="o">:</span> <span class="s">'London'</span><span class="p">,</span>
-                <span class="na">data</span><span class="o">:</span> <span class="p">[</span><span class="mf">3.9</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">,</span> <span class="mf">5.7</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">,</span> <span class="mf">11.9</span><span class="p">,</span> <span class="mf">15.2</span><span class="p">,</span> <span class="mf">17.0</span><span class="p">,</span> <span class="mf">16.6</span><span class="p">,</span> <span class="mf">14.2</span><span class="p">,</span> <span class="mf">10.3</span><span class="p">,</span> <span class="mf">6.6</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">]</span>
-            <span class="p">}]</span>
-      <span class="p">}</span>
-</code></pre></div></div>
-
-<p>Usage with control over config</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  {{ view App.HighChartsView dataset=dataset highChartConfig=highChartConfig title="Sample Analytics" type="line" }}
-</code></pre></div></div>
-
-<div class="language-coffeescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">App</span><span class="p">.</span><span class="na">IndexController</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">.</span><span class="na">ArrayController</span><span class="p">.</span><span class="na">extend</span>
-    <span class="na">highChartConfig</span><span class="o">:</span> <span class="p">{</span>
-      <span class="na">yAxis</span><span class="o">:</span> <span class="p">{</span>
-        <span class="na">title</span><span class="o">:</span> <span class="p">{</span>
-            <span class="na">text</span><span class="o">:</span> <span class="s">'Temperature (°C)'</span>
-        <span class="p">},</span>
-        <span class="na">plotLines</span><span class="o">:</span> <span class="p">[{</span>
-            <span class="na">value</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="na">width</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="na">color</span><span class="o">:</span> <span class="s">'#808080'</span>
-        <span class="p">}]</span>
-      <span class="p">},</span>
-      <span class="na">tooltip</span><span class="o">:</span> <span class="p">{</span>
-          <span class="na">valueSuffix</span><span class="o">:</span> <span class="s">'°C'</span>
-        <span class="p">}</span>
-      <span class="p">}</span>
-</code></pre></div></div>
-
-
-    <a href="/2014/03/16/emberjs-and-highcharts">Read More...</a>
-  </div>
-  
 </div>
 
-<div class="pagination">
-  
-    <a class="pagination-item older" href="/page2">Older</a>
-  
-  
-    <span class="pagination-item newer">Newer</span>
-  
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2020/01/05/simpler-microfrontends-implementation-with-react-and-esnext">
+            Simpler Microfrontends Implementation with React and ESNext
+            <small>05 Jan 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2020/01/05/making-test-driven-development-work">
+            Making Test Driven Development work
+            <small>05 Jan 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/12/06/embercli-and-rails-and-beyond">
+            Ember Cli and Rails And Beyond
+            <small>06 Dec 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
 </div>
+
+
+  <div class="comments">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://rohitrox.github.io/2021/04/10/just-golang-things';
+        var disqus_url = 'https://rohitrox.github.io/2021/04/10/just-golang-things';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'https://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+    </script>
+  </div>
 
 
       </div>
