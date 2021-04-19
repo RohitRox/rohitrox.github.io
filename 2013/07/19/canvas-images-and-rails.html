@@ -139,7 +139,7 @@ So let say you make an app that render some effects in a Canvas element and you 
 
 <h3 id="strategy-1--send-canvas-image-as-raw-dataurl">Strategy 1 : Send canvas image as raw dataURL</h3>
 
-<p>The data URI scheme is a URI scheme that provides a way to include data in-line in web pages as if they were external resources. The <code class="highlighter-rouge">canvas.toDataURL()</code> method returns the image data of the canvas as Data URI. And the Data URI has the image data Encodes with MIME base64.</p>
+<p>The data URI scheme is a URI scheme that provides a way to include data in-line in web pages as if they were external resources. The <code class="language-plaintext highlighter-rouge">canvas.toDataURL()</code> method returns the image data of the canvas as Data URI. And the Data URI has the image data Encodes with MIME base64.</p>
 
 <p>Let’s see how it works. Copy and run this javascript snippet in your browser console. Somewhere at the bottom of the page you’ll see a green circle.</p>
 
@@ -167,7 +167,7 @@ So let say you make an app that render some effects in a Canvas element and you 
 
 <!--more-->
 
-<p>As you can see, with that weird long url string something like <code class="highlighter-rouge">data:image/png;base64,iVBORw0KGgoA...</code>, it render a png image. That long url is infact data uri which has image data encoded with MIME base64.</p>
+<p>As you can see, with that weird long url string something like <code class="language-plaintext highlighter-rouge">data:image/png;base64,iVBORw0KGgoA...</code>, it render a png image. That long url is infact data uri which has image data encoded with MIME base64.</p>
 
 <p>The format to be specific is <em>** data:[&lt;mime type&gt;][;charset=&lt;charset&gt;][;base64],&lt; encoded data &gt; **</em>.</p>
 
@@ -248,6 +248,15 @@ For this we use the Blob object. Simply it’s an object that represent a file-l
     
       <li>
         <h3>
+          <a href="/2021/04/19/testing-in-golang-projects">
+            Testing in Golang Projects
+            <small>19 Apr 2021</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/2021/04/10/just-golang-things">
             Just Golang Things
             <small>10 Apr 2021</small>
@@ -259,15 +268,6 @@ For this we use the Blob object. Simply it’s an object that represent a file-l
         <h3>
           <a href="/2020/01/05/simpler-microfrontends-implementation-with-react-and-esnext">
             Simpler Microfrontends Implementation with React and ESNext
-            <small>05 Jan 2020</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/2020/01/05/making-test-driven-development-work">
-            Making Test Driven Development work
             <small>05 Jan 2020</small>
           </a>
         </h3>

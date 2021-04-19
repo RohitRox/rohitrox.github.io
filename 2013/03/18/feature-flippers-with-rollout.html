@@ -137,7 +137,7 @@
 
 <p>We’ll be using redis as rollout’s backend.</p>
 
-<p>To setup, jusst add <code class="highlighter-rouge">gem 'rollout'</code> to Gemfile and run <code class="highlighter-rouge">bundle install</code>.</p>
+<p>To setup, jusst add <code class="language-plaintext highlighter-rouge">gem 'rollout'</code> to Gemfile and run <code class="language-plaintext highlighter-rouge">bundle install</code>.</p>
 
 <p>Now, we need to create a rollout setup file inside initializer.</p>
 
@@ -168,7 +168,7 @@ Complete documentation can be found <a href="https://github.com/jamesgolick/roll
 
 <!--more-->
 
-<p>The <code class="highlighter-rouge">$rollout.active?</code> method accepts the name of the feature and the user and returns true or false.</p>
+<p>The <code class="language-plaintext highlighter-rouge">$rollout.active?</code> method accepts the name of the feature and the user and returns true or false.</p>
 
 <p>This method is accessible in views as well as in controllers.
 That’s not all, if you restart your server now and look at the app, you may find out that the feature is unavailable to admin groups also, it is because by default the feature is deactivated to all groups or users. We can make a rake task or an interface for activating the feature to subset of users. Activating code looks like this:</p>
@@ -190,13 +190,22 @@ That’s not all, if you restart your server now and look at the app, you may fi
 
 </code></pre></div></div>
 
-<p>Each of these methods have deactivate version for deactivating the feature. You can also just call <code class="highlighter-rouge">$rollout.deactivate_all(:chat)</code> to deactivate the feature to all at once.</p>
+<p>Each of these methods have deactivate version for deactivating the feature. You can also just call <code class="language-plaintext highlighter-rouge">$rollout.deactivate_all(:chat)</code> to deactivate the feature to all at once.</p>
 
 </div>
 
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/04/19/testing-in-golang-projects">
+            Testing in Golang Projects
+            <small>19 Apr 2021</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -211,15 +220,6 @@ That’s not all, if you restart your server now and look at the app, you may fi
         <h3>
           <a href="/2020/01/05/simpler-microfrontends-implementation-with-react-and-esnext">
             Simpler Microfrontends Implementation with React and ESNext
-            <small>05 Jan 2020</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/2020/01/05/making-test-driven-development-work">
-            Making Test Driven Development work
             <small>05 Jan 2020</small>
           </a>
         </h3>

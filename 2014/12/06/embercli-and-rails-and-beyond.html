@@ -133,9 +133,9 @@
 
   <h3 id="ember-cli-and-rails-setup">Ember Cli and Rails Setup</h3>
 
-<p>Rails setup is pretty staright forward with <code class="highlighter-rouge">rails new ..</code> and new ember cli app with <code class="highlighter-rouge">ember new ..</code>  but with following folder configuration</p>
+<p>Rails setup is pretty staright forward with <code class="language-plaintext highlighter-rouge">rails new ..</code> and new ember cli app with <code class="language-plaintext highlighter-rouge">ember new ..</code>  but with following folder configuration</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  | embercli-rails-app
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  | embercli-rails-app
   |-- rails
   |-- ember
 </code></pre></div></div>
@@ -145,12 +145,12 @@
 
 <p>For coffeescript</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  npm install --save-dev ember-cli-coffeescript
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  npm install --save-dev ember-cli-coffeescript
 </code></pre></div></div>
 
 <p>and renaming .js files to .coffee and correcting the js syntax to coffee will do the trick.</p>
 
-<p>Make sure that ember app is all well by using <code class="highlighter-rouge">ember server</code> and visiting http://localhost:4200.</p>
+<p>Make sure that ember app is all well by using <code class="language-plaintext highlighter-rouge">ember server</code> and visiting http://localhost:4200.</p>
 
 <p>Before proceeding, it would be nice to have some tests.</p>
 
@@ -182,7 +182,7 @@
 
 <p>Let’s quickly build an api that can be consumed by our ember app. We are skipping out the tests.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  rails g model post title:string body:text
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  rails g model post title:string body:text
   rake db:create db:migrate db:seed
   rails g serializer post
 </code></pre></div></div>
@@ -195,7 +195,7 @@
 </code></pre></div></div>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># app/controllers/api/posts_controller.rb</span>
-  <span class="k">class</span> <span class="nc">Api</span><span class="o">::</span><span class="no">PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">class</span> <span class="nc">Api::PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
     <span class="k">def</span> <span class="nf">index</span>
       <span class="n">render</span> <span class="ss">json: </span><span class="no">Post</span><span class="p">.</span><span class="nf">all</span>
     <span class="k">end</span>
@@ -205,13 +205,13 @@
     <span class="k">end</span>
   <span class="k">end</span>
 </code></pre></div></div>
-<p>Boot rails server and make sure api is working using curl command <code class="highlighter-rouge">curl http://0.0.0.0:3000/api/posts</code> and see if it outputs json data.</p>
+<p>Boot rails server and make sure api is working using curl command <code class="language-plaintext highlighter-rouge">curl http://0.0.0.0:3000/api/posts</code> and see if it outputs json data.</p>
 
 <h3 id="ember-data-and-stuffs">Ember Data and stuffs</h3>
 
 <p>First, create ember model for Post model.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ember generate model post title:string body:string
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ember generate model post title:string body:string
 </code></pre></div></div>
 
 <p>Then setup routes and templates.</p>
@@ -247,14 +247,14 @@ Nothing happens! In console we can see that there was request was made on url ht
 We need a way to redirect this resource to rails app.</p>
 
 <p>This can be fixed by one line using ember server with proxy enabled.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ember server --proxy http://localhost:3000
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ember server --proxy http://localhost:3000
 </code></pre></div></div>
 
 <h3 id="more-tests">More Tests</h3>
 
 <p>Let’s try to test this new posts page feature. In test we cannot hit rails server to get posts so we will use a tool called <a href="https://github.com/trek/pretender">Pretender</a> to mock the request-response.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  npm install --save-dev ember-cli-pretender
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  npm install --save-dev ember-cli-pretender
   ember generate ember-cli-pretender
 </code></pre></div></div>
 
@@ -358,8 +358,8 @@ We need a way to redirect this resource to rails app.</p>
 
 <p>Now, we can shutdown ember server and visit localhost:3000, we can still see our ember app there.</p>
 
-<p>To deploy our app we need to deploy our rails app only. We can put out both frontend and backend in single repo or in different repo. I have put both in a single <a href="https://github.com/RohitRox/embercli-rails">repo</a>. Do <code class="highlighter-rouge">config.serve_static_assets = true</code> in production.rb We can deploy like any other rails app. I have deployed this app to <a href="https://embercli-rails.herokuapp.com/posts">heroku</a>. One gotcha is that heroku expects the app directory structure at the root of the repository. So to deploy we will have to push differently:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $ git subtree push --prefix rails heroku master
+<p>To deploy our app we need to deploy our rails app only. We can put out both frontend and backend in single repo or in different repo. I have put both in a single <a href="https://github.com/RohitRox/embercli-rails">repo</a>. Do <code class="language-plaintext highlighter-rouge">config.serve_static_assets = true</code> in production.rb We can deploy like any other rails app. I have deployed this app to <a href="https://embercli-rails.herokuapp.com/posts">heroku</a>. One gotcha is that heroku expects the app directory structure at the root of the repository. So to deploy we will have to push differently:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $ git subtree push --prefix rails heroku master
 </code></pre></div></div>
 
 </div>
@@ -367,6 +367,15 @@ We need a way to redirect this resource to rails app.</p>
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/04/19/testing-in-golang-projects">
+            Testing in Golang Projects
+            <small>19 Apr 2021</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -381,15 +390,6 @@ We need a way to redirect this resource to rails app.</p>
         <h3>
           <a href="/2020/01/05/simpler-microfrontends-implementation-with-react-and-esnext">
             Simpler Microfrontends Implementation with React and ESNext
-            <small>05 Jan 2020</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/2020/01/05/making-test-driven-development-work">
-            Making Test Driven Development work
             <small>05 Jan 2020</small>
           </a>
         </h3>

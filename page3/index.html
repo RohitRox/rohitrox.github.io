@@ -119,6 +119,88 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2013/08/18/lets-learn-to-knockout">
+        Lets learn to knockout
+      </a>
+    </h1>
+
+    <span class="post-date">18 Aug 2013</span>
+
+    <p>Knockout.js is known for rapid and responsive UI development. Lets try it to build something today.
+Lets see quick <a href="http://rohitrox.github.io/knockoutjs_projects">demo</a> of what we are going to build.</p>
+
+<p><a href="https://github.com/RohitRox/knockoutjs_projects/archive/master.zip">Download Source</a></p>
+
+<p>This is a basic table that is used in bills or receipts. We will try to add some magic to table like autocomplete, automatic information fill up of selected item and calculation of amounts with the help of knockout.</p>
+
+<p>I will not describe what knockout.js is and why use it.
+<a href="http://learn.knockoutjs.com">Learn.knockout.js</a> has an excellent
+tutorial for knockout js beginners. I strongly suggest to go through
+learn.knockoutjs.com before proceeding.</p>
+
+<p>I assume basic understanding of knockout js from here.</p>
+
+<p>Let’s setup the files first. Nothing fancy, I have just used jquery source file and knockout source js from their official websites and I have used twitter bootstrap prettifying stuffs.</p>
+
+<p>I have initial table markup, which looks like as shown below:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"span12"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"table table-bordered"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;thead&gt;</span>
+            <span class="nt">&lt;tr&gt;</span>
+              <span class="nt">&lt;th&gt;</span>Item<span class="nt">&lt;/th&gt;</span>
+              <span class="nt">&lt;th&gt;</span>Description<span class="nt">&lt;/th&gt;</span>
+              <span class="nt">&lt;th&gt;</span>Unit Price<span class="nt">&lt;/th&gt;</span>
+              <span class="nt">&lt;th&gt;</span>Quantity<span class="nt">&lt;/th&gt;</span>
+              <span class="nt">&lt;th&gt;</span>Amount<span class="nt">&lt;/th&gt;</span>
+              <span class="nt">&lt;th&gt;</span>Actions<span class="nt">&lt;/th&gt;</span>
+            <span class="nt">&lt;/tr&gt;</span>
+          <span class="nt">&lt;/thead&gt;</span>
+          <span class="nt">&lt;tbody&gt;</span>
+            <span class="nt">&lt;tr&gt;</span>
+              <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">class=</span><span class="s">"span3"</span>  <span class="nt">/&gt;&lt;/td&gt;</span>
+              <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">class=</span><span class="s">"span4"</span> <span class="nt">/&gt;&lt;/td&gt;</span>
+              <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">class=</span><span class="s">"span1"</span> <span class="nt">/&gt;&lt;/td&gt;</span>
+              <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">class=</span><span class="s">"span1"</span> <span class="nt">/&gt;&lt;/td&gt;</span>
+              <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">class=</span><span class="s">"span1"</span> <span class="nt">/&gt;&lt;/td&gt;</span>
+              <span class="nt">&lt;td&gt;&lt;button</span> <span class="na">class=</span><span class="s">"btn"</span><span class="nt">&gt;</span>Remove<span class="nt">&lt;/button&gt;&lt;/td&gt;</span>
+            <span class="nt">&lt;/tr&gt;</span>
+          <span class="nt">&lt;/tbody&gt;</span>
+        <span class="nt">&lt;/table&gt;</span>
+        <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"pull-left"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn"</span><span class="nt">&gt;</span>Add New Row<span class="nt">&lt;/button&gt;</span>
+          <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn"</span><span class="nt">&gt;</span>Save<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;h4</span> <span class="na">class=</span><span class="s">"pull-right"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;strong&gt;</span>Grand Total: <span class="nt">&lt;span&gt;&lt;/span&gt;</span> <span class="nt">&lt;/strong&gt;</span>
+        <span class="nt">&lt;/h4&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+<p>Lets see what we have upto here and talk something about what we are trying to do to this table.</p>
+
+<p><img src="/images/knockout-table-1.png" alt="knockout table 1" /></p>
+
+<p>Lets summarize the behaviours we would like to have:</p>
+
+<ul>
+  <li>Add a new row</li>
+  <li>Suggest items in item field</li>
+  <li>Fill up the item information (description and price) automatically</li>
+  <li>Calculate the grand total as items are added</li>
+  <li>A remove button to remove item and re-compute grand total automatically on removal</li>
+</ul>
+
+
+
+    <a href="/2013/08/18/lets-learn-to-knockout">Read More...</a>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2013/07/19/canvas-images-and-rails">
         Canvas Images and Rails
       </a>
@@ -134,7 +216,7 @@ So let say you make an app that render some effects in a Canvas element and you 
 
 <h3 id="strategy-1--send-canvas-image-as-raw-dataurl">Strategy 1 : Send canvas image as raw dataURL</h3>
 
-<p>The data URI scheme is a URI scheme that provides a way to include data in-line in web pages as if they were external resources. The <code class="highlighter-rouge">canvas.toDataURL()</code> method returns the image data of the canvas as Data URI. And the Data URI has the image data Encodes with MIME base64.</p>
+<p>The data URI scheme is a URI scheme that provides a way to include data in-line in web pages as if they were external resources. The <code class="language-plaintext highlighter-rouge">canvas.toDataURL()</code> method returns the image data of the canvas as Data URI. And the Data URI has the image data Encodes with MIME base64.</p>
 
 <p>Let’s see how it works. Copy and run this javascript snippet in your browser console. Somewhere at the bottom of the page you’ll see a green circle.</p>
 
@@ -162,7 +244,7 @@ So let say you make an app that render some effects in a Canvas element and you 
 
 <!--more-->
 
-<p>As you can see, with that weird long url string something like <code class="highlighter-rouge">data:image/png;base64,iVBORw0KGgoA...</code>, it render a png image. That long url is infact data uri which has image data encoded with MIME base64.</p>
+<p>As you can see, with that weird long url string something like <code class="language-plaintext highlighter-rouge">data:image/png;base64,iVBORw0KGgoA...</code>, it render a png image. That long url is infact data uri which has image data encoded with MIME base64.</p>
 
 <p>The format to be specific is <em>** data:[&lt;mime type&gt;][;charset=&lt;charset&gt;][;base64],&lt; encoded data &gt; **</em>.</p>
 
@@ -768,7 +850,7 @@ This little snippet, found in HTML5 Boilerplate, will do just that:</p>
 
 <p>We’ll be using redis as rollout’s backend.</p>
 
-<p>To setup, jusst add <code class="highlighter-rouge">gem 'rollout'</code> to Gemfile and run <code class="highlighter-rouge">bundle install</code>.</p>
+<p>To setup, jusst add <code class="language-plaintext highlighter-rouge">gem 'rollout'</code> to Gemfile and run <code class="language-plaintext highlighter-rouge">bundle install</code>.</p>
 
 <p>Now, we need to create a rollout setup file inside initializer.</p>
 
@@ -799,7 +881,7 @@ Complete documentation can be found <a href="https://github.com/jamesgolick/roll
 
 <!--more-->
 
-<p>The <code class="highlighter-rouge">$rollout.active?</code> method accepts the name of the feature and the user and returns true or false.</p>
+<p>The <code class="language-plaintext highlighter-rouge">$rollout.active?</code> method accepts the name of the feature and the user and returns true or false.</p>
 
 <p>This method is accessible in views as well as in controllers.
 That’s not all, if you restart your server now and look at the app, you may find out that the feature is unavailable to admin groups also, it is because by default the feature is deactivated to all groups or users. We can make a rake task or an interface for activating the feature to subset of users. Activating code looks like this:</p>
@@ -821,102 +903,10 @@ That’s not all, if you restart your server now and look at the app, you may fi
 
 </code></pre></div></div>
 
-<p>Each of these methods have deactivate version for deactivating the feature. You can also just call <code class="highlighter-rouge">$rollout.deactivate_all(:chat)</code> to deactivate the feature to all at once.</p>
+<p>Each of these methods have deactivate version for deactivating the feature. You can also just call <code class="language-plaintext highlighter-rouge">$rollout.deactivate_all(:chat)</code> to deactivate the feature to all at once.</p>
 
 
     <a href="/2013/03/18/feature-flippers-with-rollout">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2012/11/03/mysql-commands">
-        MySql commands
-      </a>
-    </h1>
-
-    <span class="post-date">03 Nov 2012</span>
-
-    <p>This is a short-list of handy MySQL commands that I have to use time and time again, in my development machine as well as in servers and for importing and exporting databases.</p>
-
-<p>Login to mysql console (from unix shell)</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysql <span class="nt">-u</span> user <span class="nt">-p</span>
-  <span class="c"># if host name is required</span>
-  <span class="nv">$ </span>mysql <span class="nt">-h</span> <span class="nb">hostname</span> <span class="nt">-u</span> user <span class="nt">-p</span>
-
-</code></pre></div></div>
-
-<p>Create a new database</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; create database databasename<span class="p">;</span>
-</code></pre></div></div>
-
-<p>List all databases</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; show databases<span class="p">;</span>
-</code></pre></div></div>
-
-<!--more-->
-
-<p>Switch to a database</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; use database_name<span class="p">;</span>
-</code></pre></div></div>
-
-<p>List tables</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; show tables<span class="p">;</span>
-</code></pre></div></div>
-
-<p>See database’s field formats.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   mysql&gt; describe table_name<span class="p">;</span>
-</code></pre></div></div>
-
-<p>Drop a db.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; drop database database_name<span class="p">;</span>
-</code></pre></div></div>
-
-<p>Delete a table.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; drop table table_name<span class="p">;</span>
-</code></pre></div></div>
-
-<p>Show all data in a table.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; SELECT <span class="k">*</span> FROM table_name<span class="p">;</span>
-</code></pre></div></div>
-
-<p>Returns the columns and column information pertaining to the designated table.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mysql&gt; show columns from table_name<span class="p">;</span>
-</code></pre></div></div>
-
-<p>Set a root password if there is on root password.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysqladmin <span class="nt">-u</span> root password newpassword
-</code></pre></div></div>
-
-<p>Update a root password.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysqladmin <span class="nt">-u</span> root <span class="nt">-p</span> oldpassword newpassword
-</code></pre></div></div>
-
-<p>Recover a MySQL root password.
-Stop the MySQL server process. Start again with no grant tables. Login to MySQL as root. Set new password. Exit MySQL and restart MySQL server.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>/etc/init.d/mysql stop
-  <span class="nv">$ </span>mysqld_safe <span class="nt">--skip-grant-tables</span> &amp;
-  <span class="nv">$ </span>mysql <span class="nt">-u</span> root
-  mysql&gt; use mysql<span class="p">;</span>
-  mysql&gt; update user <span class="nb">set </span><span class="nv">password</span><span class="o">=</span>PASSWORD<span class="o">(</span><span class="s2">"newrootpassword"</span><span class="o">)</span> where <span class="nv">User</span><span class="o">=</span><span class="s1">'root'</span><span class="p">;</span>
-  mysql&gt; flush privileges<span class="p">;</span>
-  mysql&gt; quit
-  <span class="nv">$ </span>/etc/init.d/mysql stop
-  <span class="nv">$ </span>/etc/init.d/mysql start
-</code></pre></div></div>
-<p>Export a database for backup.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysqldump <span class="nt">-u</span> user <span class="nt">-p</span> database_name <span class="o">&gt;</span> file.sql
-</code></pre></div></div>
-
-<p>Import a database</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysql <span class="nt">-p</span> <span class="nt">-u</span> username database_name &lt; file.sql
-</code></pre></div></div>
-<p>Dump all databases</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>mysqldump <span class="nt">-u</span> root <span class="nt">-password</span> <span class="nt">--opt</span> <span class="o">&gt;</span> alldatabases.sql
-</code></pre></div></div>
-
-
-
-    <a href="/2012/11/03/mysql-commands">Read More...</a>
   </div>
   
 </div>
