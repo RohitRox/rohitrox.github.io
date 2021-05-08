@@ -4,7 +4,7 @@
  <title>RohitRox @ Tech</title>
  <link href="https://rohitrox.github.io/atom.xml" rel="self"/>
  <link href="https://rohitrox.github.io/"/>
- <updated>2021-05-08T14:47:29+01:00</updated>
+ <updated>2021-05-08T14:50:06+01:00</updated>
  <id>https://rohitrox.github.io</id>
  <author>
    <name>Rohit Joshi</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>Getting started with gRPC</title>
-   <link href="https://rohitrox.github.io/2021/04/19/getting-started-with-grpc"/>
-   <updated>2021-04-19T16:05:00+01:00</updated>
-   <id>https://rohitrox.github.io/2021/04/19/getting-started-with-grpc</id>
+   <link href="https://rohitrox.github.io/2021/05/08/getting-started-with-grpc"/>
+   <updated>2021-05-08T14:05:00+01:00</updated>
+   <id>https://rohitrox.github.io/2021/05/08/getting-started-with-grpc</id>
    <content type="html">&lt;p&gt;A very basic introduction of &lt;a href=&quot;https://grpc.io/&quot;&gt;gRPC&lt;/a&gt; could be - a modern RPC framework built on HTTP/2 that uses &lt;a href=&quot;https://developers.google.com/protocol-buffers&quot;&gt;Protofbuf&lt;/a&gt; serialization instead of commonly used text based formats such as Json or XML.&lt;/p&gt;
 
 &lt;p&gt;RPC stands for “Remote Procedure Call”, bascially means “invoking a function on another system”. SOAP(Simple Object Access Protocol) is one of the popular example of RPC and was very popular in the 90s. Remote Procedure Call techniques are thus not new and the concept has been around for decades.&lt;/p&gt;
