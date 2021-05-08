@@ -11,7 +11,7 @@
 
   <title>
     
-      About Me &middot; RohitRox @ Tech
+      RohitRox @ Tech &middot; 
     
   </title>
 
@@ -60,7 +60,7 @@
     
       
         
-          <a class="sidebar-nav-item active" href="/about_me">About Me</a>
+          <a class="sidebar-nav-item" href="/about_me">About Me</a>
         
       
     
@@ -119,15 +119,51 @@
       </div>
 
       <div class="container content">
-        <div class="page">
-  <h1 class="page-title">About Me</h1>
-  <p>My name is Rohit Joshi and I am a Software Engineer from Nepal, currently based in Reading, UK. I specialize in Ruby, Rails, Javascript, NodeJS, Docker, AWS and related technologies.</p>
+        <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2012/10/30/interacting-to-mysql-with-ruby">
+        Interacting to MySQL using Ruby
+      </a>
+    </h1>
 
-<p>I am also a founding member of <a href="https://rubynepal.org/">RubyNepal</a> where we organize meetups, talks, trainings and promote Ruby and related technologies.</p>
+    <span class="post-date">30 Oct 2012</span>
 
-<p>You can find more things that I am upto on my <a href="https://www.instagram.com/rohitrox00/">Instagram</a> and my professional experiences on my <a href="https://www.linkedin.com/in/rohitrox/">LinkedIn</a>.</p>
+    <p>This tutorials guides you to go straight into interacting with MySQL database using Ruby alone. No Rails.
+It is assumed that MySQL has been installed in your computer.</p>
 
+<p>Now let’s get started:</p>
+
+<p>First of all, lets begin with installing MySQL libraries via RubyGems</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  gem <span class="nb">install </span>mysql
+</code></pre></div></div>
+<p>There is <a href="http://www.tmtm.org/en/mysql/ruby/">documentation</a> for the MySQL library online . So you can follow that.</p>
+
+<p>Now let’s fire irb.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">require</span> <span class="s1">'mysql'</span>
+  <span class="n">db</span> <span class="o">=</span> <span class="no">Mysql</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'localhost'</span><span class="p">,</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'password'</span><span class="p">,</span> <span class="s1">'database'</span><span class="p">)</span>
+</code></pre></div></div>
+
+
+    <a href="/2012/10/30/interacting-to-mysql-with-ruby">Read More...</a>
+  </div>
+  
 </div>
+
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    
+      <a class="pagination-item newer" href="/page4">Newer</a>
+    
+  
+</div>
+
 
       </div>
     </div>

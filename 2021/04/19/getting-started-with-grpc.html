@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Getting started with gRPC &middot; RohitRox @ Tech
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="layout-reverse">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Rohit Joshi's tech blog, tutorials and presentation slides</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about_me">About Me</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archives">Blog Archives</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/categories">Categories</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      This page is built using <a href="https://github.com/jekyll/jekyll" target="_blank">Jekyll</a>, <a href="https://github.com/poole/poole" target="_blank">Poole</a> and <a href="https://github.com/poole/lanyon" target="_blank">Lanyon</a>.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" style="border: 2px solid #373737; padding: 2px 8px; color: #373737;">RohitRox @ Tech</a>
+            <small></small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div>
+  <h1 class="post-title">Getting started with gRPC</h1>
+
+  <span class="post-date">
+    <time datetime="2021-04-19T16:05:00+01:00" pubdate><span class='month'>Apr</span> <span class='day'>19</span>, <span class='year'>2021</span></time>
+  </span>
+
+  <div class="post-tags">
+    <span>In:</span>
+    
+      <a href="/categories/#golang" class="post-tag">Golang</a>
+    
+      <a href="/categories/#grpc" class="post-tag">gRPC</a>
+    
+  </div>
+
+  <p>A very basic introduction of <a href="https://grpc.io/">gRPC</a> could be - a modern RPC framework built on HTTP/2 that uses <a href="https://developers.google.com/protocol-buffers">Protofbuf</a> serialization instead of commonly used text based formats such as Json or XML.</p>
+
+<p>RPC stands for “Remote Procedure Call”, bascially means “invoking a function on another system”. SOAP(Simple Object Access Protocol) is one of the popular example of RPC and was very popular in the 90s. Remote Procedure Call techniques are thus not new and the concept has been around for decades.</p>
+
+<p>There are issues with SOAP and traditional RPC frameworks like usage of heavy XML formats and payloads, tight coupling, schema maintenance issues, poort performance and steep learning curve. REST architecture style emerged as new cool framework that solved many shortcomings of SOAP. REST has become one of the default and widely used framework for designing and developing APIs.</p>
+
+<p>The question arises why again RPC instead of REST? There are already good amount of articles on this subject of gRPC vs REST. Instead of debating on this subject, I’ll be focusing on salient features and development of gRPC services.</p>
+
+<p>gRPC is a modern RPC framework built at Google (thus ‘g’ in gRPC) and the protocol itself is built on HTTP/2. Using HTTP 2 under the hood, gRPC is able to optimize the network layer; unlike REST, SOAP or GraphQL, which must to use text-based data formats, gRPC uses the Protocol Buffers (Protobuf) binary format. This gives us certain pros like:</p>
+<ul>
+  <li>Protobuf is extremely efficient on wire and gives high-performance, low-overhead messaging</li>
+  <li>HTTP/2 supports any number of requests and responses over a single connection. Connections can also be bi-directional.</li>
+  <li>Streaming requests and responses are first class</li>
+</ul>
+
+<p>In addition, gRPC supports and introduces modern tools and ecosystems to support code generation, load balancing, tracing, health checking, and authentication and seamless interoperability between clients and services written in different languages.</p>
+
+<p>Full gRPC Inroduciton &amp; History: <a href="https://grpc.io/about/">https://grpc.io/about/</a></p>
+
+<p>gRPC can be a great performant option for multi-language microservice communications.</p>
+
+<h3 id="getting-started-with-grpc-in-go">Getting started with gRPC in Go</h3>
+
+<p>Before we do anything, we need to get dependencies installed:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c"># Instructions for Mac OS</span>
+  <span class="c"># You can find similar package for your OS</span>
+  <span class="nv">$ </span>brew <span class="nb">install </span>protobuf <span class="c"># protocol buffer compiler; protoc</span>
+  <span class="nv">$ </span>brew <span class="nb">install </span>protoc-gen-grpc-web <span class="c"># protoc plugin that generates code for gRPC-Web clients</span>
+  <span class="nv">$ </span>brew <span class="nb">install </span>grpcurl <span class="c"># curl for gRPC servers</span>
+</code></pre></div></div>
+
+<p>An example definiton for sample Echo service with method called <code class="language-plaintext highlighter-rouge">Hello</code> that echoes back the text param passed to it. The code is heavily commented so the code self explains what it is doing.</p>
+
+<div class="language-proto highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// use proto3 version of the protocol buffers language</span>
+  <span class="na">syntax</span> <span class="o">=</span> <span class="s">"proto3"</span><span class="p">;</span>
+
+  <span class="c1">// go package for generated go files</span>
+  <span class="k">option</span> <span class="na">go_package</span> <span class="o">=</span> <span class="s">"protos/"</span><span class="p">;</span>
+
+  <span class="c1">// define a message type named Msg with field named Text of type string</span>
+  <span class="c1">// each field/attribute should be assigned a unique number</span>
+  <span class="c1">// These field numbers are used to identify fields in the message binary format, and should not be changed deployed</span>
+  <span class="kd">message</span> <span class="nc">Msg</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">Text</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// define a RPC service named Echo</span>
+  <span class="kd">service</span> <span class="n">Echo</span> <span class="p">{</span>
+    <span class="c1">// defined a method for RPC service named Hello that takes a Msg and return a Msg</span>
+    <span class="k">rpc</span> <span class="n">Hello</span><span class="p">(</span><span class="n">Msg</span><span class="p">)</span> <span class="k">returns</span><span class="p">(</span><span class="n">Msg</span><span class="p">);</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Full Proto Language Guide: <a href="https://developers.google.com/protocol-buffers/docs/proto3">https://developers.google.com/protocol-buffers/docs/proto3</a></p>
+
+<p>We can run <code class="language-plaintext highlighter-rouge">protoc -I ./ *.proto --go_out=. --go-grpc_out=.</code> to compile this proto file,
+which will output two files <code class="language-plaintext highlighter-rouge">echo.pb.go</code> and <code class="language-plaintext highlighter-rouge">echo_grpc.pb.go</code> in <code class="language-plaintext highlighter-rouge">protos</code> folder. I am using Go as my primary language but single proto file works for over 12 programming languages.</p>
+
+<p>Magically those file incorporates all the protobuf and grpc stuff into it. The files can be
+intimidating to look at; but we don’t need to understand all of it at this moment.</p>
+
+<p>According to our service definition, we can look out for 3 things that will be of our interest:
+Definition of <code class="language-plaintext highlighter-rouge">Msg</code>, server defintion for <code class="language-plaintext highlighter-rouge">EchoServer</code> and client definition for <code class="language-plaintext highlighter-rouge">EchoClient</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">package</span> <span class="n">protos</span>
+  <span class="c">// ...</span>
+
+  <span class="k">type</span> <span class="n">Msg</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">state</span>         <span class="n">protoimpl</span><span class="o">.</span><span class="n">MessageState</span>
+    <span class="n">sizeCache</span>     <span class="n">protoimpl</span><span class="o">.</span><span class="n">SizeCache</span>
+    <span class="n">unknownFields</span> <span class="n">protoimpl</span><span class="o">.</span><span class="n">UnknownFields</span>
+
+    <span class="n">Text</span> <span class="kt">string</span> <span class="s">`protobuf:"bytes,1,opt,name=Text,proto3" json:"Text,omitempty"`</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">package</span> <span class="n">protos</span>
+  <span class="c">// ...</span>
+
+  <span class="k">type</span> <span class="n">EchoClient</span> <span class="k">interface</span> <span class="p">{</span>
+    <span class="n">Hello</span><span class="p">(</span><span class="n">ctx</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">in</span> <span class="o">*</span><span class="n">Msg</span><span class="p">,</span> <span class="n">opts</span> <span class="o">...</span><span class="n">grpc</span><span class="o">.</span><span class="n">CallOption</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="n">Msg</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="c">// ...</span>
+
+  <span class="k">type</span> <span class="n">EchoServer</span> <span class="k">interface</span> <span class="p">{</span>
+    <span class="n">Hello</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="o">*</span><span class="n">Msg</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="n">Msg</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<p>It might be unbelievable but all we need to do to create our gRPC service is to implement these interfaces. That means we can focus on only and only on our business logic.</p>
+
+<!-- more -->
+
+<p>A sample <code class="language-plaintext highlighter-rouge">EchoServer</code> implementation:</p>
+
+<p><code class="language-plaintext highlighter-rouge">Note: *protos.Msg is used because my generated protos are in protos package</code></p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">type</span> <span class="n">EchoServer</span> <span class="k">struct</span> <span class="p">{</span>
+  <span class="p">}</span>
+
+  <span class="k">func</span> <span class="p">(</span><span class="n">es</span> <span class="o">*</span><span class="n">EchoServer</span><span class="p">)</span> <span class="n">Hello</span><span class="p">(</span><span class="n">c</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">m</span> <span class="o">*</span><span class="n">protos</span><span class="o">.</span><span class="n">Msg</span><span class="p">)</span> <span class="p">(</span><span class="n">respMsg</span> <span class="o">*</span><span class="n">protos</span><span class="o">.</span><span class="n">Msg</span><span class="p">,</span> <span class="n">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">txt</span> <span class="o">:=</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"Echo: %s"</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">Text</span><span class="p">)</span>
+    <span class="n">respMsg</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">protos</span><span class="o">.</span><span class="n">Msg</span><span class="p">{</span>
+      <span class="n">Text</span><span class="o">:</span> <span class="n">txt</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span>
+  <span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>All we need to do now is to init a new grpc server and register an instance of our EchoServer.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">grpcServer</span> <span class="o">:=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">NewServer</span><span class="p">()</span>
+    <span class="n">echoServer</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">EchoServer</span><span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="n">protos</span><span class="o">.</span><span class="n">RegisterEchoServer</span><span class="p">(</span><span class="n">grpcServer</span><span class="p">,</span> <span class="n">echoServer</span><span class="p">)</span>
+    <span class="n">reflection</span><span class="o">.</span><span class="n">Register</span><span class="p">(</span><span class="n">grpcServer</span><span class="p">)</span>
+
+    <span class="n">lis</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">net</span><span class="o">.</span><span class="n">Listen</span><span class="p">(</span><span class="s">"tcp"</span><span class="p">,</span> <span class="s">":9000"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+      <span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"failed to listen: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    
+    <span class="n">log</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"gRPC server starting at :9000"</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">grpcServer</span><span class="o">.</span><span class="n">Serve</span><span class="p">(</span><span class="n">lis</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+      <span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"failed to serve: %s"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<p>We make use of <code class="language-plaintext highlighter-rouge">RegisterEchoServer</code> provided in generated code to register our instance of EchoServer into an instance of grpc server.</p>
+
+<p>As we can see we really don’t need to code or worry about all the grpc inetrnals.</p>
+
+<p>Next we can run our grpc server with <code class="language-plaintext highlighter-rouge">go run .</code></p>
+
+<p>Now, we can make use og <code class="language-plaintext highlighter-rouge">grpcurl </code> to test our service.</p>
+
+<p>Note that we need one extra line for grpcurl to work <code class="language-plaintext highlighter-rouge">reflection.Register(grpcServer)</code></p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="nv">$ </span>grpcurl <span class="nt">--plaintext</span> <span class="nt">-d</span> <span class="s1">'{"Text": "Hellp Grpc"}'</span> localhost:9000 Echo.Hello
+  <span class="c"># {</span>
+  <span class="c">#   "Text": "Echo: Hellp Grpc"</span>
+  <span class="c"># }</span>
+</code></pre></div></div>
+<p><strong>grpcurl</strong> allow us to do other useful things like;</p>
+
+<p>listing all available services:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  grpcurl <span class="nt">--plaintext</span> localhost:9000 list
+</code></pre></div></div>
+
+<p>Or, decribe a service:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  grpcurl <span class="nt">--plaintext</span> localhost:9000 describe Echo
+</code></pre></div></div>
+
+<p>Full doc: <a href="https://github.com/fullstorydev/grpcurl">https://github.com/fullstorydev/grpcurl</a></p>
+
+<p>Next, we can make a proper client which can consume this service:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// setup grpc connection</span>
+    <span class="n">conn</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">Dial</span><span class="p">(</span><span class="s">"localhost:9000"</span><span class="p">,</span> <span class="n">grpc</span><span class="o">.</span><span class="n">WithInsecure</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+      <span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"did not connect: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="n">conn</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+
+    <span class="c">// create EchoClient using NewEchoClient, which is auto generated from proto file</span>
+    <span class="n">client</span> <span class="o">:=</span> <span class="n">protos</span><span class="o">.</span><span class="n">NewEchoClient</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+    <span class="c">// create a Msg to send</span>
+    <span class="n">msg</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">protos</span><span class="o">.</span><span class="n">Msg</span><span class="p">{</span>
+      <span class="n">Text</span><span class="o">:</span> <span class="s">"Pinging"</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="c">// call Hello method on client, also auto generated</span>
+    <span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">client</span><span class="o">.</span><span class="n">Hello</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">(),</span> <span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+      <span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"could not greet: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c">// Note that resp is of type Msg, as defined in proto file</span>
+    <span class="c">// All the grpc and protobuf is handled internally </span>
+    <span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Received: %v"</span><span class="p">,</span> <span class="n">resp</span><span class="p">)</span>
+    <span class="c">// prints: Received: Text:"Echo: Pinging"</span>
+  <span class="p">}</span>	
+</code></pre></div></div>
+
+<p>Overall grpc services communication could be illustrated as:</p>
+
+<p><img src="/images/grpc.png" alt="grpc communication" /></p>
+
+<p>Full Code for this post: <a href="https://gist.github.com/RohitRox/146fb015bcdf2d5a5a61d77241f4efa6">https://gist.github.com/RohitRox/146fb015bcdf2d5a5a61d77241f4efa6</a></p>
+
+<p>Over the next series of posts on this topic, I will be writing about <code class="language-plaintext highlighter-rouge">gRPC-web</code> and production readiness of grpc services.</p>
+
+<p>As stated, gRPC works on top of HTTP/2, browsers which primarily uses HTTP/1, there is no way to force the use of HTTP/2, and there is no browser API to allow control over request packets to implement Protobuf format. gRPC-Web exists solely in a browser and acts as a translation layer between gRPC and applications in a browser which allows to develop end-to-end gRPC applications.</p>
+
+<p>For production readiness, I will be exporing tools and techniques available for production usage like interceptors(kind of middlewares), logging, tracing, authentication and deployment strategies on AWS.</p>
+
+<p>Be sure to check back soon again.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/04/19/testing-in-golang-projects">
+            Testing in Golang Projects
+            <small>19 Apr 2021</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/04/10/just-golang-things">
+            Just Golang Things
+            <small>10 Apr 2021</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2020/01/05/simpler-microfrontends-implementation-with-react-and-esnext">
+            Simpler Microfrontends Implementation with React and ESNext
+            <small>05 Jan 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+  <div class="comments">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://rohitrox.github.io/2021/04/19/getting-started-with-grpc';
+        var disqus_url = 'https://rohitrox.github.io/2021/04/19/getting-started-with-grpc';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'https://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+    </script>
+  </div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>
