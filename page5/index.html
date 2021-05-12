@@ -123,6 +123,43 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2012/10/30/activerecord-with-ruby-alone">
+        ActiveRecord with Ruby alone
+      </a>
+    </h1>
+
+    <span class="post-date">30 Oct 2012</span>
+
+    <p>Active Record is the main tool that Rails developers use to communicate with and underlying database. Active Record does some wonderful things for a web developer looking for abstractions in  database setup, SQL connections and queries.  We can get a cool command line Ruby application or utility script for our daily tasks using Active Record going in about 5 minutes!</p>
+
+<p>First of all, get the activerecord gem using</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  gem install activerecord
+</code></pre></div></div>
+
+<p>At the top of Ruby program we need to require the Active Record gem previously installed.  Interacting with your database will be a pleasure now!</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">require</span> <span class="s1">'activerecord'</span>
+</code></pre></div></div>
+
+<h3 id="establishing-a-connection-to-database">Establishing a connection to database</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">establish_connection</span> <span class="p">{</span>
+    <span class="ss">adapter:  </span><span class="s2">"mysql"</span><span class="p">,</span>
+    <span class="ss">host:     </span><span class="s2">"localhost"</span><span class="p">,</span>
+    <span class="ss">username: </span><span class="s2">"root"</span><span class="p">,</span>
+    <span class="ss">password: </span><span class="s2">"password"</span><span class="p">,</span>
+    <span class="ss">database: </span><span class="s2">"dbname"</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+
+
+    <a href="/2012/10/30/activerecord-with-ruby-alone">Read More...</a>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2012/10/30/interacting-to-mysql-with-ruby">
         Interacting to MySQL using Ruby
       </a>

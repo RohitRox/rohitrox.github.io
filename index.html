@@ -123,6 +123,126 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2021/05/12/graphql-layer-for-rest-apis">
+        Graphql layer for REST Apis
+      </a>
+    </h1>
+
+    <span class="post-date">12 May 2021</span>
+
+    <p>Great thing about GraphQL is that we don’t need to rewrite all of our existing APIs to get started.</p>
+
+<p>We can easily build a GraphQL layer and use resolvers to get our data from Apis, but in Apollo Servers, <a href="https://github.com/apollographql/apollo-server/tree/main/packages/apollo-datasource-rest">Apollo REST Data Source</a> is probably the cleanest way to build this layer. It also offers some desired feature like caching, deduplication, and error handling on top.</p>
+
+<p>To get started, we first need to get the <code class="language-plaintext highlighter-rouge">apollo-datasource-rest</code> npm package.</p>
+
+<p>In this post, I will be showing how we can build a graphql server on top of free APIs provided by <a href="https://jsonplaceholder.typicode.com/">https://jsonplaceholder.typicode.com/</a>
+I will be using two resources <code class="language-plaintext highlighter-rouge">posts</code> and <code class="language-plaintext highlighter-rouge">users</code></p>
+
+<p>Inspecting the apis, we can see the response data structure:</p>
+
+<p><em><strong>GET https://jsonplaceholder.typicode.com/posts</strong></em></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"userId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sunt aut facere repellat provident occaecati excepturi optio reprehenderit"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"quia et suscipit...ostrum rerum est autem sunt rem eveniet architecto"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"userId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qui est esse"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"est rerum tempore vita..qui aperiam non debitis possimus qui neque nisi nulla"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<p><em><strong>GET https://jsonplaceholder.typicode.com/posts/1</strong></em></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"userId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sunt aut facere repellat provident occaecati excepturi optio reprehenderit"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"quia et suscipi tno .. ostrum rerum est autem sunt rem eveniet architecto"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><em><strong>GET https://jsonplaceholder.typicode.com/users/1</strong></em></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Leanne Graham"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bret"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sincere@april.biz"</span><span class="w">
+    </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1-770-736-8031 x56442"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hildegard.org"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>First, we’ll create our graphql schema:</p>
+
+<div class="language-graphql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">type</span><span class="w"> </span><span class="n">Post</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="nb">Int</span><span class="p">!</span><span class="w">
+    </span><span class="n">userId</span><span class="p">:</span><span class="w"> </span><span class="nb">Int</span><span class="p">!</span><span class="w">
+    </span><span class="n">title</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+    </span><span class="n">body</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+    </span><span class="n">user</span><span class="p">:</span><span class="w"> </span><span class="n">User</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+
+  </span><span class="k">type</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="nb">Int</span><span class="p">!</span><span class="w">
+    </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+    </span><span class="n">username</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+    </span><span class="n">email</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>and our query interface:</p>
+
+<div class="language-graphql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">type</span><span class="w"> </span><span class="n">Query</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">post</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="nb">Int</span><span class="p">!):</span><span class="w"> </span><span class="n">Post</span><span class="w">
+    </span><span class="n">posts</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">Post</span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Next we create REST data source classes:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">import</span> <span class="p">{</span> <span class="nx">RESTDataSource</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">apollo-datasource-rest</span><span class="dl">'</span><span class="p">;</span>
+
+  <span class="k">export</span> <span class="kd">class</span> <span class="nx">PostsAPI</span> <span class="kd">extends</span> <span class="nx">RESTDataSource</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">super</span><span class="p">();</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">baseURL</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://jsonplaceholder.typicode.com/</span><span class="dl">'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">async</span> <span class="nx">find</span><span class="p">(</span><span class="nx">id</span><span class="p">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">`posts/</span><span class="p">${</span><span class="nx">id</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">async</span> <span class="nx">list</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">posts</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">export</span> <span class="kd">class</span> <span class="nx">UsersAPI</span> <span class="kd">extends</span> <span class="nx">RESTDataSource</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">super</span><span class="p">();</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">baseURL</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://jsonplaceholder.typicode.com/</span><span class="dl">'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">async</span> <span class="nx">find</span><span class="p">(</span><span class="nx">id</span><span class="p">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">`users/</span><span class="p">${</span><span class="nx">id</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+
+
+    <a href="/2021/05/12/graphql-layer-for-rest-apis">Read More...</a>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2021/05/08/getting-started-with-grpc">
         Getting started with gRPC
       </a>
@@ -523,24 +643,6 @@ Definition of <code class="language-plaintext highlighter-rouge">Msg</code>, ser
 
 
     <a href="/2020/01/05/simpler-microfrontends-implementation-with-react-and-esnext">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2020/01/05/making-test-driven-development-work">
-        Making Test Driven Development work
-      </a>
-    </h1>
-
-    <span class="post-date">05 Jan 2020</span>
-
-    <p>Here are the slides for the presentation on Test Driven Development I gave at CloudFactory on a Lunch and Learn Session.</p>
-
-<p>The goal of this talk was to introduce TDD as a process rather then a paradigm. It explains how TDD can provide lower defect rates, higher productivity, modular design and a much more logical and fun technique for us to solve problems. It describes the cycle of writing a test first, and application code afterwards – followed by refactoring. It tries to describe how to approach TDD: Where do I begin to develop? What exactly should I test? How should tests be structured?.</p>
-
-
-
-    <a href="/2020/01/05/making-test-driven-development-work">Read More...</a>
   </div>
   
 </div>

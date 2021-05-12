@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Graphql layer for REST Apis &middot; RohitRox @ Tech
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="layout-reverse">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Rohit Joshi's tech blog, tutorials and presentation slides</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about_me">About Me</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archives">Blog Archives</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/categories">Categories</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      This page is built using <a href="https://github.com/jekyll/jekyll" target="_blank">Jekyll</a>, <a href="https://github.com/poole/poole" target="_blank">Poole</a> and <a href="https://github.com/poole/lanyon" target="_blank">Lanyon</a>.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" style="border: 2px solid #373737; padding: 2px 8px; color: #373737;">RohitRox @ Tech</a>
+            <small></small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div>
+  <h1 class="post-title">Graphql layer for REST Apis</h1>
+
+  <span class="post-date">
+    <time datetime="2021-05-12T23:43:00+01:00" pubdate><span class='month'>May</span> <span class='day'>12</span>, <span class='year'>2021</span></time>
+  </span>
+
+  <div class="post-tags">
+    <span>In:</span>
+    
+      <a href="/categories/#nodejs" class="post-tag">Nodejs</a>
+    
+      <a href="/categories/#graphql" class="post-tag">GraphQL</a>
+    
+  </div>
+
+  <p>Great thing about GraphQL is that we don’t need to rewrite all of our existing APIs to get started.</p>
+
+<p>We can easily build a GraphQL layer and use resolvers to get our data from Apis, but in Apollo Servers, <a href="https://github.com/apollographql/apollo-server/tree/main/packages/apollo-datasource-rest">Apollo REST Data Source</a> is probably the cleanest way to build this layer. It also offers some desired feature like caching, deduplication, and error handling on top.</p>
+
+<p>To get started, we first need to get the <code class="language-plaintext highlighter-rouge">apollo-datasource-rest</code> npm package.</p>
+
+<p>In this post, I will be showing how we can build a graphql server on top of free APIs provided by <a href="https://jsonplaceholder.typicode.com/">https://jsonplaceholder.typicode.com/</a>
+I will be using two resources <code class="language-plaintext highlighter-rouge">posts</code> and <code class="language-plaintext highlighter-rouge">users</code></p>
+
+<p>Inspecting the apis, we can see the response data structure:</p>
+
+<p><em><strong>GET https://jsonplaceholder.typicode.com/posts</strong></em></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"userId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sunt aut facere repellat provident occaecati excepturi optio reprehenderit"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"quia et suscipit...ostrum rerum est autem sunt rem eveniet architecto"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"userId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qui est esse"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"est rerum tempore vita..qui aperiam non debitis possimus qui neque nisi nulla"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<p><em><strong>GET https://jsonplaceholder.typicode.com/posts/1</strong></em></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"userId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sunt aut facere repellat provident occaecati excepturi optio reprehenderit"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"quia et suscipi tno .. ostrum rerum est autem sunt rem eveniet architecto"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><em><strong>GET https://jsonplaceholder.typicode.com/users/1</strong></em></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Leanne Graham"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bret"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sincere@april.biz"</span><span class="w">
+    </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1-770-736-8031 x56442"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hildegard.org"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>First, we’ll create our graphql schema:</p>
+
+<div class="language-graphql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">type</span><span class="w"> </span><span class="n">Post</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="nb">Int</span><span class="p">!</span><span class="w">
+    </span><span class="n">userId</span><span class="p">:</span><span class="w"> </span><span class="nb">Int</span><span class="p">!</span><span class="w">
+    </span><span class="n">title</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+    </span><span class="n">body</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+    </span><span class="n">user</span><span class="p">:</span><span class="w"> </span><span class="n">User</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+
+  </span><span class="k">type</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="nb">Int</span><span class="p">!</span><span class="w">
+    </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+    </span><span class="n">username</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+    </span><span class="n">email</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>and our query interface:</p>
+
+<div class="language-graphql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">type</span><span class="w"> </span><span class="n">Query</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">post</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="nb">Int</span><span class="p">!):</span><span class="w"> </span><span class="n">Post</span><span class="w">
+    </span><span class="n">posts</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">Post</span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Next we create REST data source classes:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">import</span> <span class="p">{</span> <span class="nx">RESTDataSource</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">apollo-datasource-rest</span><span class="dl">'</span><span class="p">;</span>
+
+  <span class="k">export</span> <span class="kd">class</span> <span class="nx">PostsAPI</span> <span class="kd">extends</span> <span class="nx">RESTDataSource</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">super</span><span class="p">();</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">baseURL</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://jsonplaceholder.typicode.com/</span><span class="dl">'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">async</span> <span class="nx">find</span><span class="p">(</span><span class="nx">id</span><span class="p">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">`posts/</span><span class="p">${</span><span class="nx">id</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">async</span> <span class="nx">list</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">posts</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">export</span> <span class="kd">class</span> <span class="nx">UsersAPI</span> <span class="kd">extends</span> <span class="nx">RESTDataSource</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">super</span><span class="p">();</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">baseURL</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://jsonplaceholder.typicode.com/</span><span class="dl">'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">async</span> <span class="nx">find</span><span class="p">(</span><span class="nx">id</span><span class="p">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">`users/</span><span class="p">${</span><span class="nx">id</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<!-- more -->
+
+<p>Now these data source class instances can be injects to an Apollo server:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ApolloServer</span><span class="p">({</span>
+    <span class="c1">// ... ,</span>
+    <span class="na">dataSources</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">postsAPI</span><span class="p">:</span> <span class="k">new</span> <span class="nx">PostsAPI</span><span class="p">(),</span>
+        <span class="na">usersAPI</span><span class="p">:</span> <span class="k">new</span> <span class="nx">UsersAPI</span><span class="p">(),</span>
+      <span class="p">};</span>
+    <span class="p">},</span>
+  <span class="p">});</span>
+</code></pre></div></div>
+
+<p>Last part of the puzzle is to write up resolvers with these data sources:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">resolvers</span><span class="p">:</span> <span class="nx">IResolvers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">Query</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nx">status</span><span class="p">(</span><span class="na">_</span><span class="p">:</span> <span class="k">void</span><span class="p">,</span> <span class="na">args</span><span class="p">:</span> <span class="k">void</span><span class="p">):</span> <span class="nx">string</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="dl">'</span><span class="s1">Graphql status OK</span><span class="dl">'</span><span class="p">;</span>
+      <span class="p">},</span>
+      <span class="na">post</span><span class="p">:</span> <span class="k">async</span> <span class="p">(</span><span class="nx">_source</span><span class="p">,</span> <span class="p">{</span> <span class="nx">id</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">dataSources</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">dataSources</span><span class="p">.</span><span class="nx">postsAPI</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="na">posts</span><span class="p">:</span> <span class="k">async</span> <span class="p">(</span><span class="nx">_source</span><span class="p">,</span> <span class="p">{},</span> <span class="p">{</span> <span class="nx">dataSources</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">dataSources</span><span class="p">.</span><span class="nx">postsAPI</span><span class="p">.</span><span class="nx">list</span><span class="p">()</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="na">Post</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">user</span><span class="p">:</span> <span class="k">async</span> <span class="p">(</span><span class="nx">_source</span><span class="p">,</span> <span class="p">{},</span> <span class="p">{</span> <span class="nx">dataSources</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">dataSources</span><span class="p">.</span><span class="nx">usersAPI</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">_source</span><span class="p">.</span><span class="nx">userId</span><span class="p">)</span>
+      <span class="p">},</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+</code></pre></div></div>
+
+<p>Now we can query our graphql server to get posts:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  posts {
+    id
+    title
+  }
+}
+</code></pre></div></div>
+<p>and specify user attributes as well if we want:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  posts {
+    id
+    title
+    user {
+      name
+    }
+  }
+}
+</code></pre></div></div>
+
+<p>This all maps out really well.</p>
+
+<p>Now it may seem like we could have just use <code class="language-plaintext highlighter-rouge">axios</code> or <code class="language-plaintext highlighter-rouge">fetch</code> to do those REST api calls but Apollo’s REST Data Source does a lot more behind the scenes.
+Most importantly <strong>Request Deduplication</strong> and <strong>Caching</strong> are my favourite ones.</p>
+
+<p>Request duplication occurs when we need to resolve same resource again and again. For eg in our posts query with user, if same user wrote multiple posts, the api calls to fetch user should occur only once for each unique users. The Rest Data Source package handles this via Promise memoization technique ( <a href="https://bluepnume.medium.com/async-javascript-is-much-more-fun-when-you-spend-less-time-thinking-about-control-flow-8580ce9f73fc">How to Memoize Async Functions in JavaScript</a> ).</p>
+
+<p>Apollo data sources by default built-in <a href="https://github.com/apollographql/apollo-server/blob/main/packages/apollo-server-caching/src/InMemoryLRUCache.ts">InMemoryLRUCache</a> to store the results of past fetches.
+Great thing about this is that we can swap cache stores as we like. Usage of Memcached/Redis as a cache store is effortless.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">import</span> <span class="p">{</span> <span class="nx">MemcachedCache</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">apollo-server-cache-memcached</span><span class="dl">'</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ApolloServer</span><span class="p">({</span>
+    <span class="c1">// ...,</span>
+    <span class="na">cache</span><span class="p">:</span> <span class="k">new</span> <span class="nx">MemcachedCache</span><span class="p">(</span>
+      <span class="p">[</span><span class="dl">'</span><span class="s1">memcached-server-1</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">memcached-server-2</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">memcached-server-3</span><span class="dl">'</span><span class="p">],</span>
+      <span class="p">{</span> <span class="na">retries</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="na">retry</span><span class="p">:</span> <span class="mi">10000</span> <span class="p">},</span>
+    <span class="p">),</span>
+    <span class="na">dataSources</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+      <span class="c1">// ...</span>
+    <span class="p">}),</span>
+  <span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="links">Links:</h3>
+
+<ul>
+  <li>
+    <p><a href="https://www.apollographql.com/docs/apollo-server/data/data-sources/">Apollo Data Sources Doc</a></p>
+  </li>
+  <li>
+    <p><a href="https://github.com/apollographql/apollo-server/tree/main/packages/apollo-datasource-rest">Apollo REST Data Source</a></p>
+  </li>
+</ul>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/05/08/getting-started-with-grpc">
+            Getting started with gRPC
+            <small>08 May 2021</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/04/19/testing-in-golang-projects">
+            Testing in Golang Projects
+            <small>19 Apr 2021</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/04/10/just-golang-things">
+            Just Golang Things
+            <small>10 Apr 2021</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+  <div class="comments">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'webdevelopmentlog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://rohitrox.github.io/2021/05/12/graphql-layer-for-rest-apis';
+        var disqus_url = 'https://rohitrox.github.io/2021/05/12/graphql-layer-for-rest-apis';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'https://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+    </script>
+  </div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>

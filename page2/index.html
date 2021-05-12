@@ -123,6 +123,24 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2020/01/05/making-test-driven-development-work">
+        Making Test Driven Development work
+      </a>
+    </h1>
+
+    <span class="post-date">05 Jan 2020</span>
+
+    <p>Here are the slides for the presentation on Test Driven Development I gave at CloudFactory on a Lunch and Learn Session.</p>
+
+<p>The goal of this talk was to introduce TDD as a process rather then a paradigm. It explains how TDD can provide lower defect rates, higher productivity, modular design and a much more logical and fun technique for us to solve problems. It describes the cycle of writing a test first, and application code afterwards – followed by refactoring. It tries to describe how to approach TDD: Where do I begin to develop? What exactly should I test? How should tests be structured?.</p>
+
+
+
+    <a href="/2020/01/05/making-test-driven-development-work">Read More...</a>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2014/12/06/embercli-and-rails-and-beyond">
         Ember Cli and Rails And Beyond
       </a>
@@ -339,44 +357,6 @@
 
 
     <a href="/2013/09/05/javascript-array-tricks">Read More...</a>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/08/30/single-table-inheritance-in-mongoid">
-        Single Table Inheritance in Mongoid
-      </a>
-    </h1>
-
-    <span class="post-date">30 Aug 2013</span>
-
-    <p>Single table inheritance is a software pattern described by Martin Fowler. STI is basically an idea of using a single table(colection in case of mongo) to reflect multiple models that inherit from a base model.</p>
-
-<p>We use STI pattern when we are dealing with classes that have same attributes and behaviour. Rather than duplicate the same code over and over, STI helps us to use a common base model and write specific behaviours in its inherited class while keeeping data on a same table.</p>
-
-<p>Mongoid supports inheritance in both root and embedded documents. In
-scenarios where documents are inherited from their fields, relations, validations and scopes get copied down into their child documents, but not vice-versa.</p>
-
-<p>A very simple example:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Employee</span>
-    <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
-    <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type: </span><span class="no">String</span>
-    <span class="n">field</span> <span class="ss">:employee_code</span><span class="p">,</span> <span class="ss">type: </span><span class="no">Integer</span>
-  <span class="k">end</span>
-
-  <span class="k">class</span> <span class="nc">FullTimeEmployee</span> <span class="o">&lt;</span> <span class="no">Employee</span>
-    <span class="n">field</span> <span class="n">status</span><span class="p">,</span> <span class="ss">type: </span><span class="no">String</span><span class="p">,</span> <span class="ss">default: </span><span class="s2">"Temporary"</span>
-  <span class="k">end</span>
-
-  <span class="k">class</span> <span class="nc">InternEmployee</span> <span class="o">&lt;</span> <span class="no">Employee</span>
-    <span class="n">field</span> <span class="n">intern_period</span><span class="p">,</span> <span class="ss">type: </span><span class="no">Integer</span>
-  <span class="k">end</span>
-</code></pre></div></div>
-
-
-
-    <a href="/2013/08/30/single-table-inheritance-in-mongoid">Read More...</a>
   </div>
   
 </div>
